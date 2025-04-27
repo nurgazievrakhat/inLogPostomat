@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_enter_number"
+        android:paddingVertical="14dp">
+
+        <TextView
+            android:id="@+id/tv_code_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+996"
+            android:textColor="@color/gray"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@id/divider"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/divider"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:src="@drawable/icon_phone_divider"
+            app:layout_constraintBottom_toBottomOf="@id/tv_code_hint"
+            app:layout_constraintEnd_toStartOf="@id/et_phone_number"
+            app:layout_constraintStart_toEndOf="@id/tv_code_hint"
+            app:layout_constraintTop_toTopOf="@id/tv_code_hint"
+            app:tint="@color/gray" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:digits="1234567890"
+            android:hint="000 00 00 00"
+            android:inputType="number"
+            android:maxLength="12"
+            android:textColor="@color/dark_question_bg"
+            android:textColorHint="@color/gray"
+            android:textSize="22sp"
+            android:typeface="monospace"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/container_phone"
+        tools:text="Номер телефона введен неверно" />
+
+</merge>

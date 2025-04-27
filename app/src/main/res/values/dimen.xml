@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_horizontal_margin">34dp</dimen>
+    <dimen name="screen_vertical_margin">24dp</dimen>
+    <dimen name="title_text_size">28sp</dimen>
+    <dimen name="button_text_size">18sp</dimen>
+    <dimen name="label_text_size">16sp</dimen>
+    <dimen name="phone_text_size">20sp</dimen>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "89512028895",
+    "project_id": "inlogpostomat",
+    "storage_bucket": "inlogpostomat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89512028895:android:8cd15b10e21bd397ba576a",
+        "android_client_info": {
+          "package_name": "com.example.sampleusbproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChFxnjSQ4eWBpBlwnTrdKfIzConJwAZuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

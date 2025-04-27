@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/enterNumberFragment"
+        android:name="com.example.sampleusbproject.presentation.EnterNumberFragment"
+        android:label="fragment_enter_number"
+        tools:layout="@layout/fragment_enter_number" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.sampleusbproject.presentation.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/screensaverFragment"
+        android:name="com.example.sampleusbproject.presentation.ScreensaverFragment"
+        android:label="fragment_screensaver"
+        tools:layout="@layout/fragment_screensaver" />
+
+    <action
+        android:id="@+id/action_to_screensaver"
+        app:destination="@id/screensaverFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.sampleusbproject.presentation.AuthFragment"
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

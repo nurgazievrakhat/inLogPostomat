@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">sampleUSBproject</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="inlogy_logo">Логотип</string>
+    <string name="here_you_can_receive_order">Здесь можно получить и оставить заказ</string>
+    <string name="scan_package_code">Отсканируйте код посылки</string>
+    <string name="enter_order_number_manually">Ввести номер заказа вручную</string>
+    <string name="contact_center">Контакт-центр</string>
+    <string name="contact_phone">+995 550 500 500</string>
+    <string name="leave">Оставить</string>
+    <string name="take">Забрать</string>
+    <string name="left_aux_button_desc">x</string>
+    <string name="right_aux_button_desc">r</string>
+</resources>

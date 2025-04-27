@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.MainFragment"
+    android:background="@color/white"
+    android:paddingStart="@dimen/screen_horizontal_margin"
+    android:paddingEnd="@dimen/screen_horizontal_margin"
+    android:paddingTop="@dimen/screen_vertical_margin"
+    android:paddingBottom="@dimen/screen_vertical_margin">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/inlogy_logo"
+        android:src="@drawable/icon"
+        app:layout_constraintDimensionRatio="H,2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_max="200dp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/here_you_can_receive_order"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        app:layout_constraintWidth_percent="0.8" />
+
+
+    <!-- Scan package code button -->
+    <Button
+        android:id="@+id/btnLeave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:text="@string/leave"
+        android:textAllCaps="false"
+        android:layout_marginTop="45dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/button_text_size"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:paddingVertical="22dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
+
+    <!-- Enter order number manually button -->
+    <Button
+        android:id="@+id/btnTake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/blue"
+        android:text="@string/take"
+        android:textAllCaps="false"
+        android:paddingVertical="22dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/button_text_size"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLeave"
+        app:layout_constraintBottom_toTopOf="@+id/footer_barrier" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/footer_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="btnLeave,btnTake" />
+
+    <!-- Language selector -->
+    <Spinner
+        android:id="@+id/spinnerLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_background"
+        android:entries="@array/languages"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintWidth_min="140dp" />
+
+    <!-- Contact center label -->
+    <TextView
+        android:id="@+id/tvContactCenterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/contact_center"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/label_text_size"
+        app:layout_constraintStart_toStartOf="@id/tvContactPhone"
+        app:layout_constraintBottom_toTopOf="@+id/tvContactPhone"
+        app:layout_constraintEnd_toEndOf="@+id/tvContactPhone" />
+
+    <!-- Contact phone number -->
+    <TextView
+        android:id="@+id/tvContactPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_phone"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:textSize="@dimen/phone_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

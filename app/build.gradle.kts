@@ -1,0 +1,98 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
+}
+
+android {
+    namespace = "com.example.sampleusbproject"
+    compileSdk = 35
+    buildFeatures {
+        buildConfig = true
+    }
+    defaultConfig {
+        applicationId = "com.example.sampleusbproject"
+        minSdk = 21
+        targetSdk = 35
+        versionCode = 2
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            isDebuggable = true
+            buildConfigField ("String", "URL_BASE",  "\"https://postomat-3.ooba.kg\"")
+        }
+        release {
+            isDebuggable = false
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    sourceSets.named("main") {
+        this.jniLibs.srcDirs("src/main/jniLibs")
+    }
+    hilt {
+        enableAggregatingTask = false
+    }
+}
+
+dependencies {
+
+implementation(libs.firebase.config)
+    implementation(libs.firebase.storage)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.firebase.crashlytics)
+    //    implementation(files("/Users/rahatnurgaziev/AndroidStudioProjects/sampleUSBproject/app/libs/serialport_x_V1.01.05_20241022.aar"))
+//    implementation(files("/Users/rahatnurgaziev/AndroidStudioProjects/sampleUSBproject/app/libs/serialport_x_V1.01.01_20230524.aar"))
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.timber)
+    implementation(libs.vbpd)
+    implementation(libs.hilt.android)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.decoro)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+
+    implementation(libs.socket.io.client) {
+        exclude(group = "org.json", module = "json")
+    }
+    kapt(libs.room.compiler)
+    kapt(libs.hilt.compiler)
+}
+kapt {
+    correctErrorTypes = true
+}
