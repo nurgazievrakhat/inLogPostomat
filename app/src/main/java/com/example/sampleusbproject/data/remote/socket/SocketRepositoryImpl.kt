@@ -208,6 +208,10 @@ class SocketRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getPostamatsLocal(id: String): Flow<List<PostomatInfo>> = flow {
+         postomatInfoMapper.getPostomatInfo(id)
+    }
+
     // Вспомогательные методы
     private fun registerSocketListener(event: String, listener: (Any) -> Unit) {
         Timber.d("Registering socket listener for event: $event")

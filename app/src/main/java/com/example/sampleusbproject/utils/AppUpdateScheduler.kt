@@ -6,6 +6,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.sampleusbproject.worker.AppUpdateWorker
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,13 +16,15 @@ class AppUpdateScheduler @Inject constructor(
     private val workManager: WorkManager
 ) {
     fun scheduleUpdateCheck() {
+        Timber.d("Scheduling update check")
+        
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresCharging(true)
+            .setRequiresCharging(false)
             .build()
 
         val updateWorkRequest = PeriodicWorkRequestBuilder<AppUpdateWorker>(
-            6, TimeUnit.HOURS // Проверка каждые 6 часов
+            1, TimeUnit.MINUTES
         )
             .setConstraints(constraints)
             .build()
@@ -31,5 +34,7 @@ class AppUpdateScheduler @Inject constructor(
             ExistingPeriodicWorkPolicy.KEEP,
             updateWorkRequest
         )
+        
+        Timber.d("Update check scheduled every 6 hours")
     }
 }

@@ -49,7 +49,9 @@ class PostomatInfoMapper @Inject constructor(
         }
     }
 
-    suspend fun getCellNumberById(boardId: String, cellId: String): Int? {
+    suspend fun getCellNumberById(boardId: String, cellId: String): Pair<String,String>? {
         return postomatInfoDao.getCellNumber(boardId, cellId)
     }
+
+
 }

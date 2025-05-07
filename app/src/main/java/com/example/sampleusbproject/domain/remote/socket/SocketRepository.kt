@@ -28,4 +28,7 @@ interface SocketRepository {
     fun off(event: String)
     fun once(event: String, listener: (Any) -> Unit)
     fun emit(event: String, data: Any? = null)
+
+    //room
+    fun getPostamatsLocal(id: String) : Flow<List<PostomatInfo>>
 }

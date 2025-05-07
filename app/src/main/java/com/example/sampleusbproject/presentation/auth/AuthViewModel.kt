@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation
+package com.example.sampleusbproject.presentation.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

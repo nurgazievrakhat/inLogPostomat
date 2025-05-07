@@ -5,13 +5,17 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.example.sampleusbproject.BuildConfig.URL_BASE
+import com.example.sampleusbproject.admin.KioskManager
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.data.local.AppDatabase
 import com.example.sampleusbproject.data.local.dao.PostomatInfoDao
 import com.example.sampleusbproject.data.remote.BaseService
+import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
 import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
+import com.example.sampleusbproject.lockBoards.LockBoardFactory
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
+import com.example.sampleusbproject.utils.AppUpdateChecker
 import com.example.sampleusbproject.utils.CommonPrefs
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -87,6 +91,22 @@ class AppModule {
         database: AppDatabase
     ) = database.postomatInfoDao()
 
+    @Provides
+    @Singleton
+    fun provideAppUpdateChecker() : AppUpdateChecker{
+        return AppUpdateChecker()
+    }
+
+    @Provides
+    @Singleton
+    fun provideKioskManager(@ApplicationContext context: Context) : KioskManager{
+        return KioskManager(context)
+    }
+    @Provides
+    @Singleton
+    fun provideBoard(@ApplicationContext context: Context) : LockerBoardInterface {
+        return LockBoardFactory.createBoard(context, LockBoardFactory.BOARD_TYPE_NEW)
+    }
     private fun createRetrofitClient(
         baseUrl: String,
         okHttpClient: OkHttpClient

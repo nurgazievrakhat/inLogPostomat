@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation
+package com.example.sampleusbproject.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,6 @@ import com.example.sampleusbproject.domain.remote.socket.model.CellData
 import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

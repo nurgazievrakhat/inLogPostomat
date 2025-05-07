@@ -1,26 +1,30 @@
-package com.example.sampleusbproject.presentation
+package com.example.sampleusbproject.presentation.numberPad
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.sampleusbproject.R
 import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.databinding.FragmentEnterNumberBinding
 import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.lockBoards.LockBoardFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class EnterNumberFragment : Fragment() {
 
-    private lateinit var lockedBoard: LockerBoardInterface
+    @Inject
+    lateinit var lockedBoard: LockerBoardInterface
     private var _binding: FragmentEnterNumberBinding? = null
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Main + job)
@@ -41,7 +45,6 @@ class EnterNumberFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lockedBoard =  LockBoardFactory.createBoard(requireContext(), LockBoardFactory.BOARD_TYPE_NEW)
         setupListeners()
     }
 
@@ -117,9 +120,13 @@ class EnterNumberFragment : Fragment() {
                 }
             }
         }
-        binding.buttonBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.buttonScan.setOnClickListener {
+            findNavController().navigate(R.id.qrFragment)
+        }
+
         lifecycleScope.launch {
             lockedBoard.getEventLiveData().observe(viewLifecycleOwner) { event ->
                 when (event) {

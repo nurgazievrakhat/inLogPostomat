@@ -17,9 +17,9 @@ android {
     }
     defaultConfig {
         applicationId = "com.example.sampleusbproject"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
-        versionCode = 2
+        versionCode = 3
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -63,6 +63,8 @@ implementation(libs.firebase.config)
     implementation(libs.firebase.storage)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.firebase.crashlytics)
+    implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.hilt.work)
     //    implementation(files("/Users/rahatnurgaziev/AndroidStudioProjects/sampleUSBproject/app/libs/serialport_x_V1.01.05_20241022.aar"))
 //    implementation(files("/Users/rahatnurgaziev/AndroidStudioProjects/sampleUSBproject/app/libs/serialport_x_V1.01.01_20230524.aar"))
     testImplementation(libs.junit)
@@ -92,6 +94,7 @@ implementation(libs.firebase.config)
     }
     kapt(libs.room.compiler)
     kapt(libs.hilt.compiler)
+    kapt(libs.androidx.hilt.compiler)
 }
 kapt {
     correctErrorTypes = true

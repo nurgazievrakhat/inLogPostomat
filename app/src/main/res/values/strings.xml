@@ -12,4 +12,8 @@
     <string name="take">Забрать</string>
     <string name="left_aux_button_desc">x</string>
     <string name="right_aux_button_desc">r</string>
+    <string name="device_admin_description">
+    Разрешите приложению управлять настройками безопасности устройства,
+    чтобы отключить кнопки навигации и заблокировать планшет в киоск-режиме.
+</string>
 </resources>

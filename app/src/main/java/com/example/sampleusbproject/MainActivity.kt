@@ -1,11 +1,16 @@
 package com.example.sampleusbproject
 
+import android.app.AlertDialog
 import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.example.sampleusbproject.admin.KioskManager
 import com.example.sampleusbproject.data.remote.socket.SocketStatus
 import com.example.sampleusbproject.databinding.ActivityMainBinding
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
@@ -31,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     @Inject
+    lateinit var kioskManager: KioskManager
+
+    @Inject
     lateinit var commonPrefs: CommonPrefs
 
     @Inject
@@ -40,6 +49,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val controller = window.insetsController
+            controller?.hide(WindowInsets.Type.systemBars())
+            controller?.systemBarsBehavior =
+                WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        } else {
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        }
+
+        // Держим экран всегда включенным
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -47,12 +72,47 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         screensaverManager = ScreensaverManager(this)
+
+        // Проверяем, является ли наше приложение Device Owner
+        if (kioskManager.isDeviceOwner()) {
+            // Включаем режим киоска
+            kioskManager.enableKioskMode()
+
+            // Запускаем режим блокировки задачи
+            kioskManager.startLockTask(this)
+
+            // Настраиваем автозапуск после перезагрузки
+            kioskManager.setAutoStartAfterReboot()
+        } else {
+            // Приложение не является Device Owner, показываем инструкции
+            showDeviceOwnerInstructions()
+        }
         setupNavigation()
         setupListeners()
         setupViews()
         connectSocket()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (kioskManager.isDeviceOwner() && kioskManager.isInLockTaskMode()) {
+            // Не делаем ничего, оставаем в приложении
+            return
+        }
+    }
+    private fun showDeviceOwnerInstructions() {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Требуется настройка Device Owner")
+            .setMessage("Чтобы использовать режим киоска, необходимо установить это приложение как Device Owner. Выполните следующие шаги:\n\n" +
+                    "1. Подключите устройство к компьютеру\n" +
+                    "2. Включите отладку по USB в настройках разработчика\n" +
+                    "3. Выполните команду:\n" +
+                    "adb shell dpm set-device-owner ${packageName}/.KioskDeviceAdminReceiver")
+            .setPositiveButton("OK", null)
+            .create()
+
+        dialog.show()
+    }
     private fun setupNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
@@ -96,9 +156,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         screensaverManager.start()
-        if (isScreenPinningAvailable(this)) {
-            startScreenPinning()
-        }
+
     }
 
     override fun onUserInteraction() {
@@ -112,37 +170,8 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-        stopScreenPinning()
-    }
-
-    private fun isScreenPinningAvailable(context: Context): Boolean {
-        val devicePolicyManager = this.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager?
-        return devicePolicyManager?.isLockTaskPermitted(context.packageName) ?: false
-    }
-
-    // Запуск режима закрепления
-    private fun startScreenPinning() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                // Программное закрепление экрана
-                startLockTask()
-                Toast.makeText(this, "Приложение закреплено", Toast.LENGTH_SHORT).show()
-            } catch (e: SecurityException) {
-                // Обработка случая, когда у приложения недостаточно прав
-                Toast.makeText(this, "Ошибка закрепления экрана", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    // Выход из режима закрепления
-    private fun stopScreenPinning() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                stopLockTask()
-                Toast.makeText(this, "Приложение откреплено", Toast.LENGTH_SHORT).show()
-            } catch (e: SecurityException) {
-                Toast.makeText(this, "Ошибка открепления экрана", Toast.LENGTH_SHORT).show()
-            }
+        if (kioskManager.isDeviceOwner() && kioskManager.isInLockTaskMode()) {
+            kioskManager.stopLockTask(this)
         }
     }
 }

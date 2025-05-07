@@ -21,9 +21,11 @@ interface PostomatInfoDao {
     @Query("SELECT cells FROM postomat_info")
     suspend fun getCellsByBoardId(): String?
 
-    suspend fun getCellNumber(boardId: String, cellId: String): Int? {
+    suspend fun getCellNumber(boardId: String, cellId: String): Pair<String,String>? {
         val cellsJson = getCellsByBoardId() ?: return null
         val cells = CellListConverter().fromString(cellsJson)
-        return cells.find { it.id == cellId && it.boardId == boardId }?.number
+        val cell = cells.find { it.id == cellId && it.boardId == boardId }
+        return Pair(cell?.number.toString(),cell?.board?.number.toString())
     }
+
 } 
