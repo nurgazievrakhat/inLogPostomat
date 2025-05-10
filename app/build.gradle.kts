@@ -15,11 +15,12 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
     defaultConfig {
         applicationId = "com.example.sampleusbproject"
         minSdk = 23
         targetSdk = 35
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -29,10 +30,12 @@ android {
         debug {
             isDebuggable = true
             buildConfigField ("String", "URL_BASE",  "\"https://postomat-3.ooba.kg\"")
+            signingConfig = signingConfigs.getByName("debug")
         }
         release {
             isDebuggable = false
             isMinifyEnabled = false
+            buildConfigField ("String", "URL_BASE",  "\"https://postomat-3.ooba.kg\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -55,6 +58,7 @@ android {
     hilt {
         enableAggregatingTask = false
     }
+
 }
 
 dependencies {

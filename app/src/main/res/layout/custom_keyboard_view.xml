@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyboard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="10"
+    android:padding="8dp">
+
+    <!-- Верхний ряд -->
+    <Button android:text="Q" style="@style/KeyboardKey" />
+    <Button android:text="W" style="@style/KeyboardKey" />
+    <Button android:text="E" style="@style/KeyboardKey" />
+    <Button android:text="R" style="@style/KeyboardKey" />
+    <Button android:text="T" style="@style/KeyboardKey" />
+    <Button android:text="Y" style="@style/KeyboardKey" />
+    <Button android:text="U" style="@style/KeyboardKey" />
+    <Button android:text="I" style="@style/KeyboardKey" />
+    <Button android:text="O" style="@style/KeyboardKey" />
+    <Button android:text="P" style="@style/KeyboardKey" />
+
+    <!-- Средний ряд -->
+    <Button android:text="A" style="@style/KeyboardKey" />
+    <Button android:text="S" style="@style/KeyboardKey" />
+    <Button android:text="D" style="@style/KeyboardKey" />
+    <Button android:text="F" style="@style/KeyboardKey" />
+    <Button android:text="G" style="@style/KeyboardKey" />
+    <Button android:text="H" style="@style/KeyboardKey" />
+    <Button android:text="J" style="@style/KeyboardKey" />
+    <Button android:text="K" style="@style/KeyboardKey" />
+    <Button android:text="L" style="@style/KeyboardKey" />
+    <Button android:text="\@" style="@style/KeyboardKey" />
+
+    <!-- Нижний ряд -->
+    <Button android:text="Z" style="@style/KeyboardKey" />
+    <Button android:text="X" style="@style/KeyboardKey" />
+    <Button android:text="C" style="@style/KeyboardKey" />
+    <Button android:text="V" style="@style/KeyboardKey" />
+    <Button android:text="B" style="@style/KeyboardKey" />
+    <Button android:text="N" style="@style/KeyboardKey" />
+    <Button android:text="M" style="@style/KeyboardKey" />
+    <Button android:text="." style="@style/KeyboardKey" />
+    <Button android:id="@+id/deleteButton" android:text="⌫" style="@style/KeyboardKey" />
+    <Button android:text="123" style="@style/KeyboardKey" />
+</GridLayout> 

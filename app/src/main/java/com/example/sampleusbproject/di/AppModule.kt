@@ -3,21 +3,16 @@ package com.example.sampleusbproject.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
-import androidx.work.WorkManager
 import com.example.sampleusbproject.BuildConfig.URL_BASE
-import com.example.sampleusbproject.admin.KioskManager
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.data.local.AppDatabase
 import com.example.sampleusbproject.data.local.dao.PostomatInfoDao
 import com.example.sampleusbproject.data.remote.BaseService
 import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
-import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
 import com.example.sampleusbproject.lockBoards.LockBoardFactory
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
-import com.example.sampleusbproject.utils.AppUpdateChecker
 import com.example.sampleusbproject.utils.CommonPrefs
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +23,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -91,17 +85,6 @@ class AppModule {
         database: AppDatabase
     ) = database.postomatInfoDao()
 
-    @Provides
-    @Singleton
-    fun provideAppUpdateChecker() : AppUpdateChecker{
-        return AppUpdateChecker()
-    }
-
-    @Provides
-    @Singleton
-    fun provideKioskManager(@ApplicationContext context: Context) : KioskManager{
-        return KioskManager(context)
-    }
     @Provides
     @Singleton
     fun provideBoard(@ApplicationContext context: Context) : LockerBoardInterface {

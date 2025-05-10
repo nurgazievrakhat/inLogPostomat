@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.sampleusbproject.BuildConfig
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.databinding.FragmentMainBinding
@@ -69,6 +70,8 @@ class MainFragment : Fragment() {
                 if (isConnected) "Соединение установлено" else "Соединение разорвано"
             )
         }
+        binding.tvVersion.text = BuildConfig.VERSION_CODE.toString()
+
     }
 
     private fun setupListeners() {

@@ -2,9 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white60">#99FFFFFF</color>
     <color name="gray">#888888</color>
     <color name="transparent">#00000000</color>
     <color name="dark_question_bg">#3A3D4A</color>
     <color name="red">#ED1111</color>
 
+    <color name="colorPrimary">#FFFFFFFF</color>
+    <color name="colorPrimaryDark">#2566B8</color>
+    <color name="colorAccent">#3386E6</color>
+
+    <!-- Тёмно-синий для заголовков и иконок -->
+    <color name="textDarkBlue">#222B45</color>
+    <!-- Можно использовать и #181C4A, если нужен чуть темнее -->
+
+    <!-- Светло-серый для обводки и фона -->
+    <color name="lightGray">#E0E0E0</color>
+    <color name="extraLightGray">#F5F6FA</color>
+
+    <!-- Серый для второстепенного текста -->
+    <color name="secondaryText">#8F9BB3</color>
 </resources>

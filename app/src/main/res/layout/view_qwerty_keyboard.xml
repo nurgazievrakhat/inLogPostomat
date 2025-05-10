@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <!-- Первая строка -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button android:id="@+id/btnQ" style="@style/KeyboardButton" android:text="Q" />
+        <Button android:id="@+id/btnW" style="@style/KeyboardButton" android:text="W" />
+        <Button android:id="@+id/btnE" style="@style/KeyboardButton" android:text="E" />
+        <Button android:id="@+id/btnR" style="@style/KeyboardButton" android:text="R" />
+        <Button android:id="@+id/btnT" style="@style/KeyboardButton" android:text="T" />
+        <Button android:id="@+id/btnY" style="@style/KeyboardButton" android:text="Y" />
+        <Button android:id="@+id/btnU" style="@style/KeyboardButton" android:text="U" />
+        <Button android:id="@+id/btnI" style="@style/KeyboardButton" android:text="I" />
+        <Button android:id="@+id/btnO" style="@style/KeyboardButton" android:text="O" />
+        <Button android:id="@+id/btnP" style="@style/KeyboardButton" android:text="P" />
+    </LinearLayout>
+
+    <!-- Вторая строка -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Space android:layout_width="24dp" android:layout_height="wrap_content" />
+        <Button android:id="@+id/btnA" style="@style/KeyboardButton" android:text="A" />
+        <Button android:id="@+id/btnS" style="@style/KeyboardButton" android:text="S" />
+        <Button android:id="@+id/btnD" style="@style/KeyboardButton" android:text="D" />
+        <Button android:id="@+id/btnF" style="@style/KeyboardButton" android:text="F" />
+        <Button android:id="@+id/btnG" style="@style/KeyboardButton" android:text="G" />
+        <Button android:id="@+id/btnH" style="@style/KeyboardButton" android:text="H" />
+        <Button android:id="@+id/btnJ" style="@style/KeyboardButton" android:text="J" />
+        <Button android:id="@+id/btnK" style="@style/KeyboardButton" android:text="K" />
+        <Button android:id="@+id/btnL" style="@style/KeyboardButton" android:text="L" />
+        <Space android:layout_width="24dp" android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Третья строка -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button android:id="@+id/btnShift" style="@style/KeyboardButton" android:text="↑" />
+        <Button android:id="@+id/btnZ" style="@style/KeyboardButton" android:text="Z" />
+        <Button android:id="@+id/btnX" style="@style/KeyboardButton" android:text="X" />
+        <Button android:id="@+id/btnC" style="@style/KeyboardButton" android:text="C" />
+        <Button android:id="@+id/btnV" style="@style/KeyboardButton" android:text="V" />
+        <Button android:id="@+id/btnB" style="@style/KeyboardButton" android:text="B" />
+        <Button android:id="@+id/btnN" style="@style/KeyboardButton" android:text="N" />
+        <Button android:id="@+id/btnM" style="@style/KeyboardButton" android:text="M" />
+        <Button android:id="@+id/btnDelete" style="@style/KeyboardButton" android:text="⌫" />
+    </LinearLayout>
+
+    <!-- Четвертая строка -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button android:id="@+id/btn123" style="@style/KeyboardButton" android:text="123" />
+        <Button android:id="@+id/btnAt" style="@style/KeyboardButton" android:text="\@\" />
+        <Button android:id="@+id/btnDot" style="@style/KeyboardButton" android:text="." />
+        <Button android:id="@+id/btnSpace" style="@style/KeyboardButton" android:text=" " android:layout_width="96dp" />
+    </LinearLayout>
+
+</LinearLayout> 

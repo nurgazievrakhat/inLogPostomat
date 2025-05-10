@@ -13,14 +13,12 @@ class BootReceiver : BroadcastReceiver() {
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_REBOOT,
             "android.intent.action.QUICKBOOT_POWERON" -> {
-                // Запуск через WorkManager для надежности
                 scheduleAppLaunch(context)
             }
         }
     }
 
     private fun scheduleAppLaunch(context: Context) {
-        // Запуск приложения с минимальной задержкой для стабильности
         val launchIntent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }

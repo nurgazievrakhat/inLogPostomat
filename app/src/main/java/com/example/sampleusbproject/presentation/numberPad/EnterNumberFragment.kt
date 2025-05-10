@@ -79,17 +79,17 @@ class EnterNumberFragment : Fragment() {
         binding.btn9.setOnClickListener {
             binding.etCodeInput.text.append("9")
         }
-        binding.btnX.setOnClickListener {
-            binding.etCodeInput.text.clear()
-        }
-        binding.btnDelete.setOnClickListener {
+//        binding.btnClear.setOnClickListener {
+//            binding.etCodeInput.text.clear()
+//        }
+        binding.btnClear.setOnClickListener {
             if (binding.etCodeInput.text.isNotEmpty())
                 binding.etCodeInput.text.delete(
                     binding.etCodeInput.text.length - 1,
                     binding.etCodeInput.text.length
                 )
         }
-        binding.buttonEnter.setOnClickListener {
+        binding.btnContinue.setOnClickListener {
             val code = binding.etCodeInput.text.toString()
             when (code) {
                 "1" -> {
@@ -121,12 +121,15 @@ class EnterNumberFragment : Fragment() {
             }
         }
         binding.btnBack.setOnClickListener {
+            Timber.e("btnBack")
             findNavController().popBackStack()
         }
-        binding.buttonScan.setOnClickListener {
-            findNavController().navigate(R.id.qrFragment)
-        }
-
+//        binding.buttonScan.setOnClickListener {
+//            findNavController().navigate(R.id.qrFragment)
+//        }
+//        binding.buttonInfo.setOnClickListener {
+//            findNavController().navigate(R.id.emailReceiptFragment)
+//        }
         lifecycleScope.launch {
             lockedBoard.getEventLiveData().observe(viewLifecycleOwner) { event ->
                 when (event) {

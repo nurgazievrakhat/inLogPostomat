@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp">
@@ -11,65 +11,52 @@
         android:id="@+id/buttonBack"
         android:layout_width="100dp"
         android:layout_height="48dp"
-        android:text="Назад"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_button_outline"
+        android:text="Назад"
         android:textColor="#000"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Логотип -->
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:src="@drawable/icon"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Контакт-центр -->
     <LinearLayout
-        android:id="@+id/contactLayout"
+        android:id="@+id/contactBlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Круглосуточная поддержка"
+            android:textColor="#222B45"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/contactLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Контакт-центр"
-                android:textColor="#BDBDBD"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/contactPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+995 550 500 500"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonInfo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="i"
-            android:background="@drawable/bg_button_outline"
-            android:textColor="#000"
-            android:layout_marginStart="8dp"/>
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+995 550 500 500"
+            android:textColor="#3386E6"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Заголовок -->
@@ -77,36 +64,106 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Оплата через QR"
+        android:layout_marginTop="32dp"
+        android:text="Отсканируйте QR-код, чтобы \n оплатить заказ"
+        android:textAlignment="center"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/logoImage"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
     <!-- Подзаголовок -->
     <TextView
         android:id="@+id/textSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Наведите камеру, чтобы оплатить посылку"
+        android:layout_marginTop="8dp"
+        android:text="Пожалуйста, оплатите заказ для открытия ячейки"
         android:textColor="#BDBDBD"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/textTitle"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitle" />
 
     <!-- QR-код -->
     <ImageView
         android:id="@+id/qrImage"
         android:layout_width="220dp"
         android:layout_height="220dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/qr_placeholder"
-        app:layout_constraintTop_toBottomOf="@id/textSubtitle"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textSubtitle" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white60"
+        app:layout_constraintBottom_toBottomOf="@id/qrImage"
+        app:layout_constraintEnd_toEndOf="@id/qrImage"
+        app:layout_constraintStart_toStartOf="@id/qrImage"
+        app:layout_constraintTop_toTopOf="@id/qrImage" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/qrImage"
+        app:layout_constraintEnd_toEndOf="@id/qrImage"
+        app:layout_constraintStart_toStartOf="@id/qrImage"
+        app:layout_constraintTop_toTopOf="@id/qrImage">
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/blue" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_circular"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Загрузка..."
+            android:textColor="@color/blue"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <!-- Заголовок суммы -->
+    <TextView
+        android:id="@+id/sumTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Сумма к оплате:"
+        android:textColor="#BDBDBD"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/qrImage" />
+    <!-- Сумма -->
+    <TextView
+        android:id="@+id/sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sumTitle"
+        tools:text="1200 сом" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout> 

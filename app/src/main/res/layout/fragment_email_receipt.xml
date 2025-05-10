@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Круглосуточная поддержка\n+995 550 500 500"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Оплата получена"
+        android:textColor="#18196A"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_support"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="48dp"/>
+
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:hint="Эл.почта для получения чека"
+        android:background="@drawable/bg_email_input"
+        android:paddingHorizontal="24dp"
+        android:textSize="20sp"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginEnd="120dp"/>
+    <com.example.sampleusbproject.utils.customview.CustomKeyboardView
+        android:id="@+id/customKeyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/emailInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:text="Отправить"
+        android:textSize="20sp"
+        android:backgroundTint="#18196A"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/customKeyboard"
+        app:layout_constraintStart_toStartOf="@id/emailInput"
+        app:layout_constraintEnd_toStartOf="@id/btn_no_receipt"
+        android:layout_marginTop="24dp"/>
+
+    <Button
+        android:id="@+id/btn_no_receipt"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:text="Чек не нужен"
+        android:textSize="20sp"
+        android:backgroundTint="#F5F6FA"
+        android:textColor="#18196A"
+        app:layout_constraintTop_toTopOf="@id/btn_send"
+        app:layout_constraintStart_toEndOf="@id/btn_send"
+        app:layout_constraintEnd_toEndOf="@id/emailInput" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

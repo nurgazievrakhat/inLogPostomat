@@ -46,4 +46,8 @@
         android:id="@+id/lockerBoardMapFragment"
         android:name="com.example.sampleusbproject.presentation.lockerMap.LockerBoardMapFragment"
         android:label="LockerBoardMapFragment" />
+    <fragment
+        android:id="@+id/emailReceiptFragment"
+        android:name="com.example.sampleusbproject.presentation.emailReceipt.EmailReceiptFragment"
+        android:label="EmailReceiptFragment" />
 </navigation>
