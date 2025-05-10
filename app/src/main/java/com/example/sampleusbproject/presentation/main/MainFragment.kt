@@ -70,7 +70,7 @@ class MainFragment : Fragment() {
                 if (isConnected) "Соединение установлено" else "Соединение разорвано"
             )
         }
-        binding.tvVersion.text = BuildConfig.VERSION_CODE.toString()
+        binding.tvVersion.text = BuildConfig.VERSION_NAME
 
     }
 

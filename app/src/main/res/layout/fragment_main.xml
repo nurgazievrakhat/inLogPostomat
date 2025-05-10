@@ -23,7 +23,6 @@
         android:id="@+id/ivPostomat"
         android:layout_width="345dp"
         android:layout_height="517dp"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/leftPanel"
         app:layout_constraintStart_toStartOf="@id/leftPanel"
         app:layout_constraintEnd_toEndOf="@id/leftPanel"

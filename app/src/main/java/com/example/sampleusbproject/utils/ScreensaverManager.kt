@@ -12,7 +12,7 @@ import com.example.sampleusbproject.R
 
 class ScreensaverManager(
     private val activity: AppCompatActivity,
-    private val idleTimeMillis: Long = 300000
+    private val idleTimeMillis: Long = 540000 //9 мин
 ) {
     private var userActivityHandler = Handler(Looper.getMainLooper())
     private var isScreensaverShown = false
@@ -20,7 +20,9 @@ class ScreensaverManager(
 
     private val showScreensaverRunnable = Runnable {
         if (!isScreensaverShown) {
-            navController.navigate(R.id.action_to_screensaver)
+            if (navController.currentDestination?.id != R.id.mainFragment) {
+                navController.navigate(R.id.mainFragment)
+            }
             isScreensaverShown = true
         }
     }
