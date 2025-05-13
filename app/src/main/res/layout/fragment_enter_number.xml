@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+995 550 500 500"
+            android:layout_gravity="end"
             android:textColor="#3386E6"
             android:textSize="18sp"
             android:textStyle="bold" />

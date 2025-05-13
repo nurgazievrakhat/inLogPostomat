@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.sampleusbproject.R
+import com.example.sampleusbproject.databinding.FragmentQrCodeBinding
 import com.example.sampleusbproject.databinding.QrFragmentBinding
 
 class QrFragment : Fragment(R.layout.qr_fragment) {
-    private var _binding: QrFragmentBinding? = null
+    private var _binding: FragmentQrCodeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,7 +19,7 @@ class QrFragment : Fragment(R.layout.qr_fragment) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = QrFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentQrCodeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
