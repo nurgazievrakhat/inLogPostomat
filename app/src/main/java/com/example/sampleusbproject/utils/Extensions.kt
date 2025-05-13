@@ -1,10 +1,13 @@
 package com.example.sampleusbproject.utils
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorRes
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 
 fun View.invisible() {
     this.visibility = View.INVISIBLE
@@ -34,3 +37,6 @@ fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
     dp.toFloat(),
     resources.displayMetrics
 )
+
+fun Fragment.getColorStateList(@ColorRes color: Int) =
+    ColorStateList.valueOf(requireContext().getColor(color))

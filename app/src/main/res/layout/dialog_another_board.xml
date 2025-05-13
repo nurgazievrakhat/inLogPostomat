@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/btn_change"
-            style="@style/BlueRoundedBtnWithoutInsets"
+            style="@style/BlueRoundedBtn"
             android:layout_width="0dp"
             android:layout_height="54dp"
             android:layout_marginStart="16dp"

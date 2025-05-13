@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentQrCodeBinding
-import com.example.sampleusbproject.databinding.QrFragmentBinding
 
 class QrFragment : Fragment(R.layout.qr_fragment) {
     private var _binding: FragmentQrCodeBinding? = null

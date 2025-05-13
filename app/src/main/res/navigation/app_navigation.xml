@@ -58,4 +58,8 @@
         android:id="@+id/anotherBoardDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
         android:label="AnotherBoardDialogFragment" />
+    <fragment
+        android:id="@+id/receiverFragment"
+        android:name="com.example.sampleusbproject.presentation.receiver.ReceiverFragment"
+        android:label="ReceiverFragment" />
 </navigation>
