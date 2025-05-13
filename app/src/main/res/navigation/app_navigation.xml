@@ -50,4 +50,8 @@
         android:id="@+id/emailReceiptFragment"
         android:name="com.example.sampleusbproject.presentation.emailReceipt.EmailReceiptFragment"
         android:label="EmailReceiptFragment" />
+    <fragment
+        android:id="@+id/successFragment"
+        android:name="com.example.sampleusbproject.presentation.success.SuccessFragment"
+        android:label="SuccessFragment" />
 </navigation>
