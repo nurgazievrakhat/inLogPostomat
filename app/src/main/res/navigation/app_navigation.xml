@@ -54,4 +54,8 @@
         android:id="@+id/successFragment"
         android:name="com.example.sampleusbproject.presentation.success.SuccessFragment"
         android:label="SuccessFragment" />
+    <dialog
+        android:id="@+id/anotherBoardDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
+        android:label="AnotherBoardDialogFragment" />
 </navigation>

@@ -22,4 +22,6 @@
 
     <!-- Серый для второстепенного текста -->
     <color name="secondaryText">#8F9BB3</color>
+    <color name="dark_blue">#121061</color>
+    <color name="shadow_black">#0F0F0F</color>
 </resources>
