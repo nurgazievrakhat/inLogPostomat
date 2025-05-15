@@ -1,6 +1,5 @@
 package com.example.sampleusbproject.presentation.receiver
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +44,7 @@ class ReceiverFragment : Fragment(R.layout.fragment_receiver) {
 
     fun deselect(btn: MaterialButton) {
         btn.strokeColor = getColorStateList(R.color.black_10)
-        btn.backgroundTintList = getColorStateList(R.color.white_light)
+        btn.backgroundTintList = getColorStateList(R.color.blue_light)
         btn.setTextColor(getColorStateList(R.color.shadow_black))
     }
 
