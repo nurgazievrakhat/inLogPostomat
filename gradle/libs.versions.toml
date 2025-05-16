@@ -26,6 +26,8 @@ googleFirebaseCrashlytics = "3.0.3"
 hiltCommon = "1.2.0"
 hiltWork = "1.2.0"
 hiltCompiler = "1.1.0"
+flexBox = "3.0.0"
+uiUnitAndroid = "1.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +61,7 @@ firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashly
 androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCommon" }
 androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
+flex = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexBox" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

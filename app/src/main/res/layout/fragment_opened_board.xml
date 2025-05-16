@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Контакт справа вверху -->
+    <LinearLayout
+        android:id="@+id/contactBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="60dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvSupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="Круглосуточная поддержка"
+            android:textColor="#222B45"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:includeFontPadding="false"
+            android:text="+995 550 500 500"
+            android:textColor="#3386E6"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="426dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/text_opened_board"
+        android:textColor="@color/dark_blue"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoImage" />
+
+    <TextView
+        android:id="@+id/tv_description1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Заберите посылку и закройте ячейку вручную."
+        android:textColor="@color/shadow_black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_description2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Если возникла проблема — свяжитесь с нашей поддержкой."
+        android:textColor="@color/shadow_black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_description1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_boards"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="16dp"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="7dp"
+        android:background="@drawable/boards_bg"
+        tools:listitem="@layout/item_boards"
+        tools:itemCount="3"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/bg_boards"
+        app:layout_constraintEnd_toEndOf="@id/bg_boards"
+        app:layout_constraintStart_toStartOf="@id/bg_boards"
+        app:layout_constraintTop_toTopOf="@id/bg_boards" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bg_boards"
+        android:layout_width="660dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@color/blue_light"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btnContinue"
+        app:layout_constraintStart_toEndOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:strokeWidth="0dp" />
+
+    <!-- Кнопки внизу -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        style="@style/BlueStrokedBtn"
+        android:layout_width="459dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="34dp"
+        android:text="Открыть ячейку еще раз"
+        android:textColor="@color/blue_baby"
+        android:textSize="24sp"
+        app:icon="@drawable/icon_repeat"
+        app:iconGravity="textEnd"
+        app:iconPadding="18dp"
+        app:iconSize="28dp"
+        app:iconTint="@color/blue_baby"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinue"
+        style="@style/BlueRoundedBtn"
+        android:layout_width="380dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="34dp"
+        android:text="Я забра(-а) посылку"
+        android:textSize="24sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeColor="#000000" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

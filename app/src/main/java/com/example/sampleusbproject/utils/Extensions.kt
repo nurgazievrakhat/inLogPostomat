@@ -40,3 +40,11 @@ fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(
 
 fun Fragment.getColorStateList(@ColorRes color: Int) =
     ColorStateList.valueOf(requireContext().getColor(color))
+
+fun Int.dpToPx(context: Context): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(),
+        context.resources.displayMetrics
+    ).toInt()
+}

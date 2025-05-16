@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             navHostFragment.navController.navInflater.inflate(R.navigation.app_navigation)
         
         navGraph.setStartDestination(
-            if (commonPrefs.isAuthorized()) R.id.mainFragment else R.id.authFragment
+            if (commonPrefs.isAuthorized()) R.id.mainFragment else R.id.openedBoardFragment
         )
         
         navHostFragment.navController.graph = navGraph

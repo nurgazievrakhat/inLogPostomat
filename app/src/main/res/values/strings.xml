@@ -14,6 +14,7 @@
     <string name="right_aux_button_desc">r</string>
     <string name="text_day_count">Количество дней*</string>
     <string name="text_max_days">*макс. %1$s %2$s</string>
+    <string name="text_opened_board">Открыта ячейка <font color="#0076D8">%1$s</font></string>
     <string name="device_admin_description">
     Разрешите приложению управлять настройками безопасности устройства,
     чтобы отключить кнопки навигации и заблокировать планшет в киоск-режиме.

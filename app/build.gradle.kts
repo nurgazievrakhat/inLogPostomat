@@ -92,6 +92,7 @@ implementation(libs.firebase.config)
     implementation(libs.decoro)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    implementation(libs.flex)
 
     implementation(libs.socket.io.client) {
         exclude(group = "org.json", module = "json")

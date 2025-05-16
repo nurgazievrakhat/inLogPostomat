@@ -62,4 +62,8 @@
         android:id="@+id/receiverFragment"
         android:name="com.example.sampleusbproject.presentation.receiver.ReceiverFragment"
         android:label="ReceiverFragment" />
+    <fragment
+        android:id="@+id/openedBoardFragment"
+        android:name="com.example.sampleusbproject.presentation.boards.OpenedBoardFragment"
+        android:label="OpenedBoardFragment" />
 </navigation>
