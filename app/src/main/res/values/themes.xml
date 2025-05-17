@@ -20,6 +20,13 @@
         <item name="cornerRadius">12dp</item>
     </style>
 
+    <style name="NoInsets" parent="Widget.Material3.Button">
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+    </style>
+
     <style name="BlueStrokedBtn" parent="Widget.Material3.Button">
         <item name="strokeColor">@color/blue</item>
         <item name="strokeWidth">1dp</item>

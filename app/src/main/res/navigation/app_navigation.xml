@@ -9,12 +9,35 @@
         android:id="@+id/enterNumberFragment"
         android:name="com.example.sampleusbproject.presentation.numberPad.EnterNumberFragment"
         android:label="fragment_enter_number"
-        tools:layout="@layout/fragment_enter_number" />
+        tools:layout="@layout/fragment_enter_number">
+
+<!--        <argument-->
+<!--            android:name="type"-->
+<!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_enterNumberFragment_to_openedCourierBoardFragment"-->
+<!--            app:destination="@id/openedCourierBoardFragment" >-->
+
+<!--            <argument-->
+<!--                android:name="type"-->
+<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+<!--        </action>-->
+
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.sampleusbproject.presentation.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+<!--        <action-->
+<!--            android:id="@+id/action_mainFragment_to_enterNumberFragment"-->
+<!--            app:destination="@id/enterNumberFragment">-->
+
+<!--            <argument-->
+<!--                android:name="type"-->
+<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+<!--        </action>-->
+    </fragment>
     <fragment
         android:id="@+id/screensaverFragment"
         android:name="com.example.sampleusbproject.presentation.sceersaver.ScreensaverFragment"
@@ -31,7 +54,7 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.sampleusbproject.presentation.auth.AuthFragment"
-        android:label="AuthFragment" >
+        android:label="AuthFragment">
         <action
             android:id="@+id/action_authFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -53,7 +76,13 @@
     <fragment
         android:id="@+id/successFragment"
         android:name="com.example.sampleusbproject.presentation.success.SuccessFragment"
-        android:label="SuccessFragment" />
+        android:label="SuccessFragment" >
+
+<!--        <argument-->
+<!--            android:name="type"-->
+<!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+
+    </fragment>
     <dialog
         android:id="@+id/anotherBoardDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
@@ -65,5 +94,32 @@
     <fragment
         android:id="@+id/openedBoardFragment"
         android:name="com.example.sampleusbproject.presentation.boards.OpenedBoardFragment"
-        android:label="OpenedBoardFragment" />
+        android:label="OpenedBoardFragment" >
+<!--        <action-->
+<!--            android:id="@+id/action_openedBoardFragment_to_successFragment"-->
+<!--            app:destination="@id/successFragment" >-->
+
+<!--            <argument-->
+<!--                android:name="type"-->
+<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+<!--        </action>-->
+    </fragment>
+    <fragment
+        android:id="@+id/openedCourierBoardFragment"
+        android:name="com.example.sampleusbproject.presentation.boards.courier.OpenedCourierBoardFragment"
+        android:label="OpenedCourierBoardFragment" >
+
+<!--        <argument-->
+<!--            android:name="type"-->
+<!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+
+<!--        <action-->
+<!--            android:id="@+id/action_openedCourierBoardFragment_to_successFragment"-->
+<!--            app:destination="@id/successFragment" >-->
+
+<!--            <argument-->
+<!--                android:name="type"-->
+<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+<!--        </action>-->
+    </fragment>
 </navigation>

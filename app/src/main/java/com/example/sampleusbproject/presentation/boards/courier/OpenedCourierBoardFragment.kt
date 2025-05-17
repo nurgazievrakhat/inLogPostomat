@@ -1,5 +1,6 @@
-package com.example.sampleusbproject.presentation.boards
+package com.example.sampleusbproject.presentation.boards.courier
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,18 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentOpenedBoardBinding
+import com.example.sampleusbproject.presentation.boards.Board
+import com.example.sampleusbproject.presentation.boards.BoardSize
+import com.example.sampleusbproject.presentation.boards.BoardsAdapter
+import com.example.sampleusbproject.presentation.boards.BoardsDividerItemDecoration
+import com.example.sampleusbproject.presentation.boards.BoardsModel
 import com.example.sampleusbproject.presentation.numberPad.PackageType
 
-class OpenedBoardFragment : Fragment(R.layout.fragment_opened_board) {
+class OpenedCourierBoardFragment: Fragment(R.layout.fragment_opened_board) {
 
     private var _binding: FragmentOpenedBoardBinding? = null
     private val binding get() = _binding!!
@@ -20,6 +27,8 @@ class OpenedBoardFragment : Fragment(R.layout.fragment_opened_board) {
     private val adapter: BoardsAdapter by lazy {
         BoardsAdapter()
     }
+
+//    private val args: OpenedCourierBoardFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +40,15 @@ class OpenedBoardFragment : Fragment(R.layout.fragment_opened_board) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnBack.text = "Выбрать другую ячейку"
+        val args = arguments?.getInt("type")
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.anotherBoardDialogFragment)
+        }
         binding.rvBoards.adapter = adapter
         binding.rvBoards.isNestedScrollingEnabled = false
         binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.successFragment, bundleOf("type" to PackageType.getInt(PackageType.TAKE)))
+            findNavController().navigate(R.id.successFragment, bundleOf("type" to args ))
         }
         val dividerItemDecoration =
             BoardsDividerItemDecoration(requireContext(), 5, 5, RecyclerView.HORIZONTAL, R.drawable.board_divider)

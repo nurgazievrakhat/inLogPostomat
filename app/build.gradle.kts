@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
+//    alias(libs.plugins.safe.args.kotlin)
 }
 
 android {
@@ -85,6 +86,7 @@ implementation(libs.firebase.config)
     implementation(libs.hilt.android)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+//    implementation(libs.navigation.safe.args.gradle.plugin)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)

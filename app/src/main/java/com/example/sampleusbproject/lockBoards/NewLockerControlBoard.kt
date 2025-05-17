@@ -1,10 +1,6 @@
 package com.example.sampleusbproject.lockBoards
 
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.hardware.usb.UsbManager
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -133,9 +129,28 @@ class NewLockerControlBoard(
         return _eventLiveData
     }
 
+    override fun changeLockTime(boardAddress: Int) {
+        try {
+            serialPortServer?.lockTypeUpload(boardAddress, "11")
+//            serialPortServer?.spsReadLockTime(48)
+        } catch (e: Exception) {
+            Timber.e("changeLockTime $boardAddress ")
+        }
+    }
+
+    override fun readLockTime(boardAddress: Int) {
+        try {
+            serialPortServer?.checkLockType(boardAddress)
+//            serialPortServer?.spsReadLockTime(48)
+        } catch (e: Exception) {
+            Timber.e("readLockTime $boardAddress ")
+        }
+    }
+
     override fun getLockerStatus(boardAddress: Int, lockerId: Int): LockStatus {
         try {
-            serialPortServer?.spsReadLockTime(48)
+            serialPortServer?.readLockType(boardAddress, lockerId)
+//            serialPortServer?.spsReadLockTime(48)
         } catch (e: Exception) {
             Timber.e("READ_LOCK_TYPE $boardAddress $lockerId")
         }

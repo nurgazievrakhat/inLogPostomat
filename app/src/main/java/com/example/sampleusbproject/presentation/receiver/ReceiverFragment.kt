@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentReceiverBinding
 import com.example.sampleusbproject.utils.getColorStateList
@@ -33,6 +34,9 @@ class ReceiverFragment : Fragment(R.layout.fragment_receiver) {
         binding.btnSelf.setOnClickListener {
             deselect(binding.btnAnother)
             selected(binding.btnSelf)
+        }
+        binding.btnContinue.setOnClickListener {
+            findNavController().navigate(R.id.openedBoardFragment)
         }
     }
 

@@ -10,6 +10,8 @@ interface LockerBoardInterface {
     fun disconnect()
     fun isConnected(): Boolean
     fun getLockerStatus(boardAddress: Int,lockerId: Int): LockStatus
+    fun readLockTime(boardAddress: Int)
+    fun changeLockTime(boardAddress: Int)
     fun getAllLockersStatus(boardAddress: Int, totalLockers: Int): List<LockStatus?>?
     fun openLocker(boardAddress: Int, lockerId: Int): Boolean
     fun openLockers(boardAddress: Int, lockerIds: IntArray): Boolean

@@ -13,44 +13,44 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="#3386E6"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintWidth_percent="0.5"/>
+        app:layout_constraintWidth_percent="0.5" />
 
 
     <ImageView
         android:id="@+id/ivPostomat"
         android:layout_width="345dp"
         android:layout_height="517dp"
-        app:layout_constraintTop_toTopOf="@id/leftPanel"
-        app:layout_constraintStart_toStartOf="@id/leftPanel"
-        app:layout_constraintEnd_toEndOf="@id/leftPanel"
-        app:layout_constraintBottom_toBottomOf="@id/leftPanel"
+        android:layout_marginBottom="32dp"
         android:src="@drawable/img_main_screen"
-        android:layout_marginBottom="32dp" />
+        app:layout_constraintBottom_toBottomOf="@id/leftPanel"
+        app:layout_constraintEnd_toEndOf="@id/leftPanel"
+        app:layout_constraintStart_toStartOf="@id/leftPanel"
+        app:layout_constraintTop_toTopOf="@id/leftPanel" />
 
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="180dp"
         android:layout_height="54dp"
-        android:src="@drawable/logo"
         android:layout_margin="40dp"
-        app:layout_constraintTop_toTopOf="@id/leftPanel"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="@id/leftPanel"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintTop_toTopOf="@id/leftPanel" />
 
     <TextView
         android:id="@+id/tvSlogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        app:layout_constraintStart_toStartOf="@id/leftPanel"
-        app:layout_constraintBottom_toBottomOf="@id/leftPanel"
         android:text="Твои покупки –\nв шаге от тебя"
         android:textColor="@android:color/white"
         android:textSize="45sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/leftPanel"
+        app:layout_constraintStart_toStartOf="@id/leftPanel" />
 
     <!-- Правая белая часть (элементы перенесены на root уровень) -->
 
@@ -59,110 +59,116 @@
         android:id="@+id/spinnerLang"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_margin="30dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/spinner_background"
+        android:dropDownWidth="120dp"
+        android:entries="@array/languages"
+        android:padding="0dp"
         android:popupBackground="@android:color/white"
         android:spinnerMode="dropdown"
-        android:entries="@array/languages"
-        android:dropDownWidth="120dp"
-        android:layout_margin="30dp"
-        android:padding="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/leftPanel"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCourier"
+        style="@style/NoInsets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:text="Вход для курьера"
-        android:drawableEnd="@drawable/ic_walking"
-        android:textColor="#222B45"
-        android:backgroundTint="#fff"
+        android:textColor="@color/shadow_black"
         android:textSize="16sp"
-        android:background="@drawable/bg_btn_rounded_grey"
-        android:padding="0dp"
-        app:layout_constraintTop_toTopOf="@id/spinnerLang"
+        app:icon="@drawable/ic_walking"
+        app:iconGravity="textEnd"
+        app:iconPadding="18dp"
+        app:iconSize="28dp"
+        app:cornerRadius="16dp"
+        android:backgroundTint="@color/blue_light"
+        app:iconTint="@color/shadow_black"
+        app:strokeColor="@color/black_10"
+        app:strokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="@id/spinnerLang"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="32dp"/>
+        app:layout_constraintTop_toTopOf="@id/spinnerLang" />
 
     <!-- Приветствие -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="151dp"
+        android:gravity="center"
         android:text="Добро пожаловать!"
         android:textColor="#222B45"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/spinnerLang"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="151dp" />
+        app:layout_constraintStart_toEndOf="@id/leftPanel"
+        app:layout_constraintTop_toBottomOf="@id/spinnerLang" />
 
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
         android:text="Вас приветствует сервис inLog –\nудобный способ получить свою покупку"
         android:textColor="#8F9BB3"
         android:textSize="16sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="32dp" />
+        app:layout_constraintStart_toEndOf="@id/leftPanel"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
     <!-- Кнопки -->
     <Button
         android:id="@+id/btnTake"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="Забрать посылку"
-        android:textSize="20sp"
-        android:textColor="#fff"
         android:layout_marginHorizontal="108dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#3386E6"
         android:drawableEnd="@drawable/ic_white_package"
+        android:text="Забрать посылку"
+        android:textColor="#fff"
+        android:textSize="20sp"
         app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintStart_toEndOf="@id/leftPanel"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
     <Button
         android:id="@+id/btnLeave"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="Оставить посылку"
-        android:textSize="20sp"
-        android:textColor="#3386E6"
-        android:background="@drawable/bg_btn_rounded_blue"
         android:layout_marginHorizontal="108dp"
-        android:drawableEnd="@drawable/ic_blue_package"
-        app:cornerRadius="12dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/btnTake"
+        android:background="@drawable/bg_btn_rounded_blue"
+        android:drawableEnd="@drawable/ic_blue_package"
+        android:text="Оставить посылку"
+        android:textColor="#3386E6"
+        android:textSize="20sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/leftPanel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/btnTake" />
 
     <!-- Версия -->
     <TextView
         android:id="@+id/tvVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:padding="23dp"
         android:text="v 1.1"
         android:textColor="#8F9BB3"
         android:textSize="14sp"
-        android:padding="23dp"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp" />
+        app:layout_constraintStart_toEndOf="@id/leftPanel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

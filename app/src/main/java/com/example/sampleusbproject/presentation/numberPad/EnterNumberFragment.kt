@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.databinding.FragmentEnterNumberBinding
@@ -29,6 +31,7 @@ class EnterNumberFragment : Fragment() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Main + job)
     private val binding get() = _binding!!
+//    private val args: EnterNumberFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,30 +92,55 @@ class EnterNumberFragment : Fragment() {
                     binding.etCodeInput.text.length
                 )
         }
+        val args = PackageType.getType(arguments?.getInt("type") ?: 0)
         binding.btnContinue.setOnClickListener {
             val code = binding.etCodeInput.text.toString()
             when (code) {
                 "1" -> {
-                    openLock(48,0x01)
+                    openLock(1,1)
                 }
 
-                "2" -> {
-                    openLock(48,0x02)
+                "10" -> {
+                    openLock(1,0x10)
                 }
 
-                "3" -> {
-                    openLock(48,0x03)
+                "11" -> {
+                    openLock(1,0x10)
                 }
 
-                "4" -> {
-                    openLock(48,0x04)
+                "16" -> {
+                    openLock(1,0x16)
+                }
+
+                "30" -> {
+                    openLock(1,0x30)
                 }
 
                 "5" -> {
-                    openLock(48,0x05)
+                    openLock(1,0x05)
                 }
                 "25" -> {
-                    lockedBoard.getLockerStatus(0x01,0x01)
+                    lockedBoard.getLockerStatus(1,1)
+                }
+                "27" -> {
+                    lockedBoard.getLockerStatus(1,0)
+                }
+                "28" -> {
+                    lockedBoard.readLockTime(1)
+                }
+                "29" -> {
+                    lockedBoard.changeLockTime(1)
+                }
+
+                "26" -> {
+                    if (args == PackageType.COURIER){
+                        findNavController().navigate(R.id.openedCourierBoardFragment, bundleOf("type" to PackageType.getInt(PackageType.COURIER)))
+                    } else if (args == PackageType.LEAVE){
+                        findNavController().navigate(R.id.receiverFragment)
+                    }
+                    else {
+                        findNavController().navigate(R.id.openedBoardFragment)
+                    }
                 }
 
                 else -> {

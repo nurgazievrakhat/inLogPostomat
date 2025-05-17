@@ -150,6 +150,14 @@ class LockerControlBoard(
         }
     }
 
+    override fun readLockTime(boardAddress: Int) {
+
+    }
+
+    override fun changeLockTime(boardAddress: Int) {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllLockersStatus(boardAddress: Int, totalLockers: Int): List<LockStatus> {
         if (!isConnected()) {
             Timber.e(TAG, "Not connected")
