@@ -51,6 +51,9 @@ class EnterPhoneNumberFragment: Fragment() {
         binding.btnClear.setOnClickListener {
             binding.etPhoneNumber.clear()
         }
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {
