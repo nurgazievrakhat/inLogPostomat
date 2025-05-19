@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".presentation.numberPad.EnterNumberFragment">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/logoImage"
@@ -54,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:gravity="center"
-        android:text="Введите код из СМС"
+        android:text="Введите свой номер телефона"
         android:textColor="#181C4A"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -62,21 +60,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etCodeInput"
+    <com.example.sampleusbproject.utils.customview.InputPhoneNumberView
+        android:id="@+id/et_phone_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_code_input"
-        android:gravity="center"
-        android:hint="0000"
-        android:inputType="number"
-        android:maxLength="4"
-        android:paddingVertical="20dp"
-        android:textColor="#181C4A"
-        android:textColorHint="#BDBDBD"
-        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@id/btnClear"
         app:layout_constraintStart_toStartOf="@id/keypadGrid"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
@@ -88,10 +77,20 @@
         android:background="@drawable/bg_btn_circle_blue"
         android:padding="8dp"
         android:src="@drawable/ic_clear"
-        app:layout_constraintBottom_toBottomOf="@id/etCodeInput"
+        app:layout_constraintBottom_toBottomOf="@id/et_phone_number"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@id/keypadGrid"
-        app:layout_constraintTop_toTopOf="@id/etCodeInput" />
+        app:layout_constraintTop_toTopOf="@id/et_phone_number" />
+
+    <TextView
+        android:id="@+id/tv_policy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/keypadGrid"
+        app:layout_constraintStart_toStartOf="@id/keypadGrid"
+        app:layout_constraintTop_toBottomOf="@id/et_phone_number" />
 
     <!-- Клавиатура -->
     <com.example.sampleusbproject.utils.customview.NumberPadView
@@ -101,7 +100,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etCodeInput" />
+        app:layout_constraintTop_toBottomOf="@id/tv_policy" />
 
     <!-- Кнопки внизу -->
     <Button

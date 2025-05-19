@@ -52,35 +52,8 @@ class EnterNumberFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.btn0.setOnClickListener {
-            binding.etCodeInput.text.append("0")
-        }
-        binding.btn1.setOnClickListener {
-            binding.etCodeInput.text.append("1")
-        }
-        binding.btn2.setOnClickListener {
-            binding.etCodeInput.text.append("2")
-        }
-        binding.btn3.setOnClickListener {
-            binding.etCodeInput.text.append("3")
-        }
-        binding.btn4.setOnClickListener {
-            binding.etCodeInput.text.append("4")
-        }
-        binding.btn5.setOnClickListener {
-            binding.etCodeInput.text.append("5")
-        }
-        binding.btn6.setOnClickListener {
-            binding.etCodeInput.text.append("6")
-        }
-        binding.btn7.setOnClickListener {
-            binding.etCodeInput.text.append("7")
-        }
-        binding.btn8.setOnClickListener {
-            binding.etCodeInput.text.append("8")
-        }
-        binding.btn9.setOnClickListener {
-            binding.etCodeInput.text.append("9")
+        binding.keypadGrid.setOnKeyClickListener {
+            binding.etCodeInput.text.append(it)
         }
 //        binding.btnClear.setOnClickListener {
 //            binding.etCodeInput.text.clear()

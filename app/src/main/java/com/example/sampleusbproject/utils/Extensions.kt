@@ -2,12 +2,21 @@ package com.example.sampleusbproject.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.SystemClock
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.example.sampleusbproject.R
 
 fun View.invisible() {
     this.visibility = View.INVISIBLE
@@ -47,4 +56,65 @@ fun Int.dpToPx(context: Context): Int {
         this.toFloat(),
         context.resources.displayMetrics
     ).toInt()
+}
+
+private var lastClickTime: Long = 0
+
+fun TextView.setLinkedText(
+    baseText: String,
+    linkText: String,
+    secondLinkText: String,
+    textAfter: String,
+    textEnd: String,
+    onSecondLinkClick: (() -> Unit?)?,
+    onLinkClick: () -> Unit
+) {
+    val clickableSpan = object : ClickableSpan() {
+        override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.color = resources.getColor(R.color.blue_baby, null)
+        }
+
+        override fun onClick(widget: View) {
+            val currentTime = SystemClock.elapsedRealtime()
+            if (currentTime - lastClickTime > 2000) { // allow clicks only once in 2 seconds
+                lastClickTime = currentTime
+                widget.cancelPendingInputEvents()
+                onLinkClick()
+            }
+        }
+    }
+
+    val clickableSecondSpan = object : ClickableSpan() {
+        override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.color = resources.getColor(R.color.blue, null)
+        }
+
+        override fun onClick(widget: View) {
+            val currentTime = SystemClock.elapsedRealtime()
+            if (currentTime - lastClickTime > 2000) { // allow clicks only once in 2 seconds
+                lastClickTime = currentTime
+                widget.cancelPendingInputEvents()
+                onSecondLinkClick?.let { it() }
+            }
+        }
+    }
+
+    val linktext = SpannableString(linkText)
+    val secondLinkedtext = SpannableString(secondLinkText)
+
+    linktext.setSpan(clickableSpan, 0, linktext.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    secondLinkedtext.setSpan(
+        clickableSecondSpan,
+        0,
+        secondLinkedtext.length,
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+
+    val cs =
+        TextUtils.expandTemplate("$baseText ^1 $textAfter ^2 $textEnd", linktext, secondLinkedtext)
+
+    this.text = cs
+    this.movementMethod = LinkMovementMethod.getInstance()
 }

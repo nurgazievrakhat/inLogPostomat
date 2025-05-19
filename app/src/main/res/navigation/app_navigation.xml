@@ -122,4 +122,8 @@
 <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
 <!--        </action>-->
     </fragment>
+    <fragment
+        android:id="@+id/enterPhoneNumberFragment"
+        android:name="com.example.sampleusbproject.presentation.phoneNumber.EnterPhoneNumberFragment"
+        android:label="EnterPhoneNumberFragment" />
 </navigation>

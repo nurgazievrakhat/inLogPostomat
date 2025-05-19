@@ -78,7 +78,7 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnLeave.setOnClickListener {
-            findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.LEAVE)))
+            findNavController().navigate(R.id.enterPhoneNumberFragment)
         }
         binding.btnTake.setOnClickListener {
             findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.TAKE)))
