@@ -15,7 +15,7 @@ class BoardAdapter(
 
     class BoardDiffUtil : DiffUtil.ItemCallback<Board>() {
         override fun areItemsTheSame(oldItem: Board, newItem: Board): Boolean {
-            return oldItem.usable == newItem.usable
+            return oldItem.number == newItem.number
         }
 
         override fun areContentsTheSame(oldItem: Board, newItem: Board): Boolean {

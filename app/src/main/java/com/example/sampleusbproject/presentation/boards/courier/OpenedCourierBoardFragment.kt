@@ -2,6 +2,7 @@ package com.example.sampleusbproject.presentation.boards.courier
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -228,6 +229,114 @@ class OpenedCourierBoardFragment: Fragment(R.layout.fragment_opened_board) {
                 2
             )
         )
+
+        binding.tvTitle.setOnClickListener {
+            Log.e("dsfsdfsdf", "tvTitle: ", )
+            adapter.adapterMap.get(1)?.submitList(
+                listOf(
+                    Board(
+                        size = BoardSize.XL,
+                        number = 13,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.L,
+                        number = 14,
+                        usable = false
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 15,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 16,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 17,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 18,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 19,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 20,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 21,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 22,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 23,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 24,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 25,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 26,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 27,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 28,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 29,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.S,
+                        number = 30,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.L,
+                        number = 31,
+                        usable = true
+                    ),
+                    Board(
+                        size = BoardSize.L,
+                        number = 32,
+                        usable = true
+                    )
+                )
+            )
+        }
 
         adapter.submitList(data)
     }
