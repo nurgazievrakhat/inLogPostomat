@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation.boards
+package com.example.sampleusbproject.presentation.boards.adapter
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.sampleusbproject.databinding.ItemBoardsBinding

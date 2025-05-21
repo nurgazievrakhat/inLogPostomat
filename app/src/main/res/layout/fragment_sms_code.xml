@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.numberPad.EnterNumberFragment">
 
     <ImageView
         android:id="@+id/logoImage"
@@ -19,8 +22,8 @@
         android:id="@+id/contactBlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +32,6 @@
             android:id="@+id/tvSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:includeFontPadding="false"
             android:text="Круглосуточная поддержка"
             android:textColor="#222B45"
             android:textSize="16sp" />
@@ -39,83 +41,67 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:includeFontPadding="false"
             android:text="+995 550 500 500"
             android:textColor="#3386E6"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- Заголовок -->
     <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="666dp"
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="Как Вы хотите\nзабрать посылку?"
-        android:textAlignment="center"
-        android:textColor="@color/dark_blue"
+        android:layout_marginTop="120dp"
+        android:gravity="center"
+        android:text="Введите код из СМС"
+        android:textColor="#181C4A"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_another"
-        style="@style/Deselected"
-        android:layout_width="323dp"
-        android:layout_height="351dp"
+    <EditText
+        android:id="@+id/etCodeInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:gravity="top|center"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_code_input"
+        android:gravity="center"
+        android:hint="0000"
+        android:inputType="number"
+        android:maxLength="4"
         android:paddingVertical="20dp"
-        android:text="Отправить другому\nчеловеку"
-        android:textAlignment="gravity"
-        android:textColor="@color/shadow_black"
+        android:textColor="#181C4A"
+        android:textColorHint="#BDBDBD"
         android:textSize="24sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="@id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:strokeColor="@color/black_10"
-        app:strokeWidth="1dp" />
+        app:layout_constraintEnd_toStartOf="@id/btnClear"
+        app:layout_constraintStart_toStartOf="@id/keypadGrid"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <ImageView
-        android:id="@+id/iv_other"
-        android:layout_width="160dp"
-        android:layout_height="238dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/image_for_other"
-        app:layout_constraintBottom_toBottomOf="@id/btn_another"
-        app:layout_constraintEnd_toEndOf="@id/btn_another"
-        app:layout_constraintStart_toStartOf="@id/btn_another" />
+    <ImageButton
+        android:id="@+id/btnClear"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_btn_circle_blue"
+        android:padding="8dp"
+        android:src="@drawable/ic_clear"
+        app:layout_constraintBottom_toBottomOf="@id/etCodeInput"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/keypadGrid"
+        app:layout_constraintTop_toTopOf="@id/etCodeInput" />
 
-    <ImageView
-        android:id="@+id/iv_take_later"
-        android:layout_width="160dp"
-        android:layout_height="238dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/image_take_later"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="@id/btn_self"
-        app:layout_constraintEnd_toEndOf="@id/btn_self"
-        app:layout_constraintStart_toStartOf="@id/btn_self" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_self"
-        style="@style/Deselected"
-        android:layout_width="323dp"
-        android:layout_height="351dp"
+    <!-- Клавиатура -->
+    <com.example.sampleusbproject.utils.customview.NumberPadView
+        android:id="@+id/keypadGrid"
+        android:layout_width="507dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:gravity="top|center"
-        android:paddingVertical="20dp"
-        android:text="Забрать самостоятельно позже"
-        android:textAlignment="gravity"
-        android:textColor="@color/shadow_black"
-        android:textSize="24sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="@id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:strokeColor="@color/black_10"
-        app:strokeWidth="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCodeInput" />
 
     <!-- Кнопки внизу -->
     <Button
@@ -131,7 +117,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/btnContinue"
         style="@style/BlueRoundedBtn"
         android:layout_width="240dp"
@@ -140,9 +126,7 @@
         android:layout_marginBottom="32dp"
         android:text="Продолжить"
         android:textSize="20sp"
-        app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="#000000" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,55 +1,60 @@
-package com.example.sampleusbproject.presentation.boards.courier
+package com.example.sampleusbproject.presentation.boards
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentOpenedBoardBinding
+import com.example.sampleusbproject.presentation.base.BaseFragment
 import com.example.sampleusbproject.presentation.boards.adapter.Board
 import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsAdapter
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsDividerItemDecoration
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsModel
+import com.example.sampleusbproject.presentation.numberPad.PackageType
+import dagger.hilt.android.AndroidEntryPoint
 
-class OpenedCourierBoardFragment: Fragment(R.layout.fragment_opened_board) {
-
-    private var _binding: FragmentOpenedBoardBinding? = null
-    private val binding get() = _binding!!
+@AndroidEntryPoint
+class LeaveParcelOpenedBoardFragment : BaseFragment<FragmentOpenedBoardBinding>(
+    R.layout.fragment_opened_board,
+    FragmentOpenedBoardBinding::inflate
+) {
 
     private val adapter: BoardsAdapter by lazy {
         BoardsAdapter()
     }
 
-//    private val args: OpenedCourierBoardFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentOpenedBoardBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnBack.text = "Выбрать другую ячейку"
-        val args = arguments?.getInt("type")
+        binding.btnContinue.text = "Я оставил(-а) посылку"
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.anotherBoardDialogFragment)
+            findNavController().navigate(R.id.action_leaveParcelOpenedBoardFragment_to_anotherLeaveBoardDialogFragment)
         }
+        binding.btnContinue.setOnClickListener {
+            requireActivity().findNavController(R.id.nav_host).navigate(
+                R.id.global_action_to_success_fragment,
+                bundleOf(
+                    "type" to PackageType.getInt(
+                        PackageType.TAKE
+                    )
+                )
+            )
+        }
+
         binding.rvBoards.adapter = adapter
         binding.rvBoards.isNestedScrollingEnabled = false
-        binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.successFragment, bundleOf("type" to args ))
-        }
         val dividerItemDecoration =
-            BoardsDividerItemDecoration(requireContext(), 5, 5, RecyclerView.HORIZONTAL, R.drawable.board_divider)
+            BoardsDividerItemDecoration(
+                requireContext(),
+                5,
+                5,
+                RecyclerView.HORIZONTAL,
+                R.drawable.board_divider
+            )
         binding.rvBoards.addItemDecoration(dividerItemDecoration)
 
         val data = listOf(
@@ -227,119 +232,7 @@ class OpenedCourierBoardFragment: Fragment(R.layout.fragment_opened_board) {
             )
         )
 
-        binding.tvTitle.setOnClickListener {
-            Log.e("dsfsdfsdf", "tvTitle: ", )
-            adapter.adapterMap.get(1)?.submitList(
-                listOf(
-                    Board(
-                        size = BoardSize.XL,
-                        number = 13,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.L,
-                        number = 14,
-                        usable = false
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 15,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 16,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 17,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 18,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 19,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 20,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 21,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 22,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 23,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 24,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 25,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 26,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 27,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 28,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 29,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.S,
-                        number = 30,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.L,
-                        number = 31,
-                        usable = true
-                    ),
-                    Board(
-                        size = BoardSize.L,
-                        number = 32,
-                        usable = true
-                    )
-                )
-            )
-        }
-
         adapter.submitList(data)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

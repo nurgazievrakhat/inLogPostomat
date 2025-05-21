@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation.boards
+package com.example.sampleusbproject.presentation.boards.adapter
 
 data class BoardsModel(
     val list: List<Board>,

@@ -1,11 +1,15 @@
 package com.example.sampleusbproject.presentation.main
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.hardware.usb.UsbManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +20,7 @@ import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.databinding.FragmentMainBinding
 import com.example.sampleusbproject.presentation.numberPad.PackageType
 import dagger.hilt.android.AndroidEntryPoint
+import kg.averspay.finik_android_sdk.FinikActivity
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,6 +33,31 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var usbManager: UsbManager? = null
+
+    private val finikLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // Обработка success paymentResult
+                val data = result.data
+                Log.e("sdfsdf", "RESULT_OK: $data", )
+                val resultValue = data?.getStringExtra("paymentResult")
+                val details = data?.getStringExtra("details")
+            } else {
+                val isBackPressed = result.data?.getStringExtra("isBackPressed") == "true"
+                Log.e("sdfsdf", "RESULT_NOT_OK: $isBackPressed", )
+
+                if (isBackPressed) {
+                    // Обработка кнопки назад
+                    Log.d("MainActivity", "Пользователь вышел из Finik по кнопке назад")
+                } else {
+                    // Обработка failure paymentResult
+                    val data = result.data
+                    Log.e("sdfsdf", "RESULT_NOT_OK: $data", )
+                    val resultValue = data?.getStringExtra("paymentResult")
+                    val details = data?.getStringExtra("details")
+                }
+            }
+        }
 
     @Inject
     lateinit var postomatInfoMapper: PostomatInfoMapper
@@ -78,13 +108,22 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnLeave.setOnClickListener {
-            findNavController().navigate(R.id.enterPhoneNumberFragment)
+            findNavController().navigate(R.id.leave_parcel_navigation)
         }
         binding.btnTake.setOnClickListener {
             findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.TAKE)))
         }
         binding.btnCourier.setOnClickListener {
             findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.COURIER)))
+        }
+        binding.tvWelcome.setOnClickListener {
+            // Запуск FinikActivity из твоей SDK
+            val intent = Intent(requireActivity(), FinikActivity::class.java).apply {
+                putExtra("apiKey", "73fxCF4k9NvYcGReg9Jf2P7nAV6fTXf4i1q8CRf3")
+                putExtra("itemId", "1f7bbf08-5324-45b5-b28c-6fec4adf3c28")
+            }
+
+            finikLauncher.launch(intent)
         }
     }
 }

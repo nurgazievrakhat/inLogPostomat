@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation.boards
+package com.example.sampleusbproject.presentation.boards.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.example.sampleusbproject.databinding.ItemBoardsBinding
 
 class BoardsAdapter: ListAdapter<BoardsModel, BoardsViewHolder>(BoardsModelDiff()) {
 
-    val adapterMap: HashMap<Int,BoardAdapter> = hashMapOf()
+    val adapterMap: HashMap<Int, BoardAdapter> = hashMapOf()
 
     class BoardsModelDiff : DiffUtil.ItemCallback<BoardsModel>() {
         override fun areItemsTheSame(oldItem: BoardsModel, newItem: BoardsModel): Boolean {

@@ -50,7 +50,7 @@ class InputPhoneNumberView : ConstraintLayout {
         setUpListeners()
     }
 
-    private fun showError() {
+    fun showError() {
         binding.etPhoneNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
         binding.tvCodeHint.setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
         binding.containerPhone.background = ResourcesCompat.getDrawable(
@@ -146,5 +146,5 @@ class InputPhoneNumberView : ConstraintLayout {
         phoneNumberFormatWatcher.installOn(binding.etPhoneNumber)
     }
 
-    fun getRawPhoneNumber() = "+996${phoneNumberFormatWatcher.mask.toUnformattedString()}"
+    fun getRawPhoneNumber() = "996${phoneNumberFormatWatcher.mask.toUnformattedString()}"
 }

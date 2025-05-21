@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentEnterPhoneNumberBinding
-import com.example.sampleusbproject.presentation.numberPad.PackageType
+import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
 import com.example.sampleusbproject.utils.setLinkedText
 
 class EnterPhoneNumberFragment: Fragment() {
     private var _binding: FragmentEnterPhoneNumberBinding? = null
     private val binding get() = _binding!!
+    private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +42,7 @@ class EnterPhoneNumberFragment: Fragment() {
             }
         )
         binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(
-                PackageType.LEAVE))
-            )
+            findNavController().navigate(R.id.action_enterPhoneNumberFragment_to_enterSmsCodeFragment)
         }
         binding.keypadGrid.setOnKeyClickListener {
             binding.etPhoneNumber.input(it)

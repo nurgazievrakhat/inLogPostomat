@@ -27,6 +27,7 @@ hiltCommon = "1.2.0"
 hiltWork = "1.2.0"
 hiltCompiler = "1.1.0"
 flexBox = "3.0.0"
+finik = "1.0.0"
 uiUnitAndroid = "1.8.1"
 
 [libraries]
@@ -63,6 +64,7 @@ androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.
 androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
 flex = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexBox" }
+finik = { group = "kg.averspay", name = "finik-android-sdk", version.ref = "finik" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 #safe-args-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }

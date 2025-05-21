@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.sampleusbproject"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 35
         versionCode = 5
         versionName = "1.0"
@@ -30,13 +30,13 @@ android {
     buildTypes {
         debug {
             isDebuggable = true
-            buildConfigField ("String", "URL_BASE",  "\"https://postomat-3.ooba.kg\"")
+            buildConfigField ("String", "URL_BASE",  "\"https://postomat-2.ooba.kg\"")
             signingConfig = signingConfigs.getByName("debug")
         }
         release {
             isDebuggable = false
             isMinifyEnabled = false
-            buildConfigField ("String", "URL_BASE",  "\"https://postomat-3.ooba.kg\"")
+            buildConfigField ("String", "URL_BASE",  "\"https://postomat-2.ooba.kg\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -90,6 +90,7 @@ implementation(libs.firebase.config)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
+    implementation(libs.finik)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.decoro)
     implementation(libs.room.runtime)

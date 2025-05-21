@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -95,8 +96,8 @@ class MainActivity : AppCompatActivity() {
             navHostFragment.navController.navInflater.inflate(R.navigation.app_navigation)
         
         navGraph.setStartDestination(
-//            if (commonPrefs.isAuthorized()) R.id.mainFragment else R.id.authFragment
-            R.id.mainFragment
+            if (commonPrefs.isAuthorized()) R.id.mainFragment else R.id.authFragment
+//            R.id.mainFragment
         )
         
         navHostFragment.navController.graph = navGraph
@@ -110,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun connectSocket() {
+    fun connectSocket() {
         lifecycleScope.launch {
             postomatSocketUseCase.connectToPostomatServer().collectLatest {
                 when(it) {

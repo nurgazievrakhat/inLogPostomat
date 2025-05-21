@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentAuthBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,7 @@ class AuthFragment : Fragment() {
                 is AuthState.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.btnLogin.isEnabled = true
+                    (requireActivity() as? MainActivity)?.connectSocket()
                     findNavController().navigate(R.id.action_authFragment_to_mainFragment)
                 }
                 is AuthState.Error -> {

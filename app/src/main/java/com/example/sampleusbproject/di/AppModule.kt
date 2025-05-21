@@ -8,6 +8,7 @@ import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.data.local.AppDatabase
 import com.example.sampleusbproject.data.local.dao.PostomatInfoDao
 import com.example.sampleusbproject.data.remote.BaseService
+import com.example.sampleusbproject.data.remote.interceptors.TokenInterceptor
 import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
 import com.example.sampleusbproject.lockBoards.LockBoardFactory
@@ -23,6 +24,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -32,17 +34,31 @@ class AppModule {
     private val prefName = "AppPref"
 
     @Provides
+    @Named("Base")
     fun provideBaseOkHttpClint(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY ))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
+
+    @Provides
+    @Named("Authorized")
+    fun provideAuthOkHttpClint(tokenInterceptor: TokenInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(tokenInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+    }
+
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): BaseService {
+    fun provideRetrofit(@Named("Base") okHttpClient: OkHttpClient): BaseService {
         return createRetrofitClient(URL_BASE, okHttpClient)
             .create(BaseService::class.java)
     }
@@ -67,9 +83,10 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providePostomatInfoMapper(postomatInfoDao: PostomatInfoDao) : PostomatInfoMapper {
+    fun providePostomatInfoMapper(postomatInfoDao: PostomatInfoDao): PostomatInfoMapper {
         return PostomatInfoMapper(postomatInfoDao)
     }
+
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
@@ -87,9 +104,10 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideBoard(@ApplicationContext context: Context) : LockerBoardInterface {
+    fun provideBoard(@ApplicationContext context: Context): LockerBoardInterface {
         return LockBoardFactory.createBoard(context, LockBoardFactory.BOARD_TYPE_NEW)
     }
+
     private fun createRetrofitClient(
         baseUrl: String,
         okHttpClient: OkHttpClient

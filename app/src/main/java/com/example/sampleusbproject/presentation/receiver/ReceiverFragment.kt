@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentReceiverBinding
+import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
 import com.example.sampleusbproject.utils.getColorStateList
 import com.google.android.material.button.MaterialButton
 
 class ReceiverFragment : Fragment(R.layout.fragment_receiver) {
+
+    private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
     private var _binding: FragmentReceiverBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +40,7 @@ class ReceiverFragment : Fragment(R.layout.fragment_receiver) {
             selected(binding.btnSelf)
         }
         binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.openedBoardFragment)
+            findNavController().navigate(R.id.action_receiverFragment_to_enterReceiverPhoneNumberFragment2)
         }
     }
 

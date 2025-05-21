@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/leave_parcel_navigation"
+    app:startDestination="@id/enterPhoneNumberFragment">
+
+    <fragment
+        android:id="@+id/enterPhoneNumberFragment"
+        android:name="com.example.sampleusbproject.presentation.phoneNumber.EnterPhoneNumberFragment"
+        android:label="EnterPhoneNumberFragment" >
+        <action
+            android:id="@+id/action_enterPhoneNumberFragment_to_enterSmsCodeFragment"
+            app:destination="@id/enterSmsCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterSmsCodeFragment"
+        android:name="com.example.sampleusbproject.presentation.smsCode.EnterSmsCodeFragment"
+        android:label="EnterSmsCodeFragment" >
+        <action
+            android:id="@+id/action_enterSmsCodeFragment_to_receiverFragment"
+            app:destination="@id/receiverFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/receiverFragment"
+        android:name="com.example.sampleusbproject.presentation.receiver.ReceiverFragment"
+        android:label="ReceiverFragment" >
+        <action
+            android:id="@+id/action_receiverFragment_to_enterReceiverPhoneNumberFragment2"
+            app:destination="@id/enterReceiverPhoneNumberFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/confirmPhoneNumberDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.phoneNumber.ConfirmPhoneNumberDialogFragment"
+        android:label="ConfirmPhoneNumberDialogFragment" >
+        <action
+            android:id="@+id/action_confirmPhoneNumberDialogFragment_to_leaveParcelOpenedBoardFragment"
+            app:destination="@id/leaveParcelOpenedBoardFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/leaveParcelOpenedBoardFragment"
+        android:name="com.example.sampleusbproject.presentation.boards.LeaveParcelOpenedBoardFragment"
+        android:label="LeaveParcelOpenedBoardFragment" >
+        <action
+            android:id="@+id/action_leaveParcelOpenedBoardFragment_to_anotherLeaveBoardDialogFragment"
+            app:destination="@id/anotherLeaveBoardDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterReceiverPhoneNumberFragment"
+        android:name="com.example.sampleusbproject.presentation.phoneNumber.EnterReceiverPhoneNumberFragment"
+        android:label="EnterReceiverPhoneNumberFragment" >
+        <action
+            android:id="@+id/action_enterReceiverPhoneNumberFragment_to_confirmPhoneNumberDialogFragment"
+            app:destination="@id/confirmPhoneNumberDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/anotherLeaveBoardDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherLeaveBoardDialogFragment"
+        android:label="AnotherLeaveBoardDialogFragment" />
+
+</navigation>

@@ -10,6 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentOpenedBoardBinding
+import com.example.sampleusbproject.presentation.boards.adapter.Board
+import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
+import com.example.sampleusbproject.presentation.boards.adapter.BoardsAdapter
+import com.example.sampleusbproject.presentation.boards.adapter.BoardsDividerItemDecoration
+import com.example.sampleusbproject.presentation.boards.adapter.BoardsModel
 import com.example.sampleusbproject.presentation.numberPad.PackageType
 
 class OpenedBoardFragment : Fragment(R.layout.fragment_opened_board) {

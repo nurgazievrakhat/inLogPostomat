@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/transparent"
         app:cardCornerRadius="0dp"
-        app:strokeColor="@color/black_10">
+        app:strokeColor="@color/shadow_black">
 
         <TextView
             android:id="@+id/tv_number"

@@ -123,6 +123,7 @@ class SocketRepositoryImpl @Inject constructor(
 
     override fun onSendPostomatInfo(listener: (PostomatInfo) -> Unit) {
         val wrappedListener: (Any) -> Unit = { data ->
+            Log.e("dfsdf", "onSendPostomatInfo: $data", )
             val info = parseData(data, PostomatInfo::class.java)
             scope.launch {
                 withContext(Dispatchers.Main) {

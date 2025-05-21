@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation.boards
+package com.example.sampleusbproject.presentation.boards.adapter
 
 import android.content.Context
 import android.util.AttributeSet
