@@ -28,10 +28,10 @@ class ConfirmPhoneNumberDialogFragment: NonClosableDialogFragment<DialogConfirmP
         }
         phoneNumberFormatWatcher = MaskFormatWatcher(inputMask)
         phoneNumberFormatWatcher.installOn(binding.tvPhone)
-        binding.tvPhone.text = commonViewModel.phoneNumber.removePrefix("996")
+        binding.tvPhone.text = commonViewModel.receiverPhoneNumber.removePrefix("996")
 
         binding.btnOk.setOnClickListener {
-            findNavController().navigate(R.id.action_confirmPhoneNumberDialogFragment_to_leaveParcelOpenedBoardFragment)
+            findNavController().navigate(R.id.action_confirmPhoneNumberDialogFragment_to_selectCellFragment)
         }
         binding.ivClose.setOnClickListener {
             onBack()

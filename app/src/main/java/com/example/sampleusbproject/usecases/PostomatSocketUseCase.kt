@@ -47,7 +47,8 @@ class PostomatSocketUseCase @Inject constructor(
         socketRepository.onPostomatUpdated(onUpdated)
     }
 
-    fun observePostamatCellLocal(id: String) = socketRepository.getPostamatsLocal(id)
+    suspend fun getPostamatCellLocal(id: String) = socketRepository.getPostamatsLocal(id)
+    fun observePostamatCellLocal() = socketRepository.observePostamatsLocal()
     fun isConnected() = socketRepository.isConnected()
 
     fun sendOnceEvent(event: String, listener: (Any) -> Unit) = socketRepository.once(event,listener)

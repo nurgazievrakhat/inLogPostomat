@@ -27,14 +27,17 @@
         <action
             android:id="@+id/action_receiverFragment_to_enterReceiverPhoneNumberFragment2"
             app:destination="@id/enterReceiverPhoneNumberFragment" />
+        <action
+            android:id="@+id/action_receiverFragment_to_selectCellFragment"
+            app:destination="@id/selectCellFragment" />
     </fragment>
     <dialog
         android:id="@+id/confirmPhoneNumberDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.phoneNumber.ConfirmPhoneNumberDialogFragment"
         android:label="ConfirmPhoneNumberDialogFragment" >
         <action
-            android:id="@+id/action_confirmPhoneNumberDialogFragment_to_leaveParcelOpenedBoardFragment"
-            app:destination="@id/leaveParcelOpenedBoardFragment" />
+            android:id="@+id/action_confirmPhoneNumberDialogFragment_to_selectCellFragment"
+            app:destination="@id/selectCellFragment" />
     </dialog>
     <fragment
         android:id="@+id/leaveParcelOpenedBoardFragment"
@@ -56,5 +59,13 @@
         android:id="@+id/anotherLeaveBoardDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherLeaveBoardDialogFragment"
         android:label="AnotherLeaveBoardDialogFragment" />
+    <fragment
+        android:id="@+id/selectCellFragment"
+        android:name="com.example.sampleusbproject.presentation.cell.SelectCellFragment"
+        android:label="SelectCellFragment" >
+        <action
+            android:id="@+id/action_selectCellFragment_to_leaveParcelOpenedBoardFragment"
+            app:destination="@id/leaveParcelOpenedBoardFragment" />
+    </fragment>
 
 </navigation>

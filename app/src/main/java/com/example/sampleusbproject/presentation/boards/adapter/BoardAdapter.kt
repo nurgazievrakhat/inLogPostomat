@@ -9,15 +9,16 @@ import com.example.sampleusbproject.databinding.ItemBoardBinding
 
 class BoardAdapter(
     private val minItemHeight: Int,
-    private val minItemWidth: Int
-) : ListAdapter<Board, BoardViewHolder>(BoardDiffUtil()) {
+    private val minItemWidth: Int,
+    private val selectedNumber: Long
+) : ListAdapter<CellSchema, BoardViewHolder>(BoardDiffUtil()) {
 
-    class BoardDiffUtil : DiffUtil.ItemCallback<Board>() {
-        override fun areItemsTheSame(oldItem: Board, newItem: Board): Boolean {
+    class BoardDiffUtil : DiffUtil.ItemCallback<CellSchema>() {
+        override fun areItemsTheSame(oldItem: CellSchema, newItem: CellSchema): Boolean {
             return oldItem.number == newItem.number
         }
 
-        override fun areContentsTheSame(oldItem: Board, newItem: Board): Boolean {
+        override fun areContentsTheSame(oldItem: CellSchema, newItem: CellSchema): Boolean {
             return oldItem.usable == newItem.usable
         }
 
@@ -38,7 +39,7 @@ class BoardAdapter(
 
     override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.onBind(it)
+            holder.onBind(it, selectedNumber)
         }
     }
 

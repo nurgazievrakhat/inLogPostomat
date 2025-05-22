@@ -3,6 +3,9 @@ package com.example.sampleusbproject.data
 import com.example.sampleusbproject.data.local.dao.PostomatInfoDao
 import com.example.sampleusbproject.data.local.entity.PostomatInfoEntity
 import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
+import com.example.sampleusbproject.domain.remote.socket.model.mapToBoardsModel
+import com.example.sampleusbproject.domain.remote.socket.model.mapToUi
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PostomatInfoMapper @Inject constructor(
@@ -23,30 +26,18 @@ class PostomatInfoMapper @Inject constructor(
             lng = postomatInfo.lng,
             openTime = postomatInfo.openTime,
             title = postomatInfo.title,
-            updatedAt = postomatInfo.updatedAt
+            updatedAt = postomatInfo.updatedAt,
+            boards = postomatInfo.boards.mapToBoardsModel()
         )
         postomatInfoDao.insertPostomatInfo(entity)
     }
 
-    suspend fun getPostomatInfo(id: String): PostomatInfo? {
-        return postomatInfoDao.getPostomatInfo(id)?.let { entity ->
-            PostomatInfo(
-                id = entity.id,
-                cells = entity.cells,
-                address = entity.address,
-                cityId = entity.cityId,
-                closeTime = entity.closeTime,
-                connectionLastUpdate = entity.connectionLastUpdate,
-                createdAt = entity.createdAt,
-                isActive = entity.isActive,
-                isConnected = entity.isConnected,
-                lat = entity.lat,
-                lng = entity.lng,
-                openTime = entity.openTime,
-                title = entity.title,
-                updatedAt = entity.updatedAt
-            )
-        }
+    suspend fun getPostomatInfo(id: String): PostomatInfoEntity? {
+        return postomatInfoDao.getPostomatInfo(id)
+    }
+
+    fun observePostomatInfo(): Flow<List<PostomatInfoEntity>> {
+        return postomatInfoDao.observePostomatInfo()
     }
 
     suspend fun getCellNumberById(boardId: String, cellId: String): Pair<String,String>? {

@@ -1,0 +1,49 @@
+package com.example.sampleusbproject.presentation.cell
+
+import android.content.res.ColorStateList
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.sampleusbproject.R
+import com.example.sampleusbproject.databinding.LayoutSelectCellSizeBinding
+
+class SelectCellViewHolder(
+    private val binding: LayoutSelectCellSizeBinding,
+    val onClick: (Int, SelectCellModel) -> Unit
+) : ViewHolder(
+    binding.root
+) {
+
+    fun onBind(model: SelectCellModel) {
+        binding.tvTitle.text = String.format(
+            binding.root.context.getString(R.string.text_cell_size_title),
+            model.boardSize.name
+        )
+        if (!model.isAvailableToChoose()) {
+            binding.container.alpha = 0.4f
+            binding.btnChoose.setImageResource(R.drawable.iv_select_cell_inactive)
+            binding.tvCellState.text =
+                binding.root.context.getString(R.string.text_not_contains_free_cell)
+            binding.tvCellState.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(binding.root.context,R.color.black_30)))
+            binding.root.strokeColor =
+                ContextCompat.getColor(binding.root.context,R.color.black_10)
+            binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.white))
+            binding.root.isCheckable = false
+        } else {
+            binding.container.alpha = 1f
+            binding.btnChoose.setImageResource(if (model.isSelected) R.drawable.iv_select_cell_active else R.drawable.iv_select_cell_inactive)
+            binding.tvCellState.text =
+                binding.root.context.getString(R.string.text_contains_free_cell)
+            binding.tvCellState.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(binding.root.context,R.color.green)))
+            binding.root.strokeColor =
+                ContextCompat.getColor(binding.root.context, if (model.isSelected) R.color.blue_baby else R.color.black_10)
+            binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, if (model.isSelected) R.color.blue_light else R.color.white))
+            binding.root.isCheckable = true
+        }
+        binding.root.setOnClickListener {
+            if (adapterPosition != -1)
+                onClick(adapterPosition, model)
+        }
+    }
+
+}

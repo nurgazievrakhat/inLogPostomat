@@ -4,7 +4,7 @@ data class Board(
     val createdAt: String,
     val id: String,
     val isActive: Boolean,
-    val number: Int,
+    val number: Long,
     val postomatId: String,
     val title: String,
     val updatedAt: String

@@ -2,14 +2,18 @@ package com.example.sampleusbproject.data.remote.socket
 
 import android.util.Log
 import com.example.sampleusbproject.data.PostomatInfoMapper
+import com.example.sampleusbproject.data.local.entity.PostomatInfoEntity
 import com.example.sampleusbproject.domain.remote.socket.SocketEvents
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
 import com.example.sampleusbproject.domain.remote.socket.model.CellData
 import com.example.sampleusbproject.domain.remote.socket.model.CellStatus
+import com.example.sampleusbproject.domain.remote.socket.model.CellsDto
 import com.example.sampleusbproject.domain.remote.socket.model.CommandInfo
 import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
+import com.example.sampleusbproject.domain.remote.socket.model.ResponseDeserializer
 import com.example.sampleusbproject.utils.CommonPrefs
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -20,6 +24,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -34,7 +39,9 @@ class SocketRepositoryImpl @Inject constructor(
     private var socket: Socket? = null
     private val eventListeners = mutableMapOf<String, MutableList<(Any) -> Unit>>()
     private val scope = CoroutineScope(Dispatchers.IO)
-    private val gson = Gson()
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(CellsDto::class.java, ResponseDeserializer())
+        .create()
 
     override fun connect(): Flow<SocketStatus> = callbackFlow {
         if (socket?.connected() == true) {
@@ -92,6 +99,7 @@ class SocketRepositoryImpl @Inject constructor(
             }
         }
     }
+
     override fun disconnect() {
         socket?.disconnect()
         socket = null
@@ -102,10 +110,11 @@ class SocketRepositoryImpl @Inject constructor(
     }
 
     fun socketTest() {
-        socket?.emit("POSTOMAT_GET_INFO",null,{
+        socket?.emit("POSTOMAT_GET_INFO", null, {
             Timber.e(it.toString())
         })
     }
+
     // Методы для работы с событиями постомата
     override fun onOpenPostomatCell(listener: (CellData) -> Unit) {
         val wrappedListener: (Any) -> Unit = { data ->
@@ -123,7 +132,6 @@ class SocketRepositoryImpl @Inject constructor(
 
     override fun onSendPostomatInfo(listener: (PostomatInfo) -> Unit) {
         val wrappedListener: (Any) -> Unit = { data ->
-            Log.e("dfsdf", "onSendPostomatInfo: $data", )
             val info = parseData(data, PostomatInfo::class.java)
             scope.launch {
                 withContext(Dispatchers.Main) {
@@ -198,9 +206,10 @@ class SocketRepositoryImpl @Inject constructor(
         }
         Timber.w(event)
         when (data) {
-            null -> socket?.emit(event,null,{
-                Timber.e( "emit: it")
+            null -> socket?.emit(event, null, {
+                Timber.e("emit: it")
             })
+
             is JSONObject -> socket?.emit(event, data)
             else -> {
                 val jsonObject = JSONObject(gson.toJson(data))
@@ -209,9 +218,16 @@ class SocketRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getPostamatsLocal(id: String): Flow<List<PostomatInfo>> = flow {
-         postomatInfoMapper.getPostomatInfo(id)
+    override suspend fun getPostamatsLocal(id: String): PostomatInfoEntity? {
+        return postomatInfoMapper.getPostomatInfo(id)
     }
+
+    override fun observePostamatsLocal(): Flow<List<PostomatInfoEntity>> = postomatInfoMapper
+        .observePostomatInfo()
+        .onEach {
+            if (it.isEmpty())
+                getPostomatInfo()
+        }
 
     // Вспомогательные методы
     private fun registerSocketListener(event: String, listener: (Any) -> Unit) {

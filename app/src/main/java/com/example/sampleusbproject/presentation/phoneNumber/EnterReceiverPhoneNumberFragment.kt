@@ -26,13 +26,13 @@ class EnterReceiverPhoneNumberFragment : BaseFragment<FragmentEnterPhoneNumberBi
         binding.btnClear.setOnClickListener {
             binding.etPhoneNumber.clear()
         }
-        Log.e("fddfgdfgfdg", "onViewCreated: ${commonViewModel.phoneNumber}", )
+        Log.e("fddfgdfgfdg", "onViewCreated: ${commonViewModel.receiverPhoneNumber}", )
         binding.btnContinue.setOnClickListener {
-            val phone = binding.etPhoneNumber.getRawPhoneNumber()
-            if (phone.length < 12)
-                binding.etPhoneNumber.showError()
+            val isFilled = binding.etPhoneNumber.isFilled()
+            if (!isFilled)
+                binding.etPhoneNumber.showError = requireContext().getString(R.string.text_wrong_phone_number)
             else{
-                commonViewModel.phoneNumber = phone
+                commonViewModel.receiverPhoneNumber = binding.etPhoneNumber.getRawPhoneNumber()
                 findNavController().navigate(R.id.action_enterReceiverPhoneNumberFragment_to_confirmPhoneNumberDialogFragment)
             }
         }

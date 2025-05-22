@@ -13,7 +13,9 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.sampleusbproject.R
@@ -117,4 +119,8 @@ fun TextView.setLinkedText(
 
     this.text = cs
     this.movementMethod = LinkMovementMethod.getInstance()
+}
+
+fun Fragment.makeToast(@StringRes message: Int){
+    Toast.makeText(requireContext(), requireContext().getString(message), Toast.LENGTH_LONG).show()
 }

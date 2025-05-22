@@ -1,8 +1,10 @@
 package com.example.sampleusbproject.di
 
 import com.example.sampleusbproject.data.remote.MainNetworkRepositoryImpl
+import com.example.sampleusbproject.data.remote.PostomatRepositoryImpl
 import com.example.sampleusbproject.data.remote.socket.SocketRepositoryImpl
 import com.example.sampleusbproject.domain.remote.MainNetworkRepository
+import com.example.sampleusbproject.domain.remote.PostomatRepository
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,6 @@ abstract class RepositoryModule {
     abstract fun provideAuthRepository(mainNetworkRepositoryImpl: MainNetworkRepositoryImpl): MainNetworkRepository
     @Binds
     abstract fun provideSocketRepository(socketRepositoryImpl: SocketRepositoryImpl): SocketRepository
+    @Binds
+    abstract fun providePostomatRepository(postomatRepositoryImpl: PostomatRepositoryImpl): PostomatRepository
 }

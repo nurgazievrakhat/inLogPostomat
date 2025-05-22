@@ -31,4 +31,6 @@
     <color name="blue_hovered">#2694EF</color>
     <color name="stroke_primary">#DCDFE4</color>
     <color name="text_secondary">#626975</color>
+    <color name="grey">#D6D6D6</color>
+    <color name="green">#3ABE35</color>
 </resources>

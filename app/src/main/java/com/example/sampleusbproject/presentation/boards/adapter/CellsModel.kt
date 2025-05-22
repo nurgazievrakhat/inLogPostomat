@@ -1,14 +1,14 @@
 package com.example.sampleusbproject.presentation.boards.adapter
 
-data class BoardsModel(
-    val list: List<Board>,
-    val heightItemCount: Int,
-    val widthItemCount: Int
+data class CellsModel(
+    val list: List<CellSchema>,
+    val columnItemCount: Int,
+    val rawItemCount: Int
 )
 
-data class Board(
+data class CellSchema(
     val size: BoardSize,
-    val number: Int,
+    val number: Long,
     val usable: Boolean
 )
 
@@ -24,6 +24,13 @@ enum class BoardSize(val ratioHeight: Int, val ratioWidth: Int) {
             M -> 1
             L -> 2
             XL -> 3
+        }
+
+        fun fromString(s: String) = when(s.lowercase()){
+            "xl" -> XL
+            "l" -> L
+            "m" -> M
+            else -> S
         }
 
         fun getType(type: Int) = when(type){

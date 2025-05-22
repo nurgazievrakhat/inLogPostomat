@@ -7,6 +7,9 @@ import javax.inject.Inject
 @HiltViewModel
 class LeaveParcelViewModel@Inject constructor(): ViewModel() {
 
+    var receiverPhoneNumber: String = ""
     var phoneNumber: String = ""
+    var selectedCell: SelectedCell ?= null
+    var transactionId: String = ""
 
 }

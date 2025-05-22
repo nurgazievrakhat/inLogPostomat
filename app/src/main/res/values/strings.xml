@@ -23,4 +23,22 @@
     <string name="text_policy_first_link">с условиями оферты </string>
     <string name="text_policy_after_link">и </string>
     <string name="text_policy_second_link">политикой конфиденциальности.</string>
+    <string name="text_something_went_wrong">Что-то пошло нет так, попробуйте позже</string>
+    <string name="text_wrong_phone_number">Неверный номер телефона</string>
+    <string name="text_not_full_sms_code">Смс код состоит из 6 цифр</string>
+    <string name="text_wrong_sms_code">Неверный смс код</string>
+    <string name="text_choose_receiver">Пожайлуста выберите получателя</string>
+    <string name="text_choose_cell_size">Выберите размер ячейки</string>
+    <string name="text_cell_size_title">Ячейки %1$s</string>
+    <string name="text_cell_size_s">47х15х9см</string>
+    <string name="text_cell_size_m">47х34х9см</string>
+    <string name="text_cell_size_l">47х34х20см</string>
+    <string name="text_cell_size_xl">47х34х33см</string>
+    <string name="text_cell_s_amount">20 cом/сутки</string>
+    <string name="text_cell_m_amount">40 cом/сутки</string>
+    <string name="text_cell_l_amount">60 cом/сутки</string>
+    <string name="text_cell_xl_amount">80 cом/сутки</string>
+    <string name="text_contains_free_cell">Есть свободные ячейки</string>
+    <string name="text_not_contains_free_cell">Нет свободных ячеек</string>
+    <string name="text_leave_parcel">Я оставил(-а) посылку</string>
 </resources>

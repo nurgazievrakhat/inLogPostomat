@@ -9,38 +9,47 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentReceiverBinding
+import com.example.sampleusbproject.presentation.base.BaseFragment
 import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
 import com.example.sampleusbproject.utils.getColorStateList
+import com.example.sampleusbproject.utils.makeToast
 import com.google.android.material.button.MaterialButton
 
-class ReceiverFragment : Fragment(R.layout.fragment_receiver) {
+class ReceiverFragment : BaseFragment<FragmentReceiverBinding>(
+    R.layout.fragment_receiver,
+    FragmentReceiverBinding::inflate
+) {
 
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
-    private var _binding: FragmentReceiverBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentReceiverBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private var self: Boolean? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnAnother.setOnClickListener {
             deselect(binding.btnSelf)
             selected(binding.btnAnother)
+            self = false
         }
         binding.btnSelf.setOnClickListener {
             deselect(binding.btnAnother)
             selected(binding.btnSelf)
+            self = true
+        }
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
         }
         binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.action_receiverFragment_to_enterReceiverPhoneNumberFragment2)
+            if (self == null)
+                makeToast(R.string.text_choose_receiver)
+            else {
+                val receiverPhone = if (self!!) commonViewModel.phoneNumber else ""
+                commonViewModel.receiverPhoneNumber = receiverPhone
+                if (self!!)
+                    findNavController().navigate(R.id.action_receiverFragment_to_selectCellFragment)
+                else
+                    findNavController().navigate(R.id.action_receiverFragment_to_enterReceiverPhoneNumberFragment2)
+            }
         }
     }
 

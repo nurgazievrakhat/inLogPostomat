@@ -1,5 +1,6 @@
 package com.example.sampleusbproject.domain.remote.socket
 
+import com.example.sampleusbproject.data.local.entity.PostomatInfoEntity
 import com.example.sampleusbproject.data.remote.socket.SocketStatus
 import com.example.sampleusbproject.domain.remote.socket.model.CellData
 import com.example.sampleusbproject.domain.remote.socket.model.CellStatus
@@ -30,5 +31,6 @@ interface SocketRepository {
     fun emit(event: String, data: Any? = null)
 
     //room
-    fun getPostamatsLocal(id: String) : Flow<List<PostomatInfo>>
+    suspend fun getPostamatsLocal(id: String) : PostomatInfoEntity?
+    fun observePostamatsLocal() : Flow<List<PostomatInfoEntity>>
 }

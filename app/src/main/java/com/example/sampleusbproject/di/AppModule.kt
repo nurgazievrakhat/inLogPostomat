@@ -8,6 +8,7 @@ import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.data.local.AppDatabase
 import com.example.sampleusbproject.data.local.dao.PostomatInfoDao
 import com.example.sampleusbproject.data.remote.BaseService
+import com.example.sampleusbproject.data.remote.PostomatService
 import com.example.sampleusbproject.data.remote.interceptors.TokenInterceptor
 import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
@@ -54,6 +55,14 @@ class AppModule {
             .addInterceptor(tokenInterceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePostomatService(
+        @Named("Authorized") okHttpClient: OkHttpClient
+    ): PostomatService {
+        return createRetrofitClient(URL_BASE, okHttpClient).create(PostomatService::class.java)
     }
 
     @Provides

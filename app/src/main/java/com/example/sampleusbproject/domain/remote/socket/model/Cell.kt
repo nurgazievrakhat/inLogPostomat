@@ -10,7 +10,7 @@ data class Cell(
     val id: String,
     val isActive: Boolean,
     val isOpen: Boolean,
-    val number: Int,
+    val number: Long,
     val postomatId: String,
     val size: String,
     val title: String,

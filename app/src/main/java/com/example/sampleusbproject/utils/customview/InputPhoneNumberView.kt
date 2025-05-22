@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.LayoutInputPhoneNumberBinding
@@ -41,6 +42,14 @@ class InputPhoneNumberView : ConstraintLayout {
 
     }
 
+    private val phoneLength = 9
+
+    var showError: String = ""
+        set(value) {
+            showError(value)
+            field = value
+        }
+
     init {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.layout_input_phone_number, this, true)
@@ -50,17 +59,30 @@ class InputPhoneNumberView : ConstraintLayout {
         setUpListeners()
     }
 
-    fun showError() {
-        binding.etPhoneNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
-        binding.tvCodeHint.setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
-        binding.containerPhone.background = ResourcesCompat.getDrawable(
-            resources,
-            R.drawable.bg_error_input_phone,
-            context.theme
-        )
+    private fun showError(errorString: String) {
+        if (binding.tvError.isVisible) {
+            binding.tvError.text = errorString
+        } else {
+            binding.tvError.visible()
+            binding.tvError.text = errorString
+            binding.etPhoneNumber.setTextColor(
+                ResourcesCompat.getColor(
+                    resources,
+                    R.color.red,
+                    null
+                )
+            )
+            binding.tvCodeHint.setTextColor(ResourcesCompat.getColor(resources, R.color.red, null))
+            binding.containerPhone.background = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.bg_error_input_phone,
+                context.theme
+            )
+        }
     }
 
     fun hideError() {
+        binding.tvError.gone()
         binding.etPhoneNumber.setTextColor(
             ResourcesCompat.getColor(resources, R.color.black, null)
         )
@@ -83,6 +105,7 @@ class InputPhoneNumberView : ConstraintLayout {
 
     private fun setUpListeners() {
         binding.etPhoneNumber.addTextChangedListener {
+            binding.tvError.gone()
             if (it.toString().isBlank())
                 binding.etPhoneNumber.gone()
             else {
@@ -146,5 +169,7 @@ class InputPhoneNumberView : ConstraintLayout {
         phoneNumberFormatWatcher.installOn(binding.etPhoneNumber)
     }
 
-    fun getRawPhoneNumber() = "996${phoneNumberFormatWatcher.mask.toUnformattedString()}"
+    fun isFilled() = phoneNumberFormatWatcher.mask.toUnformattedString().length == phoneLength
+
+    fun getRawPhoneNumber() = "+996${phoneNumberFormatWatcher.mask.toUnformattedString()}"
 }
