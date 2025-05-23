@@ -11,11 +11,12 @@ import com.example.sampleusbproject.utils.setLinkedText
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EnterPhoneNumberFragment: BaseViewModelFragment<EnterPhoneNumberViewModel, FragmentEnterPhoneNumberBinding>(
-    R.layout.fragment_enter_number,
-    EnterPhoneNumberViewModel::class.java,
-    FragmentEnterPhoneNumberBinding::inflate
-) {
+class EnterPhoneNumberFragment :
+    BaseViewModelFragment<EnterPhoneNumberViewModel, FragmentEnterPhoneNumberBinding>(
+        R.layout.fragment_enter_number,
+        EnterPhoneNumberViewModel::class.java,
+        FragmentEnterPhoneNumberBinding::inflate
+    ) {
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
     override fun initialize() {
@@ -26,10 +27,10 @@ class EnterPhoneNumberFragment: BaseViewModelFragment<EnterPhoneNumberViewModel,
             secondLinkText = requireContext().getString(R.string.text_policy_second_link),
             textEnd = "",
             onSecondLinkClick = {
-
+                findNavController().navigate(R.id.privacyPoliceDialogFragment)
             },
             onLinkClick = {
-
+                findNavController().navigate(R.id.termsOfOfferDialogFragment)
             }
         )
     }
@@ -49,10 +50,10 @@ class EnterPhoneNumberFragment: BaseViewModelFragment<EnterPhoneNumberViewModel,
     }
 
     override fun setupSubscribers() {
-        viewModel.errorEvent.observe(viewLifecycleOwner){
+        viewModel.errorEvent.observe(viewLifecycleOwner) {
             makeToast(R.string.text_something_went_wrong)
         }
-        viewModel.onSuccessEvent.observe(viewLifecycleOwner){
+        viewModel.onSuccessEvent.observe(viewLifecycleOwner) {
             commonViewModel.phoneNumber = binding.etPhoneNumber.getRawPhoneNumber()
             findNavController().navigate(R.id.action_enterPhoneNumberFragment_to_enterSmsCodeFragment)
         }
@@ -60,12 +61,10 @@ class EnterPhoneNumberFragment: BaseViewModelFragment<EnterPhoneNumberViewModel,
         binding.btnContinue.setOnClickListener {
             val isFilled = binding.etPhoneNumber.isFilled()
             if (!isFilled)
-                binding.etPhoneNumber.showError = requireContext().getString(R.string.text_wrong_phone_number)
-            else {
-                commonViewModel.phoneNumber = binding.etPhoneNumber.getRawPhoneNumber()
-                findNavController().navigate(R.id.action_enterPhoneNumberFragment_to_enterSmsCodeFragment)
-//                viewModel.sendSmsCode(phone = binding.etPhoneNumber.getRawPhoneNumber())
-            }
+                binding.etPhoneNumber.showError =
+                    requireContext().getString(R.string.text_wrong_phone_number)
+            else
+                viewModel.sendSmsCode(phone = binding.etPhoneNumber.getRawPhoneNumber())
         }
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack(R.id.enterPhoneNumberFragment, false)

@@ -18,7 +18,7 @@ data class SelectCellModel(
 // because user can only select size, not cell
 fun List<FreeCellModel>.mapToUi(): List<SelectCellModel> {
     val filteredList = this
-//        .filter { it.forRentAvailable }
+        .filter { it.forRentAvailable }
         .groupBy { it.size }
 
     val newList = filteredList.mapValues {

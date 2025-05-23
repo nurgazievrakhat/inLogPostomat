@@ -10,7 +10,7 @@ import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EnterSmsCodeFragment: BaseViewModelFragment<EnterSmsCodeViewModel, FragmentSmsCodeBinding>(
+class EnterSmsCodeFragment : BaseViewModelFragment<EnterSmsCodeViewModel, FragmentSmsCodeBinding>(
     R.layout.fragment_sms_code,
     EnterSmsCodeViewModel::class.java,
     FragmentSmsCodeBinding::inflate
@@ -21,10 +21,10 @@ class EnterSmsCodeFragment: BaseViewModelFragment<EnterSmsCodeViewModel, Fragmen
         binding.btnContinue.setOnClickListener {
             val code = binding.etCodeInput.text.toString()
             if (code.length < 6)
-                binding.etCodeInput.error = requireContext().getString(R.string.text_not_full_sms_code)
+                binding.etCodeInput.error =
+                    requireContext().getString(R.string.text_not_full_sms_code)
             else
-                findNavController().navigate(R.id.action_enterSmsCodeFragment_to_receiverFragment)
-//                viewModel.sendSmsCode(commonViewModel.phoneNumber, code)
+                viewModel.sendSmsCode(commonViewModel.phoneNumber, code)
         }
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -35,13 +35,13 @@ class EnterSmsCodeFragment: BaseViewModelFragment<EnterSmsCodeViewModel, Fragmen
         binding.keypadGrid.setOnKeyClickListener {
             binding.etCodeInput.text.append(it)
         }
-        viewModel.errorEvent.observe(viewLifecycleOwner){
+        viewModel.errorEvent.observe(viewLifecycleOwner) {
             if (true)
                 binding.etCodeInput.error = requireContext().getString(R.string.text_wrong_sms_code)
             else
                 makeToast(R.string.text_something_went_wrong)
         }
-        viewModel.onSuccessEvent.observe(viewLifecycleOwner){
+        viewModel.onSuccessEvent.observe(viewLifecycleOwner) {
             findNavController().navigate(R.id.action_enterSmsCodeFragment_to_receiverFragment)
         }
     }

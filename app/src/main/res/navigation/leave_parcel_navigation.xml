@@ -67,5 +67,13 @@
             android:id="@+id/action_selectCellFragment_to_leaveParcelOpenedBoardFragment"
             app:destination="@id/leaveParcelOpenedBoardFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/privacyPoliceDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.policy.PrivacyPoliceDialogFragment"
+        android:label="PrivacyPoliceDialogFragment" />
+    <dialog
+        android:id="@+id/termsOfOfferDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.policy.TermsOfOfferDialogFragment"
+        android:label="TermsOfOfferDialogFragment" />
 
 </navigation>

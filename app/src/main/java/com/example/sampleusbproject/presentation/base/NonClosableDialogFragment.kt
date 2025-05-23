@@ -15,7 +15,9 @@ import androidx.viewbinding.ViewBinding
 import com.example.sampleusbproject.utils.setSize
 
 abstract class NonClosableDialogFragment<Binding : ViewBinding>(
-    private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> Binding
+    private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> Binding,
+    private val width: Int = 755,
+    private val height: Int = 400
 ) : AppCompatDialogFragment() {
 
     protected lateinit var binding: Binding
@@ -32,7 +34,7 @@ abstract class NonClosableDialogFragment<Binding : ViewBinding>(
     override fun onStart() {
         super.onStart()
 
-        setSize(755, 400)
+        setSize(width, height)
     }
 
     override fun onCreateView(

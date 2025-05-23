@@ -20,6 +20,7 @@ class EnterReceiverPhoneNumberFragment : BaseFragment<FragmentEnterPhoneNumberBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvPolicy.gone()
+        binding.tvTitle.text = requireContext().getString(R.string.text_enter_receiver_phone_number)
         binding.keypadGrid.setOnKeyClickListener {
             binding.etPhoneNumber.input(it)
         }

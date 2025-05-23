@@ -2,6 +2,7 @@ package com.example.sampleusbproject.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.SystemClock
 import android.text.SpannableString
 import android.text.Spanned
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.sampleusbproject.R
@@ -71,10 +73,15 @@ fun TextView.setLinkedText(
     onSecondLinkClick: (() -> Unit?)?,
     onLinkClick: () -> Unit
 ) {
+
+    this.highlightColor = ContextCompat.getColor(context, R.color.transparent)
+
     val clickableSpan = object : ClickableSpan() {
         override fun updateDrawState(ds: TextPaint) {
             super.updateDrawState(ds)
             ds.color = resources.getColor(R.color.blue_baby, null)
+            ds.isUnderlineText = false     // без подчеркивания
+            ds.bgColor = Color.TRANSPARENT // на всякий случай фон тоже прозрачный
         }
 
         override fun onClick(widget: View) {
@@ -91,6 +98,8 @@ fun TextView.setLinkedText(
         override fun updateDrawState(ds: TextPaint) {
             super.updateDrawState(ds)
             ds.color = resources.getColor(R.color.blue, null)
+            ds.isUnderlineText = false     // без подчеркивания
+            ds.bgColor = Color.TRANSPARENT // на всякий случай фон тоже прозрачный
         }
 
         override fun onClick(widget: View) {

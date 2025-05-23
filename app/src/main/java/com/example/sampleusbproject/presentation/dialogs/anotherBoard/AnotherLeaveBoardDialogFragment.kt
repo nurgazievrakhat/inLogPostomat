@@ -12,8 +12,11 @@ class AnotherLeaveBoardDialogFragment:
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivClose.setOnClickListener {
+        binding.btnChange.setOnClickListener {
             findNavController().popBackStack(R.id.selectCellFragment, false)
+        }
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
