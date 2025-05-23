@@ -112,7 +112,6 @@ class AppModule {
     ) = database.postomatInfoDao()
 
     @Provides
-    @Singleton
     fun provideBoard(@ApplicationContext context: Context): LockerBoardInterface {
         return LockBoardFactory.createBoard(context, LockBoardFactory.BOARD_TYPE_NEW)
     }
