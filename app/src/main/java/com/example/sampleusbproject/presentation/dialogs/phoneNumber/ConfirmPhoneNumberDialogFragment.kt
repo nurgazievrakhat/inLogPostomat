@@ -31,7 +31,7 @@ class ConfirmPhoneNumberDialogFragment: NonClosableDialogFragment<DialogConfirmP
         binding.tvPhone.text = commonViewModel.receiverPhoneNumber.removePrefix("996")
 
         binding.btnOk.setOnClickListener {
-            findNavController().navigate(R.id.action_confirmPhoneNumberDialogFragment_to_selectCellFragment)
+            findNavController().navigate(R.id.action_confirmPhoneNumberDialogFragment_to_choosePayerAndDaysFragment)
         }
         binding.ivClose.setOnClickListener {
             onBack()

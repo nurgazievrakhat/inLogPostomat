@@ -1,10 +1,12 @@
-package com.example.sampleusbproject.presentation.cell
+package com.example.sampleusbproject.presentation.cell.tariff
 
 import androidx.lifecycle.viewModelScope
 import com.example.sampleusbproject.data.remote.Either
 import com.example.sampleusbproject.domain.models.CreateOrderModel
 import com.example.sampleusbproject.domain.remote.PostomatRepository
 import com.example.sampleusbproject.presentation.base.BaseViewModel
+import com.example.sampleusbproject.presentation.cell.SelectCellModel
+import com.example.sampleusbproject.presentation.cell.mapToUi
 import com.example.sampleusbproject.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,9 +16,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectCellViewModel @Inject constructor(
+class SelectCellWithAmountViewModel@Inject constructor(
     private val postomatRepository: PostomatRepository
-) : BaseViewModel() {
+): BaseViewModel() {
 
     private val _freeCells = MutableStateFlow<List<SelectCellModel>>(listOf())
     val freeCells = _freeCells.asStateFlow()
@@ -25,12 +27,12 @@ class SelectCellViewModel @Inject constructor(
 
     val errorEvent = SingleLiveEvent<Boolean>()
 
-    fun getFreCells() {
+    fun getFreCells(){
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
             val response = postomatRepository.getFreeCells()
             _alertLiveData.postValue(false)
-            when (response) {
+            when(response){
                 is Either.Left -> errorEvent.postValue(true)
                 is Either.Right -> _freeCells.value = response.value.mapToUi()
             }

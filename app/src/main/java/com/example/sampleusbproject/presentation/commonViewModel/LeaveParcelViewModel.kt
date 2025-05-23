@@ -10,6 +10,8 @@ class LeaveParcelViewModel@Inject constructor(): ViewModel() {
     var receiverPhoneNumber: String = ""
     var phoneNumber: String = ""
     var selectedCell: SelectedCell ?= null
+    var days: Int = -1
+    var sumOfPay = 0
     var transactionId: String = ""
 
 }

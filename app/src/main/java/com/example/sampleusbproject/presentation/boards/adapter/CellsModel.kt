@@ -12,11 +12,11 @@ data class CellSchema(
     val usable: Boolean
 )
 
-enum class BoardSize(val ratioHeight: Int, val ratioWidth: Int) {
-    S(1, 1),
-    M(1, 2),
-    L(2, 2),
-    XL(3, 2);
+enum class BoardSize(val ratioHeight: Int, val ratioWidth: Int,val amount: Int) {
+    S(1, 1, 20),
+    M(1, 2, 30),
+    L(2, 2, 40),
+    XL(3, 2, 50);
 
     companion object {
         fun getIntType(b: BoardSize) = when(b){

@@ -28,16 +28,16 @@
             android:id="@+id/action_receiverFragment_to_enterReceiverPhoneNumberFragment2"
             app:destination="@id/enterReceiverPhoneNumberFragment" />
         <action
-            android:id="@+id/action_receiverFragment_to_selectCellFragment"
-            app:destination="@id/selectCellFragment" />
+            android:id="@+id/action_receiverFragment_to_selectCellWithAmountFragment"
+            app:destination="@id/selectCellWithAmountFragment" />
     </fragment>
     <dialog
         android:id="@+id/confirmPhoneNumberDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.phoneNumber.ConfirmPhoneNumberDialogFragment"
         android:label="ConfirmPhoneNumberDialogFragment" >
         <action
-            android:id="@+id/action_confirmPhoneNumberDialogFragment_to_selectCellFragment"
-            app:destination="@id/selectCellFragment" />
+            android:id="@+id/action_confirmPhoneNumberDialogFragment_to_choosePayerAndDaysFragment"
+            app:destination="@id/choosePayerAndDaysFragment" />
     </dialog>
     <fragment
         android:id="@+id/leaveParcelOpenedBoardFragment"
@@ -75,5 +75,24 @@
         android:id="@+id/termsOfOfferDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.policy.TermsOfOfferDialogFragment"
         android:label="TermsOfOfferDialogFragment" />
+    <fragment
+        android:id="@+id/choosePayerAndDaysFragment"
+        android:name="com.example.sampleusbproject.presentation.days.ChoosePayerAndDaysFragment"
+        android:label="ChoosePayerAndDaysFragment" >
+        <action
+            android:id="@+id/action_choosePayerAndDaysFragment_to_selectCellFragment"
+            app:destination="@id/selectCellFragment" />
+        <action
+            android:id="@+id/action_choosePayerAndDaysFragment_to_selectCellWithAmountFragment"
+            app:destination="@id/selectCellWithAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectCellWithAmountFragment"
+        android:name="com.example.sampleusbproject.presentation.cell.tariff.SelectCellWithAmountFragment"
+        android:label="SelectCellWithAmountFragment" >
+        <action
+            android:id="@+id/action_selectCellWithAmountFragment_to_leaveParcelOpenedBoardFragment"
+            app:destination="@id/leaveParcelOpenedBoardFragment" />
+    </fragment>
 
 </navigation>

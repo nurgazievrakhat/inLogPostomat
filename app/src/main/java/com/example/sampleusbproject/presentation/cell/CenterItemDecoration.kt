@@ -48,11 +48,10 @@ class CenterItemDecoration() : RecyclerView.ItemDecoration() {
                 parent.adapter!!.itemCount > 1
             ) {
                 outRect.right = spaceAround.toInt()
-                outRect.left = itemSpace.toInt()
             }
         }
 
-        if (adapterPosition != 0 && adapterPosition != parent.adapter!!.itemCount - 1 && parent.adapter!!.itemCount > 1)
+        if (adapterPosition != 0)
             outRect.left = itemSpace.toInt()
     }
 }

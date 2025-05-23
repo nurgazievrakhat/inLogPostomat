@@ -6,10 +6,13 @@ import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.LayoutSelectCellSizeBinding
+import com.example.sampleusbproject.utils.gone
+import com.example.sampleusbproject.utils.visible
 
 class SelectCellViewHolder(
     private val binding: LayoutSelectCellSizeBinding,
-    val onClick: (Int, SelectCellModel) -> Unit
+    val onClick: (Int, SelectCellModel) -> Unit,
+    val withAmount: Boolean
 ) : ViewHolder(
     binding.root
 ) {
@@ -19,6 +22,15 @@ class SelectCellViewHolder(
             binding.root.context.getString(R.string.text_cell_size_title),
             model.boardSize.name
         )
+        if (withAmount){
+            binding.tvAmount.text = String.format(
+                binding.root.context.getString(R.string.text_cell_amount),
+                model.boardSize.amount.toString()
+            )
+            binding.tvAmount.visible()
+        } else {
+            binding.tvAmount.gone()
+        }
         if (!model.isAvailableToChoose()) {
             binding.container.alpha = 0.4f
             binding.btnChoose.setImageResource(R.drawable.iv_select_cell_inactive)

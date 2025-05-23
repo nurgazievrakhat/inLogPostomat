@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="217dp"
-    android:layout_height="367dp"
+    android:layout_height="match_parent"
     app:cardBackgroundColor="@color/blue_light"
     app:cardCornerRadius="16dp"
     app:strokeColor="@color/black_10"
@@ -28,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/inter_tight_bold_700"
             android:includeFontPadding="false"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/shadow_black"
             android:text="@string/text_cell_size_title"
+            android:textColor="@color/shadow_black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_choose" />
@@ -42,26 +43,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:fontFamily="@font/inter_tight_medium_500"
             android:includeFontPadding="false"
-            android:textSize="16sp"
-            android:textColor="@color/shadow_black"
             android:text="47х34х9см"
+            android:textColor="@color/shadow_black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_tight_bold_700"
+            android:includeFontPadding="false"
+            android:textColor="@color/dark_blue"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_size"
+            tools:text="20 сом/сутки" />
+
+        <TextView
             android:id="@+id/tv_cell_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_tight_medium_500"
             android:includeFontPadding="false"
-            android:textSize="16sp"
-            android:textColor="@color/black_30"
             android:text="Свободных ячеек нет"
+            android:textColor="@color/black_30"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_size" />
+            app:layout_constraintTop_toBottomOf="@id/tv_amount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

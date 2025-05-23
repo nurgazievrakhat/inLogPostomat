@@ -6,7 +6,7 @@ import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
 data class SelectCellModel(
     val cellId: String ?= null,
     val number: Long ?= null,
-    val isSelected: Boolean = false,
+    var isSelected: Boolean = false,
     val boardSize: BoardSize
 ) {
 

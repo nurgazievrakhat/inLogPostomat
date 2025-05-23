@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Контакт справа вверху -->
+    <LinearLayout
+        android:id="@+id/contactBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvSupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Круглосуточная поддержка"
+            android:textColor="#222B45"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="+995 550 500 500"
+            android:textColor="#3386E6"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/inter_tight_bold_700"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_payer_and_days"
+        android:textColor="@color/dark_blue"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoImage" />
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/tvTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/inter_tight_medium_500"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_who_will_pay"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/btn_self"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_self"
+        style="@style/BlueRoundedBtn"
+        android:layout_width="323dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/text_pay_by_self"
+        app:layout_constraintEnd_toStartOf="@id/btn_other"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_other"
+        style="@style/LightBlueRoundedBtn"
+        android:layout_width="323dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/text_pay_other"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_self"
+        app:layout_constraintTop_toTopOf="@id/btn_self" />
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/inter_tight_medium_500"
+        android:includeFontPadding="false"
+        android:text="@string/text_days_count_depends_of_payer"
+        android:textColor="@color/black"
+        android:alpha="0.4"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/tvTitle2"
+        app:layout_constraintTop_toBottomOf="@id/btn_self" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:alpha="0.4"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_day_choose"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/tv_info"
+        app:layout_constraintEnd_toEndOf="@id/btn_other"
+        app:layout_constraintTop_toTopOf="@id/tv_info" />
+
+    <TextView
+        android:id="@+id/tv_days_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:alpha="0.4"
+        android:fontFamily="@font/inter_tight_medium_500"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.02"
+        android:text="@string/text_days_info"
+        android:textColor="@color/blue_baby"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/btn_other"
+        app:layout_constraintStart_toStartOf="@id/btn_self"
+        app:layout_constraintTop_toBottomOf="@id/tv_info" />
+
+    <!-- Кнопки внизу -->
+    <Button
+        android:id="@+id/btnBack"
+        style="@style/WhiteRoundedBtn"
+        android:layout_width="240dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="Назад"
+        android:textColor="#BDBDBD"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnContinue"
+        style="@style/BlueRoundedBtn"
+        android:layout_width="240dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="Продолжить"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

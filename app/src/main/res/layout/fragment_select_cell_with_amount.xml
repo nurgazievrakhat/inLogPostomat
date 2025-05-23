@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:gravity="center"
-        android:text="@string/text_choose_size_of_parcel"
+        android:text="@string/text_choose_size_of_parcel_and_day"
         android:textColor="#181C4A"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -67,14 +67,66 @@
         android:layout_width="0dp"
         android:layout_height="352dp"
         android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        tools:itemCount="4"
-        tools:listitem="@layout/layout_select_cell_size"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:itemCount="4"
+        tools:listitem="@layout/layout_select_cell_size" />
+
+    <TextView
+        android:id="@+id/tv_days_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="186dp"
+        android:layout_marginTop="26dp"
+        android:fontFamily="@font/inter_tight_medium_500"
+        android:includeFontPadding="false"
+        android:text="@string/text_rent_in_days"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_cells" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="186dp"
+        android:alpha="0.4"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/tv_days_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_days_title"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_day_choose" />
+
+    <TextView
+        android:id="@+id/tv_to_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/inter_tight_semi_bold_600"
+        android:text="@string/text_to_pay"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@id/tv_days_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_days_title" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/inter_tight_semi_bold_600"
+        tools:text="120 сом"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_to_pay"
+        app:layout_constraintEnd_toEndOf="@id/rv_days" />
 
     <!-- Кнопки внизу -->
     <Button

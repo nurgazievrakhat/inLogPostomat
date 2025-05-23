@@ -46,7 +46,7 @@ class ReceiverFragment : BaseFragment<FragmentReceiverBinding>(
                 val receiverPhone = if (self!!) commonViewModel.phoneNumber else ""
                 commonViewModel.receiverPhoneNumber = receiverPhone
                 if (self!!)
-                    findNavController().navigate(R.id.action_receiverFragment_to_selectCellFragment)
+                    findNavController().navigate(R.id.action_receiverFragment_to_selectCellWithAmountFragment)
                 else
                     findNavController().navigate(R.id.action_receiverFragment_to_enterReceiverPhoneNumberFragment2)
             }

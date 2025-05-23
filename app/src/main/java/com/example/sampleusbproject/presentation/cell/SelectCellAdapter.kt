@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.sampleusbproject.databinding.LayoutSelectCellSizeBinding
 
 class SelectCellAdapter(
-    val onClick: (Int, SelectCellModel) -> Unit
+    val onClick: (Int, SelectCellModel) -> Unit,
+    val withAmount: Boolean
 ): ListAdapter<SelectCellModel, SelectCellViewHolder>(SelectCellDiff()) {
 
     class SelectCellDiff: DiffUtil.ItemCallback<SelectCellModel>() {
@@ -26,7 +27,7 @@ class SelectCellAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectCellViewHolder {
         val binding = LayoutSelectCellSizeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SelectCellViewHolder(binding, onClick)
+        return SelectCellViewHolder(binding, onClick, withAmount)
     }
 
     override fun onBindViewHolder(holder: SelectCellViewHolder, position: Int) {

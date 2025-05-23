@@ -26,7 +26,7 @@ class SelectCellFragment :
     private var prevSelectedPos: Int = -1
 
     private val adapter: SelectCellAdapter by lazy {
-        SelectCellAdapter(this::onClick)
+        SelectCellAdapter(this::onClick, false)
     }
 
     private fun onClick(pos: Int, model: SelectCellModel) {
@@ -34,16 +34,16 @@ class SelectCellFragment :
             return
 
         if (prevSelectedPos > -1) {
-            select(false, prevSelectedPos, model)
+            select(false, prevSelectedPos)
         }
 
-        select(true, pos, model)
+        select(true, pos)
+        prevSelectedPos = pos
     }
 
-    private fun select(isSelected: Boolean, pos: Int, model: SelectCellModel) {
+    private fun select(isSelected: Boolean, pos: Int) {
         val list = adapter.currentList.toMutableList()
-        list[pos] = model.copy(isSelected = isSelected)
-        adapter.submitList(list)
+        list[pos].isSelected = isSelected
         adapter.notifyItemChanged(pos)
     }
 
@@ -55,21 +55,32 @@ class SelectCellFragment :
 
     override fun setupListeners() {
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack(R.id.receiverFragment, false)
+            findNavController().popBackStack()
         }
         binding.btnContinue.setOnClickListener {
             val selected = adapter.currentList.find { it.isSelected }
             if (selected != null) {
+                prevSelectedPos = -1
                 commonViewModel.selectedCell = SelectedCell(
                     selected.cellId ?: "",
                     number = selected.number ?: 0L
                 )
-                findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
+                viewModel.createOrder(
+                    selected.cellId ?: "",
+                    commonViewModel.phoneNumber,
+                    commonViewModel.receiverPhoneNumber,
+                    commonViewModel.days
+                )
+            } else {
+                makeToast(R.string.text_choose_size_error)
             }
         }
     }
 
     override fun setupSubscribers() {
+        viewModel.createSuccessEvent.observe(viewLifecycleOwner){
+            findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
+        }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
             makeToast(R.string.text_something_went_wrong)
         }

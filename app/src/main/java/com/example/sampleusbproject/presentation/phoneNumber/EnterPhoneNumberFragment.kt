@@ -66,8 +66,5 @@ class EnterPhoneNumberFragment :
             else
                 viewModel.sendSmsCode(phone = binding.etPhoneNumber.getRawPhoneNumber())
         }
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack(R.id.enterPhoneNumberFragment, false)
-        }
     }
 }
