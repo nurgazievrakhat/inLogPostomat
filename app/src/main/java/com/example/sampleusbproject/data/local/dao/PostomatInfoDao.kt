@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.sampleusbproject.data.local.entity.PostomatInfoEntity
 import com.example.sampleusbproject.data.local.converter.CellListConverter
+import com.example.sampleusbproject.domain.remote.socket.model.Cell
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,6 +16,9 @@ interface PostomatInfoDao {
 
     @Query("SELECT * FROM postomat_info WHERE id = :id")
     suspend fun getPostomatInfo(id: String): PostomatInfoEntity?
+
+    @Query("SELECT * FROM postomat_info")
+    suspend fun getPostomats(): List<PostomatInfoEntity>?
 
     @Query("SELECT * FROM postomat_info")
     fun observePostomatInfo(): Flow<List<PostomatInfoEntity>>

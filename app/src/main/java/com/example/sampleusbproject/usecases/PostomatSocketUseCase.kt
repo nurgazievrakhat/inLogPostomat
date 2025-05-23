@@ -1,6 +1,5 @@
 package com.example.sampleusbproject.usecases
 
-import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
 import com.example.sampleusbproject.domain.remote.socket.model.CellData
 import com.example.sampleusbproject.domain.remote.socket.model.CellStatus
@@ -46,6 +45,8 @@ class PostomatSocketUseCase @Inject constructor(
     fun observePostomatUpdates(onUpdated: () -> Unit) {
         socketRepository.onPostomatUpdated(onUpdated)
     }
+
+    suspend fun getPostomatCellById(cellId: String) = socketRepository.getPostomatCellById(cellId)
 
     suspend fun getPostamatCellLocal(id: String) = socketRepository.getPostamatsLocal(id)
     fun observePostamatCellLocal() = socketRepository.observePostamatsLocal()

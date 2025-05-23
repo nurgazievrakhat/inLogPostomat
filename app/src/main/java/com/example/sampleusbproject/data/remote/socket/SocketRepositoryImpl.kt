@@ -1,10 +1,10 @@
 package com.example.sampleusbproject.data.remote.socket
 
-import android.util.Log
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.data.local.entity.PostomatInfoEntity
 import com.example.sampleusbproject.domain.remote.socket.SocketEvents
 import com.example.sampleusbproject.domain.remote.socket.SocketRepository
+import com.example.sampleusbproject.domain.remote.socket.model.Cell
 import com.example.sampleusbproject.domain.remote.socket.model.CellData
 import com.example.sampleusbproject.domain.remote.socket.model.CellStatus
 import com.example.sampleusbproject.domain.remote.socket.model.CellsDto
@@ -12,18 +12,15 @@ import com.example.sampleusbproject.domain.remote.socket.model.CommandInfo
 import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
 import com.example.sampleusbproject.domain.remote.socket.model.ResponseDeserializer
 import com.example.sampleusbproject.utils.CommonPrefs
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
-import io.socket.engineio.client.transports.WebSocket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -228,6 +225,10 @@ class SocketRepositoryImpl @Inject constructor(
             if (it.isEmpty())
                 getPostomatInfo()
         }
+
+    override suspend fun getPostomatCellById(cellId: String): Cell? {
+        return postomatInfoMapper.getPostomatCellById(cellId)
+    }
 
     // Вспомогательные методы
     private fun registerSocketListener(event: String, listener: (Any) -> Unit) {

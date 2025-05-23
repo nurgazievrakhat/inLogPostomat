@@ -3,6 +3,8 @@ package com.example.sampleusbproject.domain.remote
 import com.example.sampleusbproject.data.remote.Either
 import com.example.sampleusbproject.domain.models.CreateOrderModel
 import com.example.sampleusbproject.domain.models.FreeCellModel
+import com.example.sampleusbproject.domain.models.GetOrderModel
+import com.example.sampleusbproject.domain.models.GetOrderType
 
 interface PostomatRepository {
 
@@ -13,5 +15,9 @@ interface PostomatRepository {
     suspend fun getFreeCells(): Either<Unit, List<FreeCellModel>>
 
     suspend fun createOrder(order: CreateOrderModel): Either<Unit, Unit>
+
+    suspend fun take(orderId: String): Either<Unit, Unit>
+
+    suspend fun getOrderByPassword(type: GetOrderType, password: String): Either<Unit, GetOrderModel>
 
 }

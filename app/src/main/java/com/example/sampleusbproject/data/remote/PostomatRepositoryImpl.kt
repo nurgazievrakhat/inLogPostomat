@@ -2,8 +2,11 @@ package com.example.sampleusbproject.data.remote
 
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
 import com.example.sampleusbproject.data.remote.dto.mapToDomain
+import com.example.sampleusbproject.data.remote.dto.mapToDto
 import com.example.sampleusbproject.domain.models.CreateOrderModel
 import com.example.sampleusbproject.domain.models.FreeCellModel
+import com.example.sampleusbproject.domain.models.GetOrderModel
+import com.example.sampleusbproject.domain.models.GetOrderType
 import com.example.sampleusbproject.domain.models.mapToDto
 import com.example.sampleusbproject.domain.remote.PostomatRepository
 import javax.inject.Inject
@@ -61,6 +64,33 @@ class PostomatRepositoryImpl @Inject constructor(
             val response = service.createOrder(order.mapToDto())
             if (response.isSuccessful && response.body() != null)
                 Either.Right(Unit)
+            else
+                Either.Left(Unit)
+        } catch (e: Exception) {
+            Either.Left(Unit)
+        }
+    }
+
+    override suspend fun take(orderId: String): Either<Unit, Unit> {
+        return try {
+            val response = service.takeOrder(orderId)
+            if (response.isSuccessful)
+                Either.Right(Unit)
+            else
+                Either.Left(Unit)
+        } catch (e: Exception) {
+            Either.Left(Unit)
+        }
+    }
+
+    override suspend fun getOrderByPassword(
+        type: GetOrderType,
+        password: String
+    ): Either<Unit, GetOrderModel> {
+        return try {
+            val response = service.getOrderByPassword(type.mapToDto(), password)
+            if (response.isSuccessful && response.body() != null)
+                Either.Right(response.body()!!.mapToDomain())
             else
                 Either.Left(Unit)
         } catch (e: Exception) {

@@ -2,6 +2,7 @@ package com.example.sampleusbproject.data
 
 import com.example.sampleusbproject.data.local.dao.PostomatInfoDao
 import com.example.sampleusbproject.data.local.entity.PostomatInfoEntity
+import com.example.sampleusbproject.domain.remote.socket.model.Cell
 import com.example.sampleusbproject.domain.remote.socket.model.PostomatInfo
 import com.example.sampleusbproject.domain.remote.socket.model.mapToBoardsModel
 import com.example.sampleusbproject.domain.remote.socket.model.mapToUi
@@ -34,6 +35,10 @@ class PostomatInfoMapper @Inject constructor(
 
     suspend fun getPostomatInfo(id: String): PostomatInfoEntity? {
         return postomatInfoDao.getPostomatInfo(id)
+    }
+
+    suspend fun getPostomatCellById(cellId: String): Cell? {
+        return postomatInfoDao.getPostomats()?.getOrNull(0)?.cells?.find { it.id == cellId }
     }
 
     fun observePostomatInfo(): Flow<List<PostomatInfoEntity>> {

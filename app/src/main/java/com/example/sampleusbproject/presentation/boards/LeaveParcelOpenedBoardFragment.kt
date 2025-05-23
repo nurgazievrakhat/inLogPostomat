@@ -37,7 +37,7 @@ class LeaveParcelOpenedBoardFragment :
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
     private val adapter: BoardsAdapter by lazy {
-        BoardsAdapter(commonViewModel.selectedCell?.number ?: 0)
+        BoardsAdapter(commonViewModel.selectedCell?.number ?: -1)
     }
 
     override fun initialize() {

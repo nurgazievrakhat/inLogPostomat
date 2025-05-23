@@ -11,32 +11,35 @@
         android:label="fragment_enter_number"
         tools:layout="@layout/fragment_enter_number">
 
-<!--        <argument-->
-<!--            android:name="type"-->
-<!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-<!--        <action-->
-<!--            android:id="@+id/action_enterNumberFragment_to_openedCourierBoardFragment"-->
-<!--            app:destination="@id/openedCourierBoardFragment" >-->
+        <!--        <argument-->
+        <!--            android:name="type"-->
+        <!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_enterNumberFragment_to_openedCourierBoardFragment"-->
+        <!--            app:destination="@id/openedCourierBoardFragment" >-->
 
-<!--            <argument-->
-<!--                android:name="type"-->
-<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-<!--        </action>-->
+        <!--            <argument-->
+        <!--                android:name="type"-->
+        <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        </action>-->
 
+        <action
+            android:id="@+id/action_enterNumberFragment_to_openedBoardFragment"
+            app:destination="@id/openedBoardFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.sampleusbproject.presentation.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
-<!--        <action-->
-<!--            android:id="@+id/action_mainFragment_to_enterNumberFragment"-->
-<!--            app:destination="@id/enterNumberFragment">-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_mainFragment_to_enterNumberFragment"-->
+        <!--            app:destination="@id/enterNumberFragment">-->
 
-<!--            <argument-->
-<!--                android:name="type"-->
-<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-<!--        </action>-->
+        <!--            <argument-->
+        <!--                android:name="type"-->
+        <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        </action>-->
     </fragment>
     <fragment
         android:id="@+id/screensaverFragment"
@@ -76,17 +79,18 @@
     <fragment
         android:id="@+id/successFragment"
         android:name="com.example.sampleusbproject.presentation.success.SuccessFragment"
-        android:label="SuccessFragment" >
+        android:label="SuccessFragment">
 
-<!--        <argument-->
-<!--            android:name="type"-->
-<!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        <argument-->
+        <!--            android:name="type"-->
+        <!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
 
     </fragment>
-    <action android:id="@+id/global_action_to_success_fragment"
+    <action
+        android:id="@+id/global_action_to_success_fragment"
+        app:destination="@id/successFragment"
         app:popUpTo="@id/leave_parcel_navigation"
-        app:popUpToInclusive="true"
-        app:destination="@id/successFragment"/>
+        app:popUpToInclusive="true" />
     <dialog
         android:id="@+id/anotherBoardDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
@@ -94,33 +98,38 @@
     <fragment
         android:id="@+id/openedBoardFragment"
         android:name="com.example.sampleusbproject.presentation.boards.OpenedBoardFragment"
-        android:label="OpenedBoardFragment" >
-<!--        <action-->
-<!--            android:id="@+id/action_openedBoardFragment_to_successFragment"-->
-<!--            app:destination="@id/successFragment" >-->
+        android:label="OpenedBoardFragment">
+        <!--        <action-->
+        <!--            android:id="@+id/action_openedBoardFragment_to_successFragment"-->
+        <!--            app:destination="@id/successFragment" >-->
 
-<!--            <argument-->
-<!--                android:name="type"-->
-<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-<!--        </action>-->
+        <!--            <argument-->
+        <!--                android:name="type"-->
+        <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        </action>-->
+        <action
+            android:id="@+id/action_openedBoardFragment_to_successFragment"
+            app:destination="@id/successFragment"
+            app:popUpTo="@id/openedBoardFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/openedCourierBoardFragment"
         android:name="com.example.sampleusbproject.presentation.boards.courier.OpenedCourierBoardFragment"
-        android:label="OpenedCourierBoardFragment" >
+        android:label="OpenedCourierBoardFragment">
 
-<!--        <argument-->
-<!--            android:name="type"-->
-<!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        <argument-->
+        <!--            android:name="type"-->
+        <!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
 
-<!--        <action-->
-<!--            android:id="@+id/action_openedCourierBoardFragment_to_successFragment"-->
-<!--            app:destination="@id/successFragment" >-->
+        <!--        <action-->
+        <!--            android:id="@+id/action_openedCourierBoardFragment_to_successFragment"-->
+        <!--            app:destination="@id/successFragment" >-->
 
-<!--            <argument-->
-<!--                android:name="type"-->
-<!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-<!--        </action>-->
+        <!--            <argument-->
+        <!--                android:name="type"-->
+        <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
+        <!--        </action>-->
     </fragment>
-    <include app:graph="@navigation/leave_parcel_navigation"/>
+    <include app:graph="@navigation/leave_parcel_navigation" />
 </navigation>

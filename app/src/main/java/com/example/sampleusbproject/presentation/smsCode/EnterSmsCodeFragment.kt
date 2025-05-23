@@ -35,6 +35,13 @@ class EnterSmsCodeFragment : BaseViewModelFragment<EnterSmsCodeViewModel, Fragme
         binding.keypadGrid.setOnKeyClickListener {
             binding.etCodeInput.text.append(it)
         }
+        binding.btnClear.setOnClickListener {
+            if (binding.etCodeInput.text.isNotEmpty())
+                binding.etCodeInput.text.delete(
+                    binding.etCodeInput.text.length - 1,
+                    binding.etCodeInput.text.length
+                )
+        }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
             if (true)
                 binding.etCodeInput.error = requireContext().getString(R.string.text_wrong_sms_code)

@@ -24,6 +24,7 @@
     <string name="text_policy_after_link">и </string>
     <string name="text_policy_second_link">политикой конфиденциальности.</string>
     <string name="text_something_went_wrong">Что-то пошло нет так, попробуйте позже</string>
+    <string name="text_order_not_found">Заказ не найден</string>
     <string name="text_enter_receiver_phone_number">Укажите номер получателя</string>
     <string name="text_wrong_phone_number">Неверный номер телефона</string>
     <string name="text_not_full_sms_code">Смс код состоит из 6 цифр</string>
