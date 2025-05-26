@@ -119,9 +119,6 @@ class SelectCellWithAmountFragment :
                 return@setOnClickListener
             }
 
-            prevCellSelectedPos = -1
-            prevDaySelectedPos = -1
-
             commonViewModel.days = selectedDay.day
             commonViewModel.selectedCell = SelectedCell(
                 selected.cellId ?: "",
@@ -139,6 +136,8 @@ class SelectCellWithAmountFragment :
 
     override fun setupSubscribers() {
         viewModel.createSuccessEvent.observe(viewLifecycleOwner){
+            prevCellSelectedPos = -1
+            prevDaySelectedPos = -1
             findNavController().navigate(R.id.action_selectCellWithAmountFragment_to_leaveParcelOpenedBoardFragment)
         }
         viewModel.errorEvent.observe(viewLifecycleOwner) {

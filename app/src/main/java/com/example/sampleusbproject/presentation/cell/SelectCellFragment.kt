@@ -60,7 +60,6 @@ class SelectCellFragment :
         binding.btnContinue.setOnClickListener {
             val selected = adapter.currentList.find { it.isSelected }
             if (selected != null) {
-                prevSelectedPos = -1
                 commonViewModel.selectedCell = SelectedCell(
                     selected.cellId ?: "",
                     number = selected.number ?: 0L
@@ -79,6 +78,7 @@ class SelectCellFragment :
 
     override fun setupSubscribers() {
         viewModel.createSuccessEvent.observe(viewLifecycleOwner){
+            prevSelectedPos = -1
             findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
         }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
