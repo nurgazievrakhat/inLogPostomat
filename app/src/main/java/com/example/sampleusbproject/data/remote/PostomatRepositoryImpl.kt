@@ -1,6 +1,7 @@
 package com.example.sampleusbproject.data.remote
 
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
+import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
 import com.example.sampleusbproject.data.remote.dto.mapToDomain
 import com.example.sampleusbproject.data.remote.dto.mapToDto
 import com.example.sampleusbproject.domain.models.CreateOrderModel
@@ -91,6 +92,23 @@ class PostomatRepositoryImpl @Inject constructor(
             val response = service.getOrderByPassword(type.mapToDto(), password)
             if (response.isSuccessful && response.body() != null)
                 Either.Right(response.body()!!.mapToDomain())
+            else
+                Either.Left(Unit)
+        } catch (e: Exception) {
+            Either.Left(Unit)
+        }
+    }
+
+    override suspend fun delivery(orderId: String, cellId: String): Either<Unit, Unit> {
+        return try {
+            val response = service.deliveryOrder(
+                orderId,
+                DeliveryOrderDto(
+                    cellId = cellId
+                )
+            )
+            if (response.isSuccessful)
+                Either.Right(Unit)
             else
                 Either.Left(Unit)
         } catch (e: Exception) {

@@ -12,6 +12,11 @@ class SelectDayViewHolder(
 ) : ViewHolder(binding.root) {
 
     fun onBind(model: SelectDay) {
+        if (model.isAvailableToSelect)
+            binding.root.alpha = 1.0f
+        else
+            binding.root.alpha = 0.4f
+
         binding.tvDay.text = model.day.toString()
         binding.root.setCardBackgroundColor(
             ContextCompat.getColor(
@@ -29,7 +34,7 @@ class SelectDayViewHolder(
             )
         )
         binding.root.setOnClickListener {
-            if (adapterPosition != -1)
+            if (adapterPosition != -1 && model.isAvailableToSelect)
                 onClick(adapterPosition, model)
         }
     }

@@ -2,19 +2,21 @@ package com.example.sampleusbproject.presentation.numberPad
 
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentEnterNumberBinding
 import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
+import com.example.sampleusbproject.presentation.commonViewModel.CourierViewModel
 import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EnterNumberFragment :
-    BaseViewModelFragment<EnterNumberViewModel, FragmentEnterNumberBinding>(
-        R.layout.fragment_enter_number,
-        EnterNumberViewModel::class.java,
-        FragmentEnterNumberBinding::inflate
-    ) {
+class EnterCourierNumberFragment: BaseViewModelFragment<EnterCourierNumberViewModel, FragmentEnterNumberBinding>(
+    R.layout.fragment_enter_number,
+    EnterCourierNumberViewModel::class.java,
+    FragmentEnterNumberBinding::inflate
+) {
+    private val commonViewModel: CourierViewModel by navGraphViewModels(R.id.courier_navigation)
 
     override fun initialize() {
         binding.etCodeInput.setOnTouchListener { v, event ->
@@ -53,7 +55,8 @@ class EnterNumberFragment :
                 makeToast(R.string.text_order_not_found)
         }
         viewModel.successEvent.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.openedBoardFragment, bundleOf("cell" to it))
+            commonViewModel.orderId = it.id
+            findNavController().navigate(R.id.courierSelectCellFragment)
         }
     }
 

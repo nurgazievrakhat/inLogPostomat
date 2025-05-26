@@ -20,4 +20,6 @@ interface PostomatRepository {
 
     suspend fun getOrderByPassword(type: GetOrderType, password: String): Either<Unit, GetOrderModel>
 
+    suspend fun delivery(orderId: String, cellId: String): Either<Unit, Unit>
+
 }

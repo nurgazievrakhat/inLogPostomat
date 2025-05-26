@@ -114,7 +114,7 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.TAKE)))
         }
         binding.btnCourier.setOnClickListener {
-            findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.COURIER)))
+            findNavController().navigate(R.id.courier_navigation)
         }
         binding.tvWelcome.setOnClickListener {
             // Запуск FinikActivity из твоей SDK

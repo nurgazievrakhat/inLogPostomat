@@ -17,6 +17,12 @@ class EnterSmsCodeFragment : BaseViewModelFragment<EnterSmsCodeViewModel, Fragme
 ) {
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
+    override fun initialize() {
+        binding.etCodeInput.setOnTouchListener { v, event ->
+            return@setOnTouchListener true
+        }
+    }
+
     override fun setupListeners() {
         binding.btnContinue.setOnClickListener {
             val code = binding.etCodeInput.text.toString()

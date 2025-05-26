@@ -31,8 +31,15 @@ class SelectCellViewHolder(
         } else {
             binding.tvAmount.gone()
         }
-        if (!model.isAvailableToChoose()) {
+        val isClickable = model.isAvailableToChoose && model.hasFreeCells()
+
+        if (isClickable){
+            binding.container.alpha = 1f
+        } else {
             binding.container.alpha = 0.4f
+        }
+
+        if (!model.hasFreeCells()) {
             binding.btnChoose.setImageResource(R.drawable.iv_select_cell_inactive)
             binding.tvCellState.text =
                 binding.root.context.getString(R.string.text_not_contains_free_cell)
@@ -40,9 +47,7 @@ class SelectCellViewHolder(
             binding.root.strokeColor =
                 ContextCompat.getColor(binding.root.context,R.color.black_10)
             binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.white))
-            binding.root.isCheckable = false
         } else {
-            binding.container.alpha = 1f
             binding.btnChoose.setImageResource(if (model.isSelected) R.drawable.iv_select_cell_active else R.drawable.iv_select_cell_inactive)
             binding.tvCellState.text =
                 binding.root.context.getString(R.string.text_contains_free_cell)
@@ -50,10 +55,9 @@ class SelectCellViewHolder(
             binding.root.strokeColor =
                 ContextCompat.getColor(binding.root.context, if (model.isSelected) R.color.blue_baby else R.color.black_10)
             binding.root.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, if (model.isSelected) R.color.blue_light else R.color.white))
-            binding.root.isCheckable = true
         }
         binding.root.setOnClickListener {
-            if (adapterPosition != -1)
+            if (adapterPosition != -1 && isClickable)
                 onClick(adapterPosition, model)
         }
     }

@@ -1,6 +1,7 @@
 package com.example.sampleusbproject.data.remote
 
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
+import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
 import com.example.sampleusbproject.data.remote.dto.FreeCellDto
 import com.example.sampleusbproject.data.remote.dto.GetOrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderDto
@@ -42,5 +43,11 @@ interface PostomatService {
         @Query("type") type: String,
         @Query("password") password: String
     ): Response<GetOrderDto>
+
+    @POST("/api/v1/postomat/order/{id}/delivery")
+    suspend fun deliveryOrder(
+        @Path("id") orderId: String,
+        @Body model: DeliveryOrderDto
+    ): Response<Unit>
 
 }

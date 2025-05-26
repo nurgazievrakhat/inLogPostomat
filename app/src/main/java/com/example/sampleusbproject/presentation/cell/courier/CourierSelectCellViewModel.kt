@@ -1,4 +1,4 @@
-package com.example.sampleusbproject.presentation.cell.tariff
+package com.example.sampleusbproject.presentation.cell.courier
 
 import androidx.lifecycle.viewModelScope
 import com.example.sampleusbproject.data.remote.Either
@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectCellWithAmountViewModel@Inject constructor(
+class CourierSelectCellViewModel @Inject constructor(
     private val postomatRepository: PostomatRepository
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _freeCells = MutableStateFlow<List<SelectCellModel>>(listOf())
     val freeCells = _freeCells.asStateFlow()
@@ -29,33 +29,26 @@ class SelectCellWithAmountViewModel@Inject constructor(
 
     val errorEvent = SingleLiveEvent<Boolean>()
 
-    fun getFreCells(previousSelectedSize: BoardSize ?= null){
+    fun getFreCells(previousSelectedSize: BoardSize?= null) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
             val response = postomatRepository.getFreeCells()
             _alertLiveData.postValue(false)
-            when(response){
+            when (response) {
                 is Either.Left -> errorEvent.postValue(true)
                 is Either.Right -> _freeCells.value = response.value.mapToUi(previousSelectedSize)
             }
         }
     }
 
-    fun createOrder(
-        cellId: String ,
-        fromUserPhone: String,
-        toUserPhone: String,
-        days: Int
+    fun deliveryOrder(
+        orderId: String,
+        cellId: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
-            val response = postomatRepository.createOrder(
-                CreateOrderModel(
-                    cellId = cellId,
-                    fromUserPhone = fromUserPhone,
-                    toUserPhone = toUserPhone,
-                    days = days
-                )
+            val response = postomatRepository.delivery(
+                orderId = orderId, cellId = cellId
             )
             _alertLiveData.postValue(false)
             when (response) {

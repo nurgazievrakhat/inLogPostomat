@@ -2,6 +2,7 @@ package com.example.sampleusbproject.presentation.numberPad
 
 import androidx.lifecycle.viewModelScope
 import com.example.sampleusbproject.data.remote.Either
+import com.example.sampleusbproject.domain.models.GetOrderModel
 import com.example.sampleusbproject.domain.models.GetOrderType
 import com.example.sampleusbproject.domain.remote.PostomatRepository
 import com.example.sampleusbproject.presentation.base.BaseViewModel
@@ -13,37 +14,27 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EnterNumberViewModel @Inject constructor(
+class EnterCourierNumberViewModel @Inject constructor(
     private val postomatRepository: PostomatRepository,
     private val postomatSocketUseCase: PostomatSocketUseCase
 ) : BaseViewModel() {
 
-    val successEvent = SingleLiveEvent<PostomatTakeCell>()
+    val successEvent = SingleLiveEvent<GetOrderModel>()
     val errorEvent = SingleLiveEvent<Boolean>()
 
     fun getOrderByPassword(password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
-            val response = postomatRepository.getOrderByPassword(GetOrderType.PICK, password)
+            val response = postomatRepository.getOrderByPassword(GetOrderType.DELIVERY, password)
             _alertLiveData.postValue(false)
-            when {
-                response is Either.Right && response.value.cellId != null -> {
-                    val postomatCell =
-                        postomatSocketUseCase.getPostomatCellById(response.value.cellId)
-                    if (postomatCell != null)
-                        successEvent.postValue(
-                            PostomatTakeCell(
-                                response.value.id,
-                                response.value.cellId,
-                                postomatCell.number,
-                                postomatCell.boardId
-                            )
-                        )
-                    else
-                        errorEvent.postValue(false)
+            when (response) {
+                is Either.Right -> {
+                    successEvent.postValue(
+                        response.value
+                    )
                 }
 
-                response is Either.Left -> errorEvent.postValue(true)
+                is Either.Left -> errorEvent.postValue(true)
             }
         }
     }

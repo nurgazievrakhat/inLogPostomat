@@ -1,345 +1,118 @@
 package com.example.sampleusbproject.presentation.boards.courier
 
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleusbproject.R
+import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.databinding.FragmentOpenedBoardBinding
-import com.example.sampleusbproject.presentation.boards.adapter.CellSchema
-import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
+import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
+import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsAdapter
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsDividerItemDecoration
-import com.example.sampleusbproject.presentation.boards.adapter.CellsModel
+import com.example.sampleusbproject.presentation.commonViewModel.CourierViewModel
+import com.example.sampleusbproject.presentation.numberPad.PackageType
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
-class OpenedCourierBoardFragment: Fragment(R.layout.fragment_opened_board) {
+class OpenedCourierBoardFragment :
+    BaseViewModelFragment<OpenedCourierBoardViewModel, FragmentOpenedBoardBinding>(
+        R.layout.fragment_opened_board,
+        OpenedCourierBoardViewModel::class.java,
+        FragmentOpenedBoardBinding::inflate
+    ) {
 
-    private var _binding: FragmentOpenedBoardBinding? = null
-    private val binding get() = _binding!!
+    @Inject
+    lateinit var lockedBoard: LockerBoardInterface
+
+    private val commonViewModel: CourierViewModel by navGraphViewModels(R.id.courier_navigation)
 
     private val adapter: BoardsAdapter by lazy {
-        BoardsAdapter(2)
+        BoardsAdapter(commonViewModel.cell?.number ?: -1)
     }
 
-//    private val args: OpenedCourierBoardFragmentArgs by navArgs()
+    override fun initialize() {
+        if (commonViewModel.cell != null){
+            lockedBoard.connect()
+            Log.e("sdfsdf", "initialize: ${commonViewModel.cell!!.number.toInt()}", )
+            lockedBoard.openLocker(1, commonViewModel.cell!!.number.toInt())
+        } else {
+            Log.e("sdfsdf", "initialize: ss ${-1}", )
+        }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentOpenedBoardBinding.inflate(inflater, container, false)
-        return binding.root
+        lifecycleScope.launch {
+            lockedBoard.getEventLiveData().observe(viewLifecycleOwner) { event ->
+                when (event) {
+                    is LockerBoardResponse.DoorStatus -> {
+                        Timber.tag("Flow").d("Статус Дверь: ${event.locker}, статус: ${event.status}")
+                    }
+                    is LockerBoardResponse.Error -> {
+                        Timber.tag("Flow").e("Ошибка: ${event.message}")
+                    }
+                    is LockerBoardResponse.OpenDoor ->{
+                        Timber.tag("Flow").d("Дверь: ${event.locker}, статус: ${event.status}")
+                    }
+                    else -> Timber.tag("Flow").d("Получено: $event")
+                }
+            }
+        }
+
+        binding.btnBack.text = requireContext().getString(R.string.text_choose_another_cell)
+        binding.btnContinue.text = requireContext().getString(R.string.text_leave_parcel)
+        binding.tvTitle.text = String.format(
+            requireContext().getString(R.string.text_opened_board),
+            (commonViewModel.cell?.number ?: 0).toString()
+        )
+
+        binding.rvBoards.adapter = adapter
+        binding.rvBoards.isNestedScrollingEnabled = false
+        val dividerItemDecoration =
+            BoardsDividerItemDecoration(
+                requireContext(),
+                5,
+                5,
+                RecyclerView.HORIZONTAL,
+                R.drawable.board_divider
+            )
+        binding.rvBoards.addItemDecoration(dividerItemDecoration)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.btnBack.text = "Выбрать другую ячейку"
-        val args = arguments?.getInt("type")
+    override fun setupListeners() {
         binding.btnBack.setOnClickListener {
             findNavController().navigate(R.id.anotherBoardDialogFragment)
         }
-        binding.rvBoards.adapter = adapter
-        binding.rvBoards.isNestedScrollingEnabled = false
         binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.successFragment, bundleOf("type" to args ))
-        }
-        val dividerItemDecoration =
-            BoardsDividerItemDecoration(requireContext(), 5, 5, RecyclerView.HORIZONTAL, R.drawable.board_divider)
-        binding.rvBoards.addItemDecoration(dividerItemDecoration)
-
-        val data = listOf(
-            CellsModel(
-                listOf(
-                    CellSchema(
-                        size = BoardSize.XL,
-                        number = 1,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 2,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 3,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 4,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 5,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 6,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 7,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 8,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 9,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.M,
-                        number = 10,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 11,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 12,
-                        usable = true
-                    )
-                ),
-                17,
-                2
-            ),
-            CellsModel(
-                listOf(
-                    CellSchema(
-                        size = BoardSize.XL,
-                        number = 13,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 14,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 15,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 16,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 17,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 18,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 19,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 20,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 21,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 22,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 23,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 24,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 25,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 26,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 27,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 28,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 29,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 30,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 31,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 32,
-                        usable = true
-                    )
-                ),
-                17,
-                2
-            )
-        )
-
-        binding.tvTitle.setOnClickListener {
-            Log.e("dsfsdfsdf", "tvTitle: ", )
-            adapter.adapterMap.get(1)?.submitList(
-                listOf(
-                    CellSchema(
-                        size = BoardSize.XL,
-                        number = 13,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 14,
-                        usable = false
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 15,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 16,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 17,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 18,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 19,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 20,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 21,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 22,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 23,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 24,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 25,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 26,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 27,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 28,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 29,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.S,
-                        number = 30,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 31,
-                        usable = true
-                    ),
-                    CellSchema(
-                        size = BoardSize.L,
-                        number = 32,
-                        usable = true
+            requireActivity().findNavController(R.id.nav_host).navigate(
+                R.id.global_action_to_success_fragment,
+                bundleOf(
+                    "type" to PackageType.getInt(
+                        PackageType.COURIER
                     )
                 )
             )
         }
-
-        adapter.submitList(data)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun setupSubscribers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.postomat.collect {
+                    adapter.submitList(it)
+                }
+            }
+        }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lockedBoard.disconnect()
+    }
+
 }
