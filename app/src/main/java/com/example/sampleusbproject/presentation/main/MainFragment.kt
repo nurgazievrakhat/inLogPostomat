@@ -32,43 +32,11 @@ class MainFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private var usbManager: UsbManager? = null
-
-    private val finikLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                // Обработка success paymentResult
-                val data = result.data
-                Log.e("sdfsdf", "RESULT_OK: $data", )
-                val resultValue = data?.getStringExtra("paymentResult")
-                val details = data?.getStringExtra("details")
-            } else {
-                val isBackPressed = result.data?.getStringExtra("isBackPressed") == "true"
-                Log.e("sdfsdf", "RESULT_NOT_OK: $isBackPressed", )
-
-                if (isBackPressed) {
-                    // Обработка кнопки назад
-                    Log.d("MainActivity", "Пользователь вышел из Finik по кнопке назад")
-                } else {
-                    // Обработка failure paymentResult
-                    val data = result.data
-                    Log.e("sdfsdf", "RESULT_NOT_OK: $data", )
-                    val resultValue = data?.getStringExtra("paymentResult")
-                    val details = data?.getStringExtra("details")
-                }
-            }
-        }
-
     @Inject
     lateinit var postomatInfoMapper: PostomatInfoMapper
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -115,15 +83,6 @@ class MainFragment : Fragment() {
         }
         binding.btnCourier.setOnClickListener {
             findNavController().navigate(R.id.courier_navigation)
-        }
-        binding.tvWelcome.setOnClickListener {
-            // Запуск FinikActivity из твоей SDK
-            val intent = Intent(requireActivity(), FinikActivity::class.java).apply {
-                putExtra("apiKey", "73fxCF4k9NvYcGReg9Jf2P7nAV6fTXf4i1q8CRf3")
-                putExtra("itemId", "1f7bbf08-5324-45b5-b28c-6fec4adf3c28")
-            }
-
-            finikLauncher.launch(intent)
         }
     }
 }
