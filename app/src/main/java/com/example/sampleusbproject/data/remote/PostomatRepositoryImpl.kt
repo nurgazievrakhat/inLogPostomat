@@ -6,6 +6,7 @@ import com.example.sampleusbproject.data.remote.dto.mapToDomain
 import com.example.sampleusbproject.data.remote.dto.mapToDto
 import com.example.sampleusbproject.domain.models.CreateOrderModel
 import com.example.sampleusbproject.domain.models.FreeCellModel
+import com.example.sampleusbproject.domain.models.GetOrderError
 import com.example.sampleusbproject.domain.models.GetOrderModel
 import com.example.sampleusbproject.domain.models.GetOrderType
 import com.example.sampleusbproject.domain.models.mapToDto
@@ -87,15 +88,17 @@ class PostomatRepositoryImpl @Inject constructor(
     override suspend fun getOrderByPassword(
         type: GetOrderType,
         password: String
-    ): Either<Unit, GetOrderModel> {
+    ): Either<GetOrderError, GetOrderModel> {
         return try {
             val response = service.getOrderByPassword(type.mapToDto(), password)
             if (response.isSuccessful && response.body() != null)
                 Either.Right(response.body()!!.mapToDomain())
+            else if (response.code() == 404)
+                Either.Left(GetOrderError.NotFound)
             else
-                Either.Left(Unit)
+                Either.Left(GetOrderError.Unexpected)
         } catch (e: Exception) {
-            Either.Left(Unit)
+            Either.Left(GetOrderError.Unexpected)
         }
     }
 

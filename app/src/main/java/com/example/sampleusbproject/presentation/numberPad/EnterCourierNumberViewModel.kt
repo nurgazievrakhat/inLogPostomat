@@ -2,6 +2,7 @@ package com.example.sampleusbproject.presentation.numberPad
 
 import androidx.lifecycle.viewModelScope
 import com.example.sampleusbproject.data.remote.Either
+import com.example.sampleusbproject.domain.models.GetOrderError
 import com.example.sampleusbproject.domain.models.GetOrderModel
 import com.example.sampleusbproject.domain.models.GetOrderType
 import com.example.sampleusbproject.domain.remote.PostomatRepository
@@ -20,7 +21,7 @@ class EnterCourierNumberViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val successEvent = SingleLiveEvent<GetOrderModel>()
-    val errorEvent = SingleLiveEvent<Boolean>()
+    val errorEvent = SingleLiveEvent<GetOrderError>()
 
     fun getOrderByPassword(password: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -34,7 +35,9 @@ class EnterCourierNumberViewModel @Inject constructor(
                     )
                 }
 
-                is Either.Left -> errorEvent.postValue(true)
+                is Either.Left -> {
+                    errorEvent.postValue(response.value)
+                }
             }
         }
     }
