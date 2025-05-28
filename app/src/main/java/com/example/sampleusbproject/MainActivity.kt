@@ -5,6 +5,7 @@ import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -50,6 +51,12 @@ class MainActivity : AppCompatActivity() {
             // Оставляем только отступы слева и справа, убираем верхний и нижний
             v.setPadding(systemBars.left, 0, systemBars.right, 0)
             insets
+        }
+
+        try {
+            Settings.System.putInt(applicationContext.contentResolver, Settings.System.SCREEN_BRIGHTNESS, 255);
+        } catch (e: Exception){
+            Log.e("sdfsdfsdfsdf", "onCreate: ${e.message}", )
         }
         
         screensaverManager = ScreensaverManager(this)
