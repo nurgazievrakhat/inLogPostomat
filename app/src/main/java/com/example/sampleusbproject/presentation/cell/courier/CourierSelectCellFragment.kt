@@ -51,6 +51,7 @@ class CourierSelectCellFragment :
     }
 
     override fun initialize() {
+        binding.tvDaysTitle.gone()
         adapter = SelectCellAdapter(this::onClick, false)
         viewModel.getFreCells(commonViewModel.cell?.size)
         binding.rvCells.adapter = adapter
