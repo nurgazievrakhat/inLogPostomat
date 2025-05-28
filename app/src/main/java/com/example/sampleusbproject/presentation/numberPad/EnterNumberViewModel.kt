@@ -31,7 +31,15 @@ class EnterNumberViewModel @Inject constructor(
                 response is Either.Right && response.value.cellId != null -> {
                     val postomatCell =
                         postomatSocketUseCase.getPostomatCellById(response.value.cellId)
-                    if (postomatCell != null)
+                    val remainder = (response.value.remainder ?: 0)
+                    val isPayed = if (remainder > 0)
+                        postomatRepository.createTransaction(
+                            remainder,
+                            response.value.id
+                        ) is Either.Right
+                    else
+                        true
+                    if (postomatCell != null && isPayed)
                         successEvent.postValue(
                             PostomatTakeCell(
                                 response.value.id,
@@ -40,6 +48,8 @@ class EnterNumberViewModel @Inject constructor(
                                 postomatCell.boardId
                             )
                         )
+                    else if (!isPayed)
+                        errorEvent.postValue(GetOrderError.Unexpected)
                     else
                         errorEvent.postValue(GetOrderError.NotFound)
                 }

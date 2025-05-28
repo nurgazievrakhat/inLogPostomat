@@ -17,6 +17,8 @@ interface PostomatRepository {
 
     suspend fun createOrder(order: CreateOrderModel): Either<Unit, Unit>
 
+    suspend fun createTransaction(amount: Long, orderId: String): Either<Unit, Unit>
+
     suspend fun take(orderId: String): Either<Unit, Unit>
 
     suspend fun getOrderByPassword(type: GetOrderType, password: String): Either<GetOrderError, GetOrderModel>

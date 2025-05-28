@@ -43,13 +43,9 @@ class OpenedBoardFragment :
             arguments?.getSerializable("cell") as? PostomatTakeCell
         }
         val selectedNumber = selectedCell?.number ?: -1L
-        if (selectedNumber > 0) {
-            lockedBoard.connect()
-            lockedBoard.openLocker(1, selectedNumber.toInt())
-        } else {
-            Log.e("sdfsdf", "initialize OpenedBoardFragment: ss ${-1}")
-        }
+        lockedBoard.connect()
         adapter = BoardsAdapter(selectedNumber)
+        viewModel.take(selectedCell?.orderId ?: "")
 
         lifecycleScope.launch {
             lockedBoard.getEventLiveData().observe(viewLifecycleOwner) { event ->
@@ -90,15 +86,14 @@ class OpenedBoardFragment :
         binding.rvBoards.addItemDecoration(dividerItemDecoration)
 
         binding.btnBack.setOnClickListener {
-//            findNavController().popBackStack()
-            if (selectedNumber > 0)
-                lockedBoard.openLocker(1, selectedNumber.toInt())
+            if (viewModel.successEvent.value == true) {
+                if (selectedNumber > 0)
+                    lockedBoard.openLocker(1, selectedNumber.toInt())
+            } else
+                viewModel.take(selectedCell?.orderId ?: "")
         }
 
         binding.btnContinue.setOnClickListener {
-//            val orderId: String = selectedCell?.orderId ?: ""
-//            viewModel.take(orderId)
-
             findNavController().navigate(
                 R.id.action_openedBoardFragment_to_successFragment,
                 bundleOf(
@@ -107,6 +102,10 @@ class OpenedBoardFragment :
                     )
                 )
             )
+        }
+        viewModel.successEvent.observe(viewLifecycleOwner) {
+            if (selectedNumber > 0)
+                lockedBoard.openLocker(1, selectedNumber.toInt())
         }
     }
 
@@ -123,16 +122,6 @@ class OpenedBoardFragment :
         }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
             makeToast(R.string.text_something_went_wrong)
-        }
-        viewModel.successEvent.observe(viewLifecycleOwner) {
-            findNavController().navigate(
-                R.id.action_openedBoardFragment_to_successFragment,
-                bundleOf(
-                    "type" to PackageType.getInt(
-                        PackageType.TAKE
-                    )
-                )
-            )
         }
     }
 

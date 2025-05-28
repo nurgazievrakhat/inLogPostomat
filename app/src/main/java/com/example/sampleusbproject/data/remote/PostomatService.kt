@@ -1,6 +1,7 @@
 package com.example.sampleusbproject.data.remote
 
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
+import com.example.sampleusbproject.data.remote.dto.CreateTransactionDto
 import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
 import com.example.sampleusbproject.data.remote.dto.FreeCellDto
 import com.example.sampleusbproject.data.remote.dto.GetOrderDto
@@ -28,6 +29,11 @@ interface PostomatService {
     @POST("/api/v1/postomat/order/{id}/take")
     suspend fun takeOrder(
         @Path("id") orderId: String
+    ): Response<Unit>
+
+    @POST("/api/v1/postomat/transaction/create")
+    suspend fun createTransaction(
+        @Body model: CreateTransactionDto
     ): Response<Unit>
 
     @GET("/api/v1/postomat/free-cells")
