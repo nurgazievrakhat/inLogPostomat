@@ -6,6 +6,7 @@ import com.example.sampleusbproject.domain.models.FreeCellModel
 import com.example.sampleusbproject.domain.models.GetOrderError
 import com.example.sampleusbproject.domain.models.GetOrderModel
 import com.example.sampleusbproject.domain.models.GetOrderType
+import com.example.sampleusbproject.domain.models.OrderResponseModel
 
 interface PostomatRepository {
 
@@ -15,7 +16,9 @@ interface PostomatRepository {
 
     suspend fun getFreeCells(): Either<Unit, List<FreeCellModel>>
 
-    suspend fun createOrder(order: CreateOrderModel): Either<Unit, Unit>
+    suspend fun createOrder(order: CreateOrderModel): Either<Unit, OrderResponseModel>
+
+    suspend fun updateCell(orderId: String, cellId: String, days: Int): Either<Unit, Unit>
 
     suspend fun createTransaction(amount: Long, orderId: String): Either<Unit, Unit>
 

@@ -14,6 +14,7 @@ import com.example.sampleusbproject.presentation.cell.SelectCellAdapter
 import com.example.sampleusbproject.presentation.cell.SelectCellModel
 import com.example.sampleusbproject.presentation.commonViewModel.CourierViewModel
 import com.example.sampleusbproject.presentation.commonViewModel.SelectedCell
+import com.example.sampleusbproject.utils.gone
 import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,9 +30,7 @@ class CourierSelectCellFragment :
 
     private var prevSelectedPos: Int = -1
 
-    private val adapter: SelectCellAdapter by lazy {
-        SelectCellAdapter(this::onClick, false)
-    }
+    private lateinit var adapter: SelectCellAdapter
 
     private fun onClick(pos: Int, model: SelectCellModel) {
         if (prevSelectedPos == pos)
@@ -52,9 +51,12 @@ class CourierSelectCellFragment :
     }
 
     override fun initialize() {
+        adapter = SelectCellAdapter(this::onClick, false)
         viewModel.getFreCells(commonViewModel.cell?.size)
         binding.rvCells.adapter = adapter
         binding.rvCells.addItemDecoration(CenterItemDecoration())
+        if (commonViewModel.cell != null)
+            binding.btnBack.gone()
     }
 
     override fun setupListeners() {
@@ -63,26 +65,32 @@ class CourierSelectCellFragment :
         }
         binding.btnContinue.setOnClickListener {
             val selected = adapter.currentList.find { it.isSelected }
-            if (selected != null) {
+
+            if (selected == null) {
+                makeToast(R.string.text_choose_size_error)
+                return@setOnClickListener
+            }
+
+            if (commonViewModel.cell != null)
+                viewModel.updateCell(
+                    orderId = commonViewModel.orderId,
+                    cellId = selected.cellId ?: ""
+                )
+            else
                 viewModel.deliveryOrder(
-                    orderId = commonViewModel.orderId, //TODO add orderID
+                    orderId = commonViewModel.orderId,
                     selected.cellId ?: ""
                 )
-            } else {
-                makeToast(R.string.text_choose_size_error)
-            }
         }
     }
 
     override fun setupSubscribers() {
         viewModel.createSuccessEvent.observe(viewLifecycleOwner) {
-            val selected = adapter.currentList.find { it.isSelected }
-            commonViewModel.cell = SelectedCell(
-                selected?.cellId ?: "",
-                number = selected?.number ?: 0L,
-                size = selected?.boardSize ?: BoardSize.S
-            )
-            prevSelectedPos = -1
+            saveData()
+            findNavController().navigate(R.id.openedCourierBoardFragment)
+        }
+        viewModel.updateSuccessEvent.observe(viewLifecycleOwner) {
+            saveData()
             findNavController().navigate(R.id.openedCourierBoardFragment)
         }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
@@ -95,6 +103,16 @@ class CourierSelectCellFragment :
                 }
             }
         }
+    }
+
+    private fun saveData(){
+        val selected = adapter.currentList.find { it.isSelected }
+        commonViewModel.cell = SelectedCell(
+            selected?.cellId ?: "",
+            number = selected?.number ?: 0L,
+            size = selected?.boardSize ?: BoardSize.S
+        )
+        prevSelectedPos = -1
     }
 
 }

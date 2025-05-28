@@ -12,6 +12,7 @@ class LeaveParcelViewModel@Inject constructor(): ViewModel() {
     var selectedCell: SelectedCell ?= null
     var days: Int = -1
     var sumOfPay = 0
+    var orderId: String = ""
     var transactionId: String = ""
 
 }

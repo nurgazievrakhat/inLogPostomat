@@ -15,6 +15,7 @@ import com.example.sampleusbproject.presentation.days.adapter.PayerDays
 import com.example.sampleusbproject.presentation.days.adapter.SelectDay
 import com.example.sampleusbproject.presentation.days.adapter.SelectDayAdapter
 import com.example.sampleusbproject.presentation.days.adapter.getSelectList
+import com.example.sampleusbproject.utils.gone
 import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,9 +32,7 @@ class SelectCellFragment :
     private var prevSelectedPos: Int = -1
     private var prevDaySelectedPos: Int = -1
 
-    private val adapter: SelectCellAdapter by lazy {
-        SelectCellAdapter(this::onClick, false)
-    }
+    private lateinit var adapter: SelectCellAdapter
 
     private val daysAdapter: SelectDayAdapter by lazy {
         SelectDayAdapter(this::onDayClick)
@@ -79,11 +78,14 @@ class SelectCellFragment :
     }
 
     override fun initialize() {
+        adapter = SelectCellAdapter(this::onClick, false)
         viewModel.getFreCells(commonViewModel.selectedCell?.size)
         binding.rvCells.adapter = adapter
         binding.rvCells.addItemDecoration(CenterItemDecoration())
         binding.rvDays.adapter = daysAdapter
-        daysAdapter.submitList(PayerDays.SENDER.getSelectList(commonViewModel.days))
+        daysAdapter.submitList(PayerDays.RECEIVER.getSelectList(commonViewModel.days))
+        if (commonViewModel.orderId.isNotBlank())
+            binding.btnBack.gone()
     }
 
     override fun setupListeners() {
@@ -104,29 +106,30 @@ class SelectCellFragment :
                 return@setOnClickListener
             }
 
-            viewModel.createOrder(
-                selected.cellId ?: "",
-                commonViewModel.phoneNumber,
-                commonViewModel.receiverPhoneNumber,
-                selectedDay.day
-            )
+            if (commonViewModel.orderId.isBlank())
+                viewModel.createOrder(
+                    selected.cellId ?: "",
+                    commonViewModel.phoneNumber,
+                    commonViewModel.receiverPhoneNumber,
+                    selectedDay.day
+                )
+            else
+                viewModel.updateCell(
+                    selected.cellId ?: "",
+                    commonViewModel.orderId,
+                    selectedDay.day
+                )
         }
     }
 
     override fun setupSubscribers() {
         viewModel.createSuccessEvent.observe(viewLifecycleOwner) {
-            val selected = adapter.currentList.find { it.isSelected }
-            val selectedDay = daysAdapter.currentList.find { it.isSelected }
-
-            commonViewModel.days = selectedDay?.day ?: 0
-            commonViewModel.selectedCell = SelectedCell(
-                selected?.cellId ?: "",
-                number = selected?.number ?: 0L,
-                size = selected?.boardSize ?: BoardSize.S
-            )
-
-            prevSelectedPos = -1
-            prevDaySelectedPos = -1
+            commonViewModel.orderId = it
+            saveData()
+            findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
+        }
+        viewModel.updateSuccessEvent.observe(viewLifecycleOwner) {
+            saveData()
             findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
         }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
@@ -139,6 +142,21 @@ class SelectCellFragment :
                 }
             }
         }
+    }
+
+    fun saveData(){
+        val selected = adapter.currentList.find { it.isSelected }
+        val selectedDay = daysAdapter.currentList.find { it.isSelected }
+
+        commonViewModel.days = selectedDay?.day ?: 0
+        commonViewModel.selectedCell = SelectedCell(
+            selected?.cellId ?: "",
+            number = selected?.number ?: 0L,
+            size = selected?.boardSize ?: BoardSize.S
+        )
+
+        prevSelectedPos = -1
+        prevDaySelectedPos = -1
     }
 
 }

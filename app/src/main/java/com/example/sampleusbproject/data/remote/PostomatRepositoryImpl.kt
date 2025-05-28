@@ -3,6 +3,7 @@ package com.example.sampleusbproject.data.remote
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
 import com.example.sampleusbproject.data.remote.dto.CreateTransactionDto
 import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
+import com.example.sampleusbproject.data.remote.dto.UpdateOrderCellDto
 import com.example.sampleusbproject.data.remote.dto.mapToDomain
 import com.example.sampleusbproject.data.remote.dto.mapToDto
 import com.example.sampleusbproject.domain.models.CreateOrderModel
@@ -10,6 +11,7 @@ import com.example.sampleusbproject.domain.models.FreeCellModel
 import com.example.sampleusbproject.domain.models.GetOrderError
 import com.example.sampleusbproject.domain.models.GetOrderModel
 import com.example.sampleusbproject.domain.models.GetOrderType
+import com.example.sampleusbproject.domain.models.OrderResponseModel
 import com.example.sampleusbproject.domain.models.mapToDto
 import com.example.sampleusbproject.domain.remote.PostomatRepository
 import javax.inject.Inject
@@ -62,10 +64,22 @@ class PostomatRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createOrder(order: CreateOrderModel): Either<Unit, Unit> {
+    override suspend fun createOrder(order: CreateOrderModel): Either<Unit, OrderResponseModel> {
         return try {
             val response = service.createOrder(order.mapToDto())
             if (response.isSuccessful && response.body() != null)
+                Either.Right(response.body()!!.mapToDomain())
+            else
+                Either.Left(Unit)
+        } catch (e: Exception) {
+            Either.Left(Unit)
+        }
+    }
+
+    override suspend fun updateCell(orderId: String, cellId: String, days: Int): Either<Unit, Unit> {
+        return try {
+            val response = service.updateCell(orderId, UpdateOrderCellDto(orderId, cellId, days))
+            if (response.isSuccessful)
                 Either.Right(Unit)
             else
                 Either.Left(Unit)

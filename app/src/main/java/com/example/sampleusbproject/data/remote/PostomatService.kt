@@ -7,6 +7,7 @@ import com.example.sampleusbproject.data.remote.dto.FreeCellDto
 import com.example.sampleusbproject.data.remote.dto.GetOrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderResponseDto
+import com.example.sampleusbproject.data.remote.dto.UpdateOrderCellDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -54,6 +55,12 @@ interface PostomatService {
     suspend fun deliveryOrder(
         @Path("id") orderId: String,
         @Body model: DeliveryOrderDto
+    ): Response<Unit>
+
+    @POST("/api/v1/postomat/order/{id}/update-cell")
+    suspend fun updateCell(
+        @Path("id") orderId: String,
+        @Body model: UpdateOrderCellDto
     ): Response<Unit>
 
 }

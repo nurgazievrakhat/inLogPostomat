@@ -25,7 +25,9 @@ class CourierSelectCellViewModel @Inject constructor(
     private val _freeCells = MutableStateFlow<List<SelectCellModel>>(listOf())
     val freeCells = _freeCells.asStateFlow()
 
-    val createSuccessEvent = SingleLiveEvent<Boolean>()
+    val createSuccessEvent = SingleLiveEvent<String>()
+
+    val updateSuccessEvent = SingleLiveEvent<Boolean>()
 
     val errorEvent = SingleLiveEvent<Boolean>()
 
@@ -53,7 +55,26 @@ class CourierSelectCellViewModel @Inject constructor(
             _alertLiveData.postValue(false)
             when (response) {
                 is Either.Left -> errorEvent.postValue(true)
-                is Either.Right -> createSuccessEvent.postValue(true)
+                is Either.Right -> createSuccessEvent.postValue(orderId)
+            }
+        }
+    }
+
+    fun updateCell(
+        cellId: String ,
+        orderId: String
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _alertLiveData.postValue(true)
+            val response = postomatRepository.updateCell(
+                orderId = orderId,
+                cellId = cellId,
+                days = 2
+            )
+            _alertLiveData.postValue(false)
+            when (response) {
+                is Either.Left -> errorEvent.postValue(true)
+                is Either.Right -> updateSuccessEvent.postValue(true)
             }
         }
     }
