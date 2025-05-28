@@ -18,10 +18,12 @@ import com.example.sampleusbproject.presentation.boards.adapter.BoardsAdapter
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsDividerItemDecoration
 import com.example.sampleusbproject.presentation.commonViewModel.CourierViewModel
 import com.example.sampleusbproject.presentation.numberPad.PackageType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class OpenedCourierBoardFragment :
     BaseViewModelFragment<OpenedCourierBoardViewModel, FragmentOpenedBoardBinding>(
         R.layout.fragment_opened_board,
