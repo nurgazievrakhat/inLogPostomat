@@ -12,10 +12,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.sampleusbproject.data.remote.socket.SocketStatus
 import com.example.sampleusbproject.databinding.ActivityMainBinding
+import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
 import com.example.sampleusbproject.utils.AliveService
 import com.example.sampleusbproject.utils.CommonPrefs
@@ -32,6 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    val viewModel: MainActivityViewModel by lazy {
+        ViewModelProvider(this)[MainActivityViewModel::class.java]
+    }
+
     @Inject
     lateinit var commonPrefs: CommonPrefs
 
@@ -42,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
+        viewModel.connectLockerBoard()
 
         setContentView(binding.root)
         val intent = Intent(this, AliveService::class.java)
@@ -149,5 +156,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         stopLockTask()
+        viewModel.disconnectLockerBoard()
     }
 }

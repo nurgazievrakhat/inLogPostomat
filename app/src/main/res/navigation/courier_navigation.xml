@@ -11,7 +11,7 @@
     <fragment
         android:id="@+id/openedCourierBoardFragment"
         android:name="com.example.sampleusbproject.presentation.boards.courier.OpenedCourierBoardFragment"
-        android:label="OpenedCourierBoardFragment"/>
+        android:label="OpenedCourierBoardFragment" />
     <dialog
         android:id="@+id/anotherBoardDialogFragment"
         android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
@@ -20,5 +20,15 @@
         android:id="@+id/courierSelectCellFragment"
         android:name="com.example.sampleusbproject.presentation.cell.courier.CourierSelectCellFragment"
         android:label="CourierSelectCellFragment" />
+    <dialog
+        android:id="@+id/closeCellDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.closeCell.CloseCellDialogFragment"
+        android:label="CloseCellDialogFragment">
+        <action
+            android:id="@+id/action_closeCellDialogFragment_to_anotherBoardDialogFragment2"
+            app:destination="@id/anotherBoardDialogFragment"
+            app:popUpTo="@id/closeCellDialogFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
 
 </navigation>

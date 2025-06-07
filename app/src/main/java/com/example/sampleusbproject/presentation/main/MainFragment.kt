@@ -10,10 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.sampleusbproject.BuildConfig
+import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
+import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.databinding.FragmentMainBinding
 import com.example.sampleusbproject.presentation.numberPad.PackageType
+import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -52,10 +55,14 @@ class MainFragment : Fragment() {
 
         viewModel.cellEvents.observe(viewLifecycleOwner) { cellData ->
             viewLifecycleOwner.lifecycleScope.launch {
-                Timber.e("Open Cell -> ${postomatInfoMapper.getCellNumberById(
-                    cellId = cellData.cellId, 
-                    boardId = cellData.boardId
-                )}")
+                Timber.e(
+                    "Open Cell -> ${
+                        postomatInfoMapper.getCellNumberById(
+                            cellId = cellData.cellId,
+                            boardId = cellData.boardId
+                        )
+                    }"
+                )
             }
         }
 
@@ -70,13 +77,36 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnLeave.setOnClickListener {
-            findNavController().navigate(R.id.leave_parcel_navigation)
+            checkLockerBoardAndDo {
+                findNavController().navigate(R.id.leave_parcel_navigation)
+            }
         }
         binding.btnTake.setOnClickListener {
-            findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.TAKE)))
+            checkLockerBoardAndDo {
+                findNavController().navigate(
+                    R.id.enterNumberFragment,
+                    bundleOf("type" to PackageType.getInt(PackageType.TAKE))
+                )
+            }
         }
         binding.btnCourier.setOnClickListener {
-            findNavController().navigate(R.id.courier_navigation)
+            checkLockerBoardAndDo {
+                findNavController().navigate(R.id.courier_navigation)
+            }
         }
+    }
+
+    private inline fun checkLockerBoardAndDo(action: () -> Unit) {
+        var lockerBoardIsConnected =
+            (requireActivity() as? MainActivity)?.viewModel?.isLockerBoardConnected()
+
+        if (lockerBoardIsConnected == null || lockerBoardIsConnected == false)
+            lockerBoardIsConnected =
+                (requireActivity() as? MainActivity)?.viewModel?.connectLockerBoard()
+
+        if (lockerBoardIsConnected == true)
+            action()
+        else
+            makeToast(R.string.text_something_went_wrong)
     }
 }
