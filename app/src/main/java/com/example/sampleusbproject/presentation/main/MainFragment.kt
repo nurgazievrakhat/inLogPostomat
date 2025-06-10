@@ -1,26 +1,23 @@
 package com.example.sampleusbproject.presentation.main
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import android.hardware.usb.UsbManager
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.sampleusbproject.BuildConfig
+import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
+import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.databinding.FragmentMainBinding
 import com.example.sampleusbproject.presentation.numberPad.PackageType
+import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
-import kg.averspay.finik_android_sdk.FinikActivity
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -32,43 +29,11 @@ class MainFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private var usbManager: UsbManager? = null
-
-    private val finikLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                // Обработка success paymentResult
-                val data = result.data
-                Log.e("sdfsdf", "RESULT_OK: $data", )
-                val resultValue = data?.getStringExtra("paymentResult")
-                val details = data?.getStringExtra("details")
-            } else {
-                val isBackPressed = result.data?.getStringExtra("isBackPressed") == "true"
-                Log.e("sdfsdf", "RESULT_NOT_OK: $isBackPressed", )
-
-                if (isBackPressed) {
-                    // Обработка кнопки назад
-                    Log.d("MainActivity", "Пользователь вышел из Finik по кнопке назад")
-                } else {
-                    // Обработка failure paymentResult
-                    val data = result.data
-                    Log.e("sdfsdf", "RESULT_NOT_OK: $data", )
-                    val resultValue = data?.getStringExtra("paymentResult")
-                    val details = data?.getStringExtra("details")
-                }
-            }
-        }
-
     @Inject
     lateinit var postomatInfoMapper: PostomatInfoMapper
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -81,7 +46,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setBrightness(1.0f)
         setupListeners()
         viewModel.setupEventListeners()
         viewModel.postomatInfo.observe(viewLifecycleOwner) { info ->
@@ -91,10 +55,14 @@ class MainFragment : Fragment() {
 
         viewModel.cellEvents.observe(viewLifecycleOwner) { cellData ->
             viewLifecycleOwner.lifecycleScope.launch {
-                Timber.e("Open Cell -> ${postomatInfoMapper.getCellNumberById(
-                    cellId = cellData.cellId, 
-                    boardId = cellData.boardId
-                )}")
+                Timber.e(
+                    "Open Cell -> ${
+                        postomatInfoMapper.getCellNumberById(
+                            cellId = cellData.cellId,
+                            boardId = cellData.boardId
+                        )
+                    }"
+                )
             }
         }
 
@@ -109,28 +77,36 @@ class MainFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnLeave.setOnClickListener {
-            findNavController().navigate(R.id.leave_parcel_navigation)
+            checkLockerBoardAndDo {
+                findNavController().navigate(R.id.leave_parcel_navigation)
+            }
         }
         binding.btnTake.setOnClickListener {
-            findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.TAKE)))
+            checkLockerBoardAndDo {
+                findNavController().navigate(
+                    R.id.enterNumberFragment,
+                    bundleOf("type" to PackageType.getInt(PackageType.TAKE))
+                )
+            }
         }
         binding.btnCourier.setOnClickListener {
-            findNavController().navigate(R.id.enterNumberFragment, bundleOf("type" to PackageType.getInt(PackageType.COURIER)))
-        }
-        binding.tvWelcome.setOnClickListener {
-            // Запуск FinikActivity из твоей SDK
-            val intent = Intent(requireActivity(), FinikActivity::class.java).apply {
-                putExtra("apiKey", "73fxCF4k9NvYcGReg9Jf2P7nAV6fTXf4i1q8CRf3")
-                putExtra("itemId", "1f7bbf08-5324-45b5-b28c-6fec4adf3c28")
+            checkLockerBoardAndDo {
+                findNavController().navigate(R.id.courier_navigation)
             }
-
-            finikLauncher.launch(intent)
         }
     }
-    private fun setBrightness(brightness: Float) {
-        val window = requireActivity().window
-        val layoutParams = window.attributes
-        layoutParams.screenBrightness = brightness.coerceIn(0.0f, 1.0f)
-        window.attributes = layoutParams
+
+    private inline fun checkLockerBoardAndDo(action: () -> Unit) {
+        var lockerBoardIsConnected =
+            (requireActivity() as? MainActivity)?.viewModel?.isLockerBoardConnected()
+
+        if (lockerBoardIsConnected == null || lockerBoardIsConnected == false)
+            lockerBoardIsConnected =
+                (requireActivity() as? MainActivity)?.viewModel?.connectLockerBoard()
+
+        if (lockerBoardIsConnected == true)
+            action()
+        else
+            makeToast(R.string.text_something_went_wrong)
     }
 }

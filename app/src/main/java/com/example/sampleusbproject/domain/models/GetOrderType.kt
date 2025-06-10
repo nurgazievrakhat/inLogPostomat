@@ -2,6 +2,6 @@ package com.example.sampleusbproject.domain.models
 
 enum class GetOrderType {
     PICK,
-    LEAVE,
+    DELIVERY,
     SEIZE
 }

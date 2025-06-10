@@ -5,16 +5,19 @@ import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.sampleusbproject.data.remote.socket.SocketStatus
 import com.example.sampleusbproject.databinding.ActivityMainBinding
+import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
 import com.example.sampleusbproject.utils.AliveService
 import com.example.sampleusbproject.utils.CommonPrefs
@@ -31,6 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    val viewModel: MainActivityViewModel by lazy {
+        ViewModelProvider(this)[MainActivityViewModel::class.java]
+    }
+
     @Inject
     lateinit var commonPrefs: CommonPrefs
 
@@ -41,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
+        viewModel.connectLockerBoard()
 
         setContentView(binding.root)
         val intent = Intent(this, AliveService::class.java)
@@ -50,6 +58,12 @@ class MainActivity : AppCompatActivity() {
             // Оставляем только отступы слева и справа, убираем верхний и нижний
             v.setPadding(systemBars.left, 0, systemBars.right, 0)
             insets
+        }
+
+        try {
+            Settings.System.putInt(applicationContext.contentResolver, Settings.System.SCREEN_BRIGHTNESS, 255);
+        } catch (e: Exception){
+            Log.e("sdfsdfsdfsdf", "onCreate: ${e.message}", )
         }
         
         screensaverManager = ScreensaverManager(this)
@@ -142,5 +156,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         stopLockTask()
+        viewModel.disconnectLockerBoard()
     }
 }

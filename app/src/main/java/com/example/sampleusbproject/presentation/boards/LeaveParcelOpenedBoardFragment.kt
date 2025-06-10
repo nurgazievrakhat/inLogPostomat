@@ -9,10 +9,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.databinding.FragmentOpenedBoardBinding
-import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
+import com.example.sampleusbproject.domain.models.LockStatus
 import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsAdapter
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsDividerItemDecoration
@@ -21,7 +22,6 @@ import com.example.sampleusbproject.presentation.numberPad.PackageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LeaveParcelOpenedBoardFragment :
@@ -31,40 +31,52 @@ class LeaveParcelOpenedBoardFragment :
         FragmentOpenedBoardBinding::inflate
     ) {
 
-    @Inject
-    lateinit var lockedBoard: LockerBoardInterface
-
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
+
+    private var isFromClick = false
 
     private val adapter: BoardsAdapter by lazy {
         BoardsAdapter(commonViewModel.selectedCell?.number ?: -1)
     }
 
     override fun initialize() {
-        if (commonViewModel.selectedCell != null){
-            lockedBoard.connect()
-            Log.e("sdfsdf", "initialize: ${commonViewModel.selectedCell!!.number.toInt()}", )
-            lockedBoard.openLocker(1, commonViewModel.selectedCell!!.number.toInt())
+        if (commonViewModel.selectedCell != null) {
+            Log.e("sdfsdf", "initialize: ${commonViewModel.selectedCell!!.number.toInt()}")
+            (requireActivity() as? MainActivity)?.viewModel?.openLocker(
+                1,
+                commonViewModel.selectedCell!!.number.toInt()
+            )
         } else {
-            Log.e("sdfsdf", "initialize: ss ${-1}", )
+            Log.e("sdfsdf", "initialize: ss ${-1}")
         }
 
-        lifecycleScope.launch {
-            lockedBoard.getEventLiveData().observe(viewLifecycleOwner) { event ->
+        (requireActivity() as? MainActivity)?.viewModel?.observeLockerBoardEvents()
+            ?.observe(viewLifecycleOwner) { event ->
                 when (event) {
                     is LockerBoardResponse.DoorStatus -> {
-                        Timber.tag("Flow").d("Статус Дверь: ${event.locker}, статус: ${event.status}")
+                        if (isFromClick && event.locker == commonViewModel.selectedCell?.number?.toInt()) {
+                            isFromClick = false
+                            if (event.status == LockStatus.CLOSED) {
+                                findNavController().navigate(R.id.action_leaveParcelOpenedBoardFragment_to_anotherLeaveBoardDialogFragment)
+                            } else {
+                                findNavController().navigate(R.id.anotherLeaveCloseCellDialogFragment)
+                            }
+                        }
+                        Timber.tag("Flow")
+                            .d("Статус Дверь: ${event.locker}, статус: ${event.status}")
                     }
+
                     is LockerBoardResponse.Error -> {
                         Timber.tag("Flow").e("Ошибка: ${event.message}")
                     }
-                    is LockerBoardResponse.OpenDoor ->{
+
+                    is LockerBoardResponse.OpenDoor -> {
                         Timber.tag("Flow").d("Дверь: ${event.locker}, статус: ${event.status}")
                     }
+
                     else -> Timber.tag("Flow").d("Получено: $event")
                 }
             }
-        }
 
         binding.btnBack.text = requireContext().getString(R.string.text_choose_another_cell)
         binding.btnContinue.text = requireContext().getString(R.string.text_leave_parcel)
@@ -88,7 +100,13 @@ class LeaveParcelOpenedBoardFragment :
 
     override fun setupListeners() {
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_leaveParcelOpenedBoardFragment_to_anotherLeaveBoardDialogFragment)
+            if (commonViewModel.selectedCell != null) {
+                isFromClick = true
+                (requireActivity() as? MainActivity)?.viewModel?.getCellStatus(
+                    1,
+                    commonViewModel.selectedCell!!.number.toInt()
+                )
+            }
         }
         binding.btnContinue.setOnClickListener {
             requireActivity().findNavController(R.id.nav_host).navigate(
@@ -110,11 +128,6 @@ class LeaveParcelOpenedBoardFragment :
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        lockedBoard.disconnect()
     }
 
 }

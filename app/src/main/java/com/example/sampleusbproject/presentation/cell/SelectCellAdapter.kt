@@ -20,7 +20,7 @@ class SelectCellAdapter(
             oldItem: SelectCellModel,
             newItem: SelectCellModel
         ): Boolean {
-            return oldItem.isSelected == newItem.isSelected
+            return oldItem.isSelected == newItem.isSelected && oldItem.isAvailableToChoose == newItem.isAvailableToChoose
         }
 
     }

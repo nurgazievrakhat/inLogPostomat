@@ -29,6 +29,7 @@
     <string name="text_wrong_phone_number">Неверный номер телефона</string>
     <string name="text_not_full_sms_code">Смс код состоит из 6 цифр</string>
     <string name="text_wrong_sms_code">Неверный смс код</string>
+    <string name="text_wrong_code">Неверный код</string>
     <string name="text_choose_receiver">Пожайлуста выберите получателя</string>
     <string name="text_choose_cell_size">Выберите размер ячейки</string>
     <string name="text_cell_size_title">Ячейки %1$s</string>
@@ -45,6 +46,7 @@
     <string name="text_contains_free_cell">Есть свободные ячейки</string>
     <string name="text_not_contains_free_cell">Нет свободных ячеек</string>
     <string name="text_leave_parcel">Я оставил(-а) посылку</string>
+    <string name="text_need_to_close_cell">Необходимо закрыть ячейку</string>
     <string name="text_familiarized">Ознакомлен(-а)</string>
     <string name="text_days_count_depends_of_payer">Количество дней хранения\nпосылки в постамате</string>
     <string name="text_pay_by_self">Отправитель - оплачу сейчас</string>

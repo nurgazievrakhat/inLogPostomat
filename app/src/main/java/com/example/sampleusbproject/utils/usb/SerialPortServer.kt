@@ -205,7 +205,7 @@ class SerialPortServer(
     }
 
     private fun processDoorType(errorMsg: String): String {
-        return if (errorMsg.length == 24) {
+        return if (errorMsg.length == 22) {
             val state1 = errorMsg.substring(14, 16)
             when (state1) {
                 "00" -> scsCallBack("8", "READ_DOOR_TYPE", hex16to10(errorMsg.substring(10, 12)),

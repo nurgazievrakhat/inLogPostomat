@@ -94,5 +94,15 @@
             android:id="@+id/action_selectCellWithAmountFragment_to_leaveParcelOpenedBoardFragment"
             app:destination="@id/leaveParcelOpenedBoardFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/anotherLeaveCloseCellDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.closeCell.AnotherLeaveCloseCellDialogFragment"
+        android:label="AnotherLeaveCloseCellDialogFragment" >
+        <action
+            android:id="@+id/action_anotherLeaveCloseCellDialogFragment_to_anotherLeaveBoardDialogFragment"
+            app:destination="@id/anotherLeaveBoardDialogFragment"
+            app:popUpTo="@id/anotherLeaveCloseCellDialogFragment"
+            app:popUpToInclusive="true"/>
+    </dialog>
 
 </navigation>

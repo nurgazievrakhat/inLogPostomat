@@ -79,57 +79,22 @@
     <fragment
         android:id="@+id/successFragment"
         android:name="com.example.sampleusbproject.presentation.success.SuccessFragment"
-        android:label="SuccessFragment">
-
-        <!--        <argument-->
-        <!--            android:name="type"-->
-        <!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-
-    </fragment>
+        android:label="SuccessFragment"/>
     <action
         android:id="@+id/global_action_to_success_fragment"
         app:destination="@id/successFragment"
         app:popUpTo="@id/leave_parcel_navigation"
         app:popUpToInclusive="true" />
-    <dialog
-        android:id="@+id/anotherBoardDialogFragment"
-        android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
-        android:label="AnotherBoardDialogFragment" />
     <fragment
         android:id="@+id/openedBoardFragment"
         android:name="com.example.sampleusbproject.presentation.boards.OpenedBoardFragment"
         android:label="OpenedBoardFragment">
-        <!--        <action-->
-        <!--            android:id="@+id/action_openedBoardFragment_to_successFragment"-->
-        <!--            app:destination="@id/successFragment" >-->
-
-        <!--            <argument-->
-        <!--                android:name="type"-->
-        <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-        <!--        </action>-->
         <action
             android:id="@+id/action_openedBoardFragment_to_successFragment"
             app:destination="@id/successFragment"
             app:popUpTo="@id/openedBoardFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/openedCourierBoardFragment"
-        android:name="com.example.sampleusbproject.presentation.boards.courier.OpenedCourierBoardFragment"
-        android:label="OpenedCourierBoardFragment">
-
-        <!--        <argument-->
-        <!--            android:name="type"-->
-        <!--            app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-
-        <!--        <action-->
-        <!--            android:id="@+id/action_openedCourierBoardFragment_to_successFragment"-->
-        <!--            app:destination="@id/successFragment" >-->
-
-        <!--            <argument-->
-        <!--                android:name="type"-->
-        <!--                app:argType="com.example.sampleusbproject.presentation.numberPad.PackageType" />-->
-        <!--        </action>-->
-    </fragment>
     <include app:graph="@navigation/leave_parcel_navigation" />
+    <include app:graph="@navigation/courier_navigation" />
 </navigation>

@@ -1,10 +1,13 @@
 package com.example.sampleusbproject.data.remote
 
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
+import com.example.sampleusbproject.data.remote.dto.CreateTransactionDto
+import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
 import com.example.sampleusbproject.data.remote.dto.FreeCellDto
 import com.example.sampleusbproject.data.remote.dto.GetOrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderResponseDto
+import com.example.sampleusbproject.data.remote.dto.UpdateOrderCellDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,6 +32,11 @@ interface PostomatService {
         @Path("id") orderId: String
     ): Response<Unit>
 
+    @POST("/api/v1/postomat/transaction/create")
+    suspend fun createTransaction(
+        @Body model: CreateTransactionDto
+    ): Response<Unit>
+
     @GET("/api/v1/postomat/free-cells")
     suspend fun getFreCells(): Response<List<FreeCellDto>>
 
@@ -42,5 +50,17 @@ interface PostomatService {
         @Query("type") type: String,
         @Query("password") password: String
     ): Response<GetOrderDto>
+
+    @POST("/api/v1/postomat/order/{id}/delivery")
+    suspend fun deliveryOrder(
+        @Path("id") orderId: String,
+        @Body model: DeliveryOrderDto
+    ): Response<Unit>
+
+    @POST("/api/v1/postomat/order/{id}/update-cell")
+    suspend fun updateCell(
+        @Path("id") orderId: String,
+        @Body model: UpdateOrderCellDto
+    ): Response<Unit>
 
 }

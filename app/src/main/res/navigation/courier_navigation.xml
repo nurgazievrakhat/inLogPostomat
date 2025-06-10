@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/courier_navigation"
+    app:startDestination="@id/enterCourierNumberFragment">
+
+    <fragment
+        android:id="@+id/enterCourierNumberFragment"
+        android:name="com.example.sampleusbproject.presentation.numberPad.EnterCourierNumberFragment"
+        android:label="EnterCourierNumberFragment" />
+    <fragment
+        android:id="@+id/openedCourierBoardFragment"
+        android:name="com.example.sampleusbproject.presentation.boards.courier.OpenedCourierBoardFragment"
+        android:label="OpenedCourierBoardFragment" />
+    <dialog
+        android:id="@+id/anotherBoardDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.anotherBoard.AnotherBoardDialogFragment"
+        android:label="AnotherBoardDialogFragment" />
+    <fragment
+        android:id="@+id/courierSelectCellFragment"
+        android:name="com.example.sampleusbproject.presentation.cell.courier.CourierSelectCellFragment"
+        android:label="CourierSelectCellFragment" />
+    <dialog
+        android:id="@+id/closeCellDialogFragment"
+        android:name="com.example.sampleusbproject.presentation.dialogs.closeCell.CloseCellDialogFragment"
+        android:label="CloseCellDialogFragment">
+        <action
+            android:id="@+id/action_closeCellDialogFragment_to_anotherBoardDialogFragment2"
+            app:destination="@id/anotherBoardDialogFragment"
+            app:popUpTo="@id/closeCellDialogFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+
+</navigation>

@@ -19,7 +19,7 @@ class SelectDayAdapter(
 
         override fun areContentsTheSame(oldItem: SelectDay, newItem: SelectDay): Boolean {
             Log.e("sdfsdf", "areContentsTheSame: $oldItem $newItem", )
-            return (oldItem.isSelected == newItem.isSelected)
+            return (oldItem.isSelected == newItem.isSelected && oldItem.isAvailableToSelect == newItem.isAvailableToSelect)
         }
 
     }

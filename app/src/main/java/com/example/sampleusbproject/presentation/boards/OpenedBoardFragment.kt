@@ -8,10 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.databinding.FragmentOpenedBoardBinding
-import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsAdapter
 import com.example.sampleusbproject.presentation.boards.adapter.BoardsDividerItemDecoration
@@ -31,9 +31,6 @@ class OpenedBoardFragment :
         FragmentOpenedBoardBinding::inflate
     ) {
 
-    @Inject
-    lateinit var lockedBoard: LockerBoardInterface
-
     private lateinit var adapter: BoardsAdapter
 
     override fun initialize() {
@@ -43,16 +40,10 @@ class OpenedBoardFragment :
             arguments?.getSerializable("cell") as? PostomatTakeCell
         }
         val selectedNumber = selectedCell?.number ?: -1L
-        if (selectedNumber > 0) {
-            lockedBoard.connect()
-            lockedBoard.openLocker(1, selectedNumber.toInt())
-        } else {
-            Log.e("sdfsdf", "initialize OpenedBoardFragment: ss ${-1}")
-        }
         adapter = BoardsAdapter(selectedNumber)
+        viewModel.take(selectedCell?.orderId ?: "")
 
-        lifecycleScope.launch {
-            lockedBoard.getEventLiveData().observe(viewLifecycleOwner) { event ->
+            (requireActivity() as? MainActivity)?.viewModel?.observeLockerBoardEvents()?.observe(viewLifecycleOwner) { event ->
                 when (event) {
                     is LockerBoardResponse.DoorStatus -> {
                         Timber.tag("Flow")
@@ -70,7 +61,6 @@ class OpenedBoardFragment :
                     else -> Timber.tag("Flow").d("Получено: $event")
                 }
             }
-        }
 
         binding.tvTitle.text = String.format(
             requireContext().getString(R.string.text_opened_board),
@@ -90,15 +80,14 @@ class OpenedBoardFragment :
         binding.rvBoards.addItemDecoration(dividerItemDecoration)
 
         binding.btnBack.setOnClickListener {
-//            findNavController().popBackStack()
-            if (selectedNumber > 0)
-                lockedBoard.openLocker(1, selectedNumber.toInt())
+            if (viewModel.successEvent.value == true) {
+                if (selectedNumber > 0)
+                    (requireActivity() as? MainActivity)?.viewModel?.openLocker(1, selectedNumber.toInt())
+            } else
+                viewModel.take(selectedCell?.orderId ?: "")
         }
 
         binding.btnContinue.setOnClickListener {
-//            val orderId: String = selectedCell?.orderId ?: ""
-//            viewModel.take(orderId)
-
             findNavController().navigate(
                 R.id.action_openedBoardFragment_to_successFragment,
                 bundleOf(
@@ -107,6 +96,10 @@ class OpenedBoardFragment :
                     )
                 )
             )
+        }
+        viewModel.successEvent.observe(viewLifecycleOwner) {
+            if (selectedNumber > 0)
+                (requireActivity() as? MainActivity)?.viewModel?.openLocker(1, selectedNumber.toInt())
         }
     }
 
@@ -124,21 +117,6 @@ class OpenedBoardFragment :
         viewModel.errorEvent.observe(viewLifecycleOwner) {
             makeToast(R.string.text_something_went_wrong)
         }
-        viewModel.successEvent.observe(viewLifecycleOwner) {
-            findNavController().navigate(
-                R.id.action_openedBoardFragment_to_successFragment,
-                bundleOf(
-                    "type" to PackageType.getInt(
-                        PackageType.TAKE
-                    )
-                )
-            )
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        lockedBoard.disconnect()
     }
 
 }

@@ -41,8 +41,8 @@ class NewLockerControlBoard(
                     val board = json.getInt("dial_up")
                     val door = json.getInt("door_number")
                     val status = when (json.getString("msg")) {
-                        "READ_DOOR_TYPE_ON" -> LockStatus.CLOSED
-                        "READ_DOOR_TYPE_OFF" -> LockStatus.OPEN
+                        "READ_DOOR_TYPE_ON" -> LockStatus.OPEN
+                        "READ_DOOR_TYPE_OFF" -> LockStatus.CLOSED
                         else -> LockStatus.UNKNOWN
                     }
                     _eventLiveData.postValue(LockerBoardResponse.DoorStatus(board, door, status))

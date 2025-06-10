@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.data.remote.socket.SocketRepositoryImpl
@@ -31,9 +32,6 @@ class LockerBoardMapFragment : Fragment() {
 
     @Inject
     lateinit var postomatInfoMapper: PostomatInfoMapper
-
-    @Inject
-    lateinit var lockedBoard: LockerBoardInterface
 
     @Inject
     lateinit var socketRepositoryImpl: SocketRepositoryImpl
@@ -57,7 +55,7 @@ class LockerBoardMapFragment : Fragment() {
                     if (cell != null) {
                         Timber.w("cellNumber = ${cell.first}, boardNumber = ${cell.second}")
 //                    viewModel.openCell(cell.first, cell.second)
-                        lockedBoard.openLocker(cell.second.toInt(),cell.first.toInt())
+                        (requireActivity() as? MainActivity)?.viewModel?.openLocker(cell.second.toInt(),cell.first.toInt())
                         setCellStatus(cell.first, true)
                     } else {
                         Toast.makeText(

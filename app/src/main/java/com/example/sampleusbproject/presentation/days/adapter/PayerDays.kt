@@ -5,9 +5,13 @@ enum class PayerDays(val list: List<Int>) {
     RECEIVER(listOf(1, 2))
 }
 
-fun PayerDays.getSelectList(selectedPos: Int) = this.list.map {
-    SelectDay(
-        isSelected = it == selectedPos,
-        day = it
-    )
+fun PayerDays.getSelectList(previousSelectedDay: Int? = null) = this.list.mapNotNull {
+    if (it >= (previousSelectedDay ?: -1))
+        SelectDay(
+            isSelected = false,
+            day = it,
+            isAvailableToSelect = true
+        )
+    else
+        null
 }

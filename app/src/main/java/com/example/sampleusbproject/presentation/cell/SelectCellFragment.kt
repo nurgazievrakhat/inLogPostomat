@@ -8,8 +8,14 @@ import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentSelectFreeCellBinding
 import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
+import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
 import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
 import com.example.sampleusbproject.presentation.commonViewModel.SelectedCell
+import com.example.sampleusbproject.presentation.days.adapter.PayerDays
+import com.example.sampleusbproject.presentation.days.adapter.SelectDay
+import com.example.sampleusbproject.presentation.days.adapter.SelectDayAdapter
+import com.example.sampleusbproject.presentation.days.adapter.getSelectList
+import com.example.sampleusbproject.utils.gone
 import com.example.sampleusbproject.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,9 +30,33 @@ class SelectCellFragment :
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
 
     private var prevSelectedPos: Int = -1
+    private var prevDaySelectedPos: Int = -1
 
-    private val adapter: SelectCellAdapter by lazy {
-        SelectCellAdapter(this::onClick, false)
+    private lateinit var adapter: SelectCellAdapter
+
+    private val daysAdapter: SelectDayAdapter by lazy {
+        SelectDayAdapter(this::onDayClick)
+    }
+
+    private fun onDayClick(pos: Int, model: SelectDay) {
+        if (prevDaySelectedPos == pos)
+            return
+
+        if (pos > -1) {
+            onDaySelect(true, pos)
+        }
+
+        if (prevDaySelectedPos > -1) {
+            onDaySelect(false, prevDaySelectedPos)
+        }
+
+        prevDaySelectedPos = pos
+    }
+
+    private fun onDaySelect(isSelected: Boolean, pos: Int) {
+        val list = daysAdapter.currentList.toMutableList()
+        list[pos].isSelected = isSelected
+        daysAdapter.notifyItemChanged(pos)
     }
 
     private fun onClick(pos: Int, model: SelectCellModel) {
@@ -48,9 +78,14 @@ class SelectCellFragment :
     }
 
     override fun initialize() {
-        viewModel.getFreCells()
+        adapter = SelectCellAdapter(this::onClick, false)
+        viewModel.getFreCells(commonViewModel.selectedCell?.size)
         binding.rvCells.adapter = adapter
         binding.rvCells.addItemDecoration(CenterItemDecoration())
+        binding.rvDays.adapter = daysAdapter
+        daysAdapter.submitList(PayerDays.RECEIVER.getSelectList(commonViewModel.days))
+        if (commonViewModel.orderId.isNotBlank())
+            binding.btnBack.gone()
     }
 
     override fun setupListeners() {
@@ -59,26 +94,42 @@ class SelectCellFragment :
         }
         binding.btnContinue.setOnClickListener {
             val selected = adapter.currentList.find { it.isSelected }
-            if (selected != null) {
-                prevSelectedPos = -1
-                commonViewModel.selectedCell = SelectedCell(
-                    selected.cellId ?: "",
-                    number = selected.number ?: 0L
-                )
+            val selectedDay = daysAdapter.currentList.find { it.isSelected }
+
+            if (selected == null) {
+                makeToast(R.string.text_choose_size_error)
+                return@setOnClickListener
+            }
+
+            if (selectedDay == null) {
+                makeToast(R.string.text_choose_day_error)
+                return@setOnClickListener
+            }
+
+            if (commonViewModel.orderId.isBlank())
                 viewModel.createOrder(
                     selected.cellId ?: "",
                     commonViewModel.phoneNumber,
                     commonViewModel.receiverPhoneNumber,
-                    commonViewModel.days
+                    selectedDay.day
                 )
-            } else {
-                makeToast(R.string.text_choose_size_error)
-            }
+            else
+                viewModel.updateCell(
+                    selected.cellId ?: "",
+                    commonViewModel.orderId,
+                    selectedDay.day
+                )
         }
     }
 
     override fun setupSubscribers() {
-        viewModel.createSuccessEvent.observe(viewLifecycleOwner){
+        viewModel.createSuccessEvent.observe(viewLifecycleOwner) {
+            commonViewModel.orderId = it
+            saveData()
+            findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
+        }
+        viewModel.updateSuccessEvent.observe(viewLifecycleOwner) {
+            saveData()
             findNavController().navigate(R.id.action_selectCellFragment_to_leaveParcelOpenedBoardFragment)
         }
         viewModel.errorEvent.observe(viewLifecycleOwner) {
@@ -91,6 +142,21 @@ class SelectCellFragment :
                 }
             }
         }
+    }
+
+    fun saveData(){
+        val selected = adapter.currentList.find { it.isSelected }
+        val selectedDay = daysAdapter.currentList.find { it.isSelected }
+
+        commonViewModel.days = selectedDay?.day ?: 0
+        commonViewModel.selectedCell = SelectedCell(
+            selected?.cellId ?: "",
+            number = selected?.number ?: 0L,
+            size = selected?.boardSize ?: BoardSize.S
+        )
+
+        prevSelectedPos = -1
+        prevDaySelectedPos = -1
     }
 
 }
