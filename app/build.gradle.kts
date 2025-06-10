@@ -100,6 +100,7 @@ implementation(libs.firebase.config)
     implementation(libs.socket.io.client) {
         exclude(group = "org.json", module = "json")
     }
+    
     kapt(libs.room.compiler)
     kapt(libs.hilt.compiler)
     kapt(libs.androidx.hilt.compiler)

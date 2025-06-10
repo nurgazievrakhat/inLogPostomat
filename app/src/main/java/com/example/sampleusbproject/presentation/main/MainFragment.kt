@@ -81,6 +81,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBrightness(1.0f)
         setupListeners()
         viewModel.setupEventListeners()
         viewModel.postomatInfo.observe(viewLifecycleOwner) { info ->
@@ -125,5 +126,11 @@ class MainFragment : Fragment() {
 
             finikLauncher.launch(intent)
         }
+    }
+    private fun setBrightness(brightness: Float) {
+        val window = requireActivity().window
+        val layoutParams = window.attributes
+        layoutParams.screenBrightness = brightness.coerceIn(0.0f, 1.0f)
+        window.attributes = layoutParams
     }
 }

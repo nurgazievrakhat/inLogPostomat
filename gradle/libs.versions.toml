@@ -27,8 +27,9 @@ hiltCommon = "1.2.0"
 hiltWork = "1.2.0"
 hiltCompiler = "1.1.0"
 flexBox = "3.0.0"
-finik = "1.0.0"
-uiUnitAndroid = "1.8.1"
+finik = "1.0.6"
+flutter = "1.0.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -65,6 +66,8 @@ androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref 
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
 flex = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexBox" }
 finik = { group = "kg.averspay", name = "finik-android-sdk", version.ref = "finik" }
+flutter-embedding = { group = "io.flutter", name = "flutter_embedding_debug", version.ref = "flutter" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 #safe-args-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
