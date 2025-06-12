@@ -81,6 +81,9 @@ class MainFragment : Fragment() {
                 findNavController().navigate(R.id.leave_parcel_navigation)
             }
         }
+        binding.tvWelcome.setOnClickListener {
+            findNavController().navigate(R.id.qrFragment)
+        }
         binding.btnTake.setOnClickListener {
             checkLockerBoardAndDo {
                 findNavController().navigate(

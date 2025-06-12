@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.0"
+agp = "8.10.1"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -27,7 +27,7 @@ hiltCommon = "1.2.0"
 hiltWork = "1.2.0"
 hiltCompiler = "1.1.0"
 flexBox = "3.0.0"
-finik = "1.0.6"
+finik = "1.1.2"
 flutter = "1.0.0"
 
 
@@ -65,7 +65,7 @@ androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.
 androidx-hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
 flex = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexBox" }
-finik = { group = "kg.averspay", name = "finik-android-sdk", version.ref = "finik" }
+finik = { group = "kg.finik", name = "android-sdk", version.ref = "finik" }
 flutter-embedding = { group = "io.flutter", name = "flutter_embedding_debug", version.ref = "flutter" }
 
 [plugins]
