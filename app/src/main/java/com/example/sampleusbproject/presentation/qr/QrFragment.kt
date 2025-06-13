@@ -68,7 +68,7 @@ class QrFragment : Fragment(R.layout.qr_fragment) {
                 CreateItemHandlerWidget(
                     accountId = "e5574818-f448-420a-816e-aab6b1f1c26e",
                     name = "Test",
-                    fixedAmount = 2300.0
+                    fixedAmount = 1.0
                 )
             )
             putExtra("paymentMethod", PaymentMethod.QR as Parcelable)
