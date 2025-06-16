@@ -47,6 +47,8 @@
     </LinearLayout>
 
     <!-- Заголовок -->
+
+    <!-- Заголовок -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -62,33 +64,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
-    <!-- Заголовок -->
-    <TextView
-        android:id="@+id/tvTitle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/inter_tight_medium_500"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:text="@string/text_who_will_pay"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/btn_self"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_self"
-        style="@style/BlueRoundedBtn"
+        style="@style/LightBlueRoundedBtn"
         android:layout_width="323dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="31dp"
         android:layout_marginEnd="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:paddingVertical="76dp"
+        android:textColor="@color/colorAccent"
         android:text="@string/text_pay_by_self"
         app:layout_constraintEnd_toStartOf="@id/btn_other"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle2" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_other"
@@ -96,6 +87,10 @@
         android:layout_width="323dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:paddingVertical="76dp"
+        android:textColor="@color/colorAccent"
         android:text="@string/text_pay_other"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_self"
@@ -127,19 +122,32 @@
 <!--        app:layout_constraintBottom_toBottomOf="@id/tv_info"-->
 <!--        app:layout_constraintEnd_toEndOf="@id/btn_other"-->
 <!--        app:layout_constraintTop_toTopOf="@id/tv_info" />-->
-
     <TextView
-        android:id="@+id/tv_days_info"
+        android:id="@+id/tv_days_info_for_other"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/inter_tight_medium_500"
         android:includeFontPadding="false"
-        android:letterSpacing="0.02"
-        android:text="@string/text_days_info"
-        android:textColor="@color/blue_baby"
-        android:textSize="16sp"
+        android:textAlignment="center"
+        android:text="@string/text_days_2_info"
+        android:textColor="@color/gray"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@id/btn_other"
+        app:layout_constraintStart_toStartOf="@id/btn_other"
+        app:layout_constraintTop_toBottomOf="@id/btn_other" />
+    <TextView
+        android:id="@+id/tv_days_info_for_yourself"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/inter_tight_medium_500"
+        android:includeFontPadding="false"
+        android:textAlignment="center"
+        android:text="@string/text_days_5_info"
+        android:textColor="@color/gray"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@id/btn_self"
         app:layout_constraintStart_toStartOf="@id/btn_self"
         app:layout_constraintTop_toBottomOf="@id/btn_self" />
 

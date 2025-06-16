@@ -4,19 +4,225 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorAccent"
     tools:context=".presentation.main.MainFragment">
 
     <!-- Левая синяя часть -->
-    <View
-        android:id="@+id/leftPanel"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/whitePanel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="#3386E6"
+        android:background="@color/white"
+        android:layout_margin="40dp"
+        app:cardCornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.6" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCourier"
+                style="@style/NoInsets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:backgroundTint="@color/blue_light"
+                android:text="@string/text_btn_login_courier"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_walking"
+                app:iconGravity="textStart"
+                app:iconPadding="18dp"
+                app:iconSize="28dp"
+                app:iconTint="@color/colorAccent"
+                app:layout_constraintEnd_toStartOf="@id/spinnerLang"
+                app:layout_constraintTop_toTopOf="@id/spinnerLang"
+                app:strokeColor="@color/black_10"
+                app:strokeWidth="1dp" />
+
+            <Spinner
+                android:id="@+id/spinnerLang"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_margin="35dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/spinner_background"
+                android:dropDownWidth="120dp"
+                android:entries="@array/languages"
+                android:padding="0dp"
+                android:popupBackground="@android:color/white"
+                android:spinnerMode="dropdown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <!-- Приветствие -->
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="98dp"
+                android:gravity="center"
+                android:text="@string/text_welcome"
+                android:textColor="#222B45"
+                android:textSize="42sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinnerLang" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="center"
+                android:text="@string/text_welcome_description"
+                android:textColor="#8F9BB3"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+
+            <!-- Кнопки -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnTake"
+                android:layout_width="0dp"
+                android:layout_height="195dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="94dp"
+                android:layout_marginTop="60dp"
+                android:focusable="true"
+                app:cardPreventCornerOverlap="false"
+                app:layout_constraintEnd_toStartOf="@id/btnLeave"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#4A90E2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/title_take"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="@string/text_btn_take"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="32sp"
+                        android:layout_marginEnd="4dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_take"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_take"
+                        android:layout_width="69dp"
+                        android:layout_height="69dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Package icon"
+                        android:src="@drawable/ic_white_package"
+                        app:layout_constraintBottom_toBottomOf="@id/title_take"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/title_take"
+                        app:layout_constraintTop_toTopOf="@id/title_take" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Кнопка "Оставить посылку" -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnLeave"
+                android:layout_width="0dp"
+                android:layout_height="195dp"
+                android:layout_marginEnd="94dp"
+                android:layout_marginStart="15dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnTake"
+                app:layout_constraintTop_toTopOf="@id/btnTake"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:strokeColor="@color/blue"
+                app:strokeWidth="4dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/title_leave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="@string/text_btn_leave"
+                        android:textColor="#4A90E2"
+                        android:textSize="32sp"
+                        android:layout_marginEnd="4dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_leave"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_leave"
+                        android:layout_width="69dp"
+                        android:layout_height="69dp"
+                        android:contentDescription="Package down icon"
+                        android:src="@drawable/ic_blue_package"
+                        app:layout_constraintBottom_toBottomOf="@id/title_leave"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/title_leave"
+                        app:layout_constraintTop_toTopOf="@id/title_leave" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:padding="23dp"
+                tools:text="v 1.1"
+                android:textColor="#8F9BB3"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
     <ImageView
@@ -25,10 +231,10 @@
         android:layout_height="517dp"
         android:layout_marginBottom="32dp"
         android:src="@drawable/img_main_screen"
-        app:layout_constraintBottom_toBottomOf="@id/leftPanel"
-        app:layout_constraintEnd_toEndOf="@id/leftPanel"
-        app:layout_constraintStart_toStartOf="@id/leftPanel"
-        app:layout_constraintTop_toTopOf="@id/leftPanel" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/whitePanel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -37,138 +243,7 @@
         android:layout_margin="40dp"
         android:layout_marginTop="32dp"
         android:src="@drawable/logo"
-        app:layout_constraintStart_toStartOf="@id/leftPanel"
-        app:layout_constraintTop_toTopOf="@id/leftPanel" />
-
-    <TextView
-        android:id="@+id/tvSlogan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:text="Твои покупки –\nв шаге от тебя"
-        android:textColor="@android:color/white"
-        android:textSize="45sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/leftPanel"
-        app:layout_constraintStart_toStartOf="@id/leftPanel" />
-
-    <!-- Правая белая часть (элементы перенесены на root уровень) -->
-
-    <!-- Язык и вход для курьера -->
-    <Spinner
-        android:id="@+id/spinnerLang"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_margin="30dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/spinner_background"
-        android:dropDownWidth="120dp"
-        android:entries="@array/languages"
-        android:padding="0dp"
-        android:popupBackground="@android:color/white"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCourier"
-        style="@style/NoInsets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="Вход для курьера"
-        android:textColor="@color/shadow_black"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_walking"
-        app:iconGravity="textEnd"
-        app:iconPadding="18dp"
-        app:iconSize="28dp"
-        app:cornerRadius="16dp"
-        android:backgroundTint="@color/blue_light"
-        app:iconTint="@color/shadow_black"
-        app:strokeColor="@color/black_10"
-        app:strokeWidth="1dp"
-        app:layout_constraintBottom_toBottomOf="@id/spinnerLang"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/spinnerLang" />
-
-    <!-- Приветствие -->
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="151dp"
-        android:gravity="center"
-        android:text="Добро пожаловать!"
-        android:textColor="#222B45"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
-        app:layout_constraintTop_toBottomOf="@id/spinnerLang" />
-
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:text="Вас приветствует сервис inLog –\nудобный способ получить свою покупку"
-        android:textColor="#8F9BB3"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
-
-    <!-- Кнопки -->
-    <Button
-        android:id="@+id/btnTake"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="108dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#3386E6"
-        android:drawableEnd="@drawable/ic_white_package"
-        android:text="Забрать посылку"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
-
-    <Button
-        android:id="@+id/btnLeave"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="108dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/bg_btn_rounded_blue"
-        android:drawableEnd="@drawable/ic_blue_package"
-        android:text="Оставить посылку"
-        android:textColor="#3386E6"
-        android:textSize="20sp"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leftPanel"
-        app:layout_constraintTop_toBottomOf="@id/btnTake" />
-
-    <!-- Версия -->
-    <TextView
-        android:id="@+id/tvVersion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:padding="23dp"
-        android:text="v 1.1"
-        android:textColor="#8F9BB3"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/leftPanel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
