@@ -62,10 +62,7 @@ class OpenedBoardFragment :
                 }
             }
 
-        binding.tvTitle.text = String.format(
-            requireContext().getString(R.string.text_opened_board),
-            selectedNumber.toString()
-        )
+        binding.tvBoardNumber.text = selectedNumber.toString()
 
         binding.rvBoards.adapter = adapter
         binding.rvBoards.isNestedScrollingEnabled = false
