@@ -20,7 +20,7 @@ interface PostomatRepository {
 
     suspend fun updateCell(orderId: String, cellId: String, days: Int): Either<Unit, Unit>
 
-    suspend fun createTransaction(amount: Long, orderId: String): Either<Unit, Unit>
+    suspend fun createTransaction(amount: Long, orderId: String?): Either<Unit, String>
 
     suspend fun take(orderId: String): Either<Unit, Unit>
 

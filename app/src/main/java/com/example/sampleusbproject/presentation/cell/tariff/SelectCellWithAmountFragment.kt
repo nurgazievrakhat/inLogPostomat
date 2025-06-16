@@ -1,6 +1,10 @@
 package com.example.sampleusbproject.presentation.cell.tariff
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.os.Parcelable
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -8,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentSelectCellWithAmountBinding
+import com.example.sampleusbproject.presentation.FinikPaymentModel
 import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
 import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
 import com.example.sampleusbproject.presentation.cell.CenterItemDecoration
@@ -21,7 +26,12 @@ import com.example.sampleusbproject.presentation.days.adapter.SelectDayAdapter
 import com.example.sampleusbproject.presentation.days.adapter.getSelectList
 import com.example.sampleusbproject.utils.gone
 import com.example.sampleusbproject.utils.makeToast
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kg.finik.android.sdk.CreateItemHandlerWidget
+import kg.finik.android.sdk.FinikActivity
+import kg.finik.android.sdk.FinikSdkLocale
+import kg.finik.android.sdk.PaymentMethod
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,6 +42,42 @@ class SelectCellWithAmountFragment :
         FragmentSelectCellWithAmountBinding::inflate
     ) {
     private val commonViewModel: LeaveParcelViewModel by navGraphViewModels(R.id.leave_parcel_navigation)
+
+    private val finikLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data
+                val paymentResultJson = data?.getStringExtra("paymentResultJson")
+                Log.d("MainActivity", "Payment result: $paymentResultJson")
+                try {
+                    val model = Gson().fromJson<FinikPaymentModel>(
+                        paymentResultJson,
+                        FinikPaymentModel::class.java
+                    )
+                    if (model.status.lowercase() == "succeeded") {
+                        val selected = adapter.currentList.find { it.isSelected }
+                        val selectedDay = daysAdapter.currentList.find { it.isSelected }
+                        val sumOfPay =
+                            binding.tvAmount.text.toString().filter { it.isDigit() }.ifBlank { "0" }.toLong()
+
+                        viewModel.createTransaction(
+                            sumOfPay,
+                            selected?.cellId ?: "",
+                            commonViewModel.phoneNumber,
+                            commonViewModel.receiverPhoneNumber,
+                            selectedDay?.day ?: -1
+                        )
+
+                    } else {
+                        makeToast(R.string.text_something_went_wrong)
+                    }
+                } catch (e: Exception){
+                    makeToast(R.string.text_something_went_wrong)
+                }
+            } else {
+                Log.d("MainActivity", "Пользователь вышел из Finik по кнопке назад")
+            }
+        }
 
     private var prevCellSelectedPos: Int = -1
     private var prevDaySelectedPos: Int = -1
@@ -109,6 +155,8 @@ class SelectCellWithAmountFragment :
         binding.btnContinue.setOnClickListener {
             val selected = adapter.currentList.find { it.isSelected }
             val selectedDay = daysAdapter.currentList.find { it.isSelected }
+            val sumOfPay =
+                binding.tvAmount.text.toString().filter { it.isDigit() }.ifBlank { "0" }.toLong()
 
             if (selected == null) {
                 makeToast(R.string.text_choose_size_error)
@@ -121,12 +169,7 @@ class SelectCellWithAmountFragment :
             }
 
             if (commonViewModel.orderId.isBlank())
-                viewModel.createOrder(
-                    selected.cellId ?: "",
-                    commonViewModel.phoneNumber,
-                    commonViewModel.receiverPhoneNumber,
-                    selectedDay.day
-                )
+                launchFinik(sumOfPay)
             else
                 viewModel.updateCell(
                     selected.cellId ?: "",
@@ -156,6 +199,25 @@ class SelectCellWithAmountFragment :
                 }
             }
         }
+    }
+
+    fun launchFinik(sum: Long) {
+        val intent = Intent(requireContext(), FinikActivity::class.java).apply {
+            putExtra("apiKey", "da2-g7s2jntzuzcojmj4fh37msznmq")
+            putExtra(
+                "widget",
+                CreateItemHandlerWidget(
+                    accountId = "e5574818-f448-420a-816e-aab6b1f1c26e",
+                    name = "Test",
+                    fixedAmount = sum.toDouble()
+                )
+            )
+            putExtra("paymentMethod", PaymentMethod.QR as Parcelable)
+            putExtra("locale", FinikSdkLocale.RU as Parcelable)
+            putExtra("isBeta", false)
+        }
+
+        finikLauncher.launch(intent)
     }
 
     fun saveData() {

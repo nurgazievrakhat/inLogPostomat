@@ -62,8 +62,8 @@ class ChoosePayerAndDaysFragment : BaseFragment<FragmentChoosePayerAndDaysBindin
     }
 
     private fun setAlphaDaysGroup(alpha: Float) {
-        binding.tvDaysInfo.alpha = alpha
-        binding.tvDaysInfo.alpha = alpha
+//        binding.tvDaysInfo.alpha = alpha
+//        binding.tvDaysInfo.alpha = alpha
 //        binding.rvDays.alpha = alpha
 //        if (alpha < 1f)
 //            binding.rvDays.isClickable = false

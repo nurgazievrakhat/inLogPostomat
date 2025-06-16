@@ -20,41 +20,58 @@ class EnterNumberViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val successEvent = SingleLiveEvent<PostomatTakeCell>()
+    val paymentEvent = SingleLiveEvent<Pair<Long, PostomatTakeCell>>()
     val errorEvent = SingleLiveEvent<GetOrderError>()
+
+    fun payed(model: PostomatTakeCell, remainder: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = postomatRepository.createTransaction(
+                remainder,
+                model.id
+            )
+            when (response) {
+                is Either.Right -> successEvent.postValue(model)
+                is Either.Left -> errorEvent.postValue(GetOrderError.Unexpected)
+            }
+        }
+    }
 
     fun getOrderByPassword(password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
             val response = postomatRepository.getOrderByPassword(GetOrderType.PICK, password)
-            _alertLiveData.postValue(false)
             when {
                 response is Either.Right && response.value.cellId != null -> {
                     val postomatCell =
                         postomatSocketUseCase.getPostomatCellById(response.value.cellId)
                     val remainder = (response.value.remainder ?: 0)
-                    val isPayed = if (remainder > 0)
-                        postomatRepository.createTransaction(
-                            remainder,
-                            response.value.id
-                        ) is Either.Right
-                    else
-                        true
-                    if (postomatCell != null && isPayed)
-                        successEvent.postValue(
-                            PostomatTakeCell(
-                                response.value.id,
-                                response.value.cellId,
-                                postomatCell.number,
-                                postomatCell.boardId
-                            )
+                    val isPayed = remainder > 0
+                    _alertLiveData.postValue(false)
+                    if (postomatCell != null) {
+                        val successModel = PostomatTakeCell(
+                            response.value.id,
+                            response.value.cellId,
+                            postomatCell.number,
+                            postomatCell.boardId
                         )
-                    else if (!isPayed)
-                        errorEvent.postValue(GetOrderError.Unexpected)
-                    else
+                        if (!isPayed)
+                            successEvent.postValue(
+                                successModel
+                            )
+                        else
+                            paymentEvent.postValue(
+                                Pair(
+                                    remainder, successModel
+                                )
+                            )
+                    } else
                         errorEvent.postValue(GetOrderError.NotFound)
                 }
 
-                response is Either.Left -> errorEvent.postValue(response.value)
+                response is Either.Left -> {
+                    _alertLiveData.postValue(false)
+                    errorEvent.postValue(response.value)
+                }
             }
         }
     }

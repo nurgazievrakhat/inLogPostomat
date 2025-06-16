@@ -90,8 +90,8 @@ class PostomatRepositoryImpl @Inject constructor(
 
     override suspend fun createTransaction(
         amount: Long,
-        orderId: String
-    ): Either<Unit, Unit> {
+        orderId: String?
+    ): Either<Unit, String> {
         return try {
             val response = service.createTransaction(
                 CreateTransactionDto(
@@ -99,8 +99,8 @@ class PostomatRepositoryImpl @Inject constructor(
                     orderId = orderId
                 )
             )
-            if (response.isSuccessful)
-                Either.Right(Unit)
+            if (response.isSuccessful && response.body() != null)
+                Either.Right(response.body()!!.id)
             else
                 Either.Left(Unit)
         } catch (e: Exception) {

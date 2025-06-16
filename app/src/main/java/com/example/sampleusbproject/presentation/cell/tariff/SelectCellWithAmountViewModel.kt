@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectCellWithAmountViewModel@Inject constructor(
+class SelectCellWithAmountViewModel @Inject constructor(
     private val postomatRepository: PostomatRepository
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _freeCells = MutableStateFlow<List<SelectCellModel>>(listOf())
     val freeCells = _freeCells.asStateFlow()
@@ -31,23 +31,44 @@ class SelectCellWithAmountViewModel@Inject constructor(
 
     val errorEvent = SingleLiveEvent<Boolean>()
 
-    fun getFreCells(previousSelectedSize: BoardSize ?= null){
+    fun getFreCells(previousSelectedSize: BoardSize? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
             val response = postomatRepository.getFreeCells()
             _alertLiveData.postValue(false)
-            when(response){
-                is Either.Left -> errorEvent.postValue(true)
+            when (response) {
                 is Either.Right -> _freeCells.value = response.value.mapToUi(previousSelectedSize)
+                is Either.Left -> errorEvent.postValue(true)
+            }
+        }
+    }
+
+    fun createTransaction(
+        sum: Long,
+        cellId: String,
+        fromUserPhone: String,
+        toUserPhone: String,
+        days: Int
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _alertLiveData.postValue(true)
+            val response = postomatRepository.createTransaction(sum, null)
+            when(response){
+                is Either.Right -> createOrder(cellId, fromUserPhone, toUserPhone, days, response.value)
+                is Either.Left -> {
+                    _alertLiveData.postValue(false)
+                    errorEvent.postValue(true)
+                }
             }
         }
     }
 
     fun createOrder(
-        cellId: String ,
+        cellId: String,
         fromUserPhone: String,
         toUserPhone: String,
-        days: Int
+        days: Int,
+        transactionId: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
@@ -56,7 +77,8 @@ class SelectCellWithAmountViewModel@Inject constructor(
                     cellId = cellId,
                     fromUserPhone = fromUserPhone,
                     toUserPhone = toUserPhone,
-                    days = days
+                    days = days,
+                    transactionId = transactionId
                 )
             )
             _alertLiveData.postValue(false)

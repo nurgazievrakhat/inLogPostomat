@@ -7,6 +7,7 @@ import com.example.sampleusbproject.data.remote.dto.FreeCellDto
 import com.example.sampleusbproject.data.remote.dto.GetOrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderDto
 import com.example.sampleusbproject.data.remote.dto.OrderResponseDto
+import com.example.sampleusbproject.data.remote.dto.TransactionDto
 import com.example.sampleusbproject.data.remote.dto.UpdateOrderCellDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -35,7 +36,7 @@ interface PostomatService {
     @POST("/api/v1/postomat/transaction/create")
     suspend fun createTransaction(
         @Body model: CreateTransactionDto
-    ): Response<Unit>
+    ): Response<TransactionDto>
 
     @GET("/api/v1/postomat/free-cells")
     suspend fun getFreCells(): Response<List<FreeCellDto>>
