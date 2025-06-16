@@ -49,11 +49,13 @@
     <string name="text_need_to_close_cell">Необходимо закрыть ячейку</string>
     <string name="text_familiarized">Ознакомлен(-а)</string>
     <string name="text_days_count_depends_of_payer">Количество дней хранения\nпосылки в постамате</string>
-    <string name="text_pay_by_self">Отправитель - оплачу сейчас</string>
-    <string name="text_pay_other">Получатель - оплатит при получении</string>
+    <string name="text_pay_by_self">Отправитель</string>
+    <string name="text_pay_other">Получатель</string>
     <string name="text_days_info">Важно: при оплате вами — до 5 дней хранения, при оплате получателем — до 2 дней.</string>
+    <string name="text_days_5_info">Срок хранения до 5 дней</string>
+    <string name="text_days_2_info">Срок хранения до 2 дней</string>
     <string name="text_who_will_pay">Кто оплачивает за хранение посылки?</string>
-    <string name="text_payer_and_days">Укажите кто платит и срок хранения</string>
+    <string name="text_payer_and_days">Кто оплачивает доставку</string>
     <string name="text_choose_day_error">Выберите срок хранения!</string>
     <string name="text_choose_another_cell">Выбрать другую ячейку</string>
     <string name="text_terms_of_offer_title">Условия публичной оферты сервиса inLog</string>
@@ -65,4 +67,9 @@
     <string name="text_welcome_description">Вас приветствует сервис inLog –\nудобный способ получить свою покупку</string>
     <string name="text_btn_take">ЗАБРАТЬ\nПОСЫЛКУ</string>
     <string name="text_btn_leave">ОСТАВИТЬ\nПОСЫЛКУ</string>
+
+    <string name="summary_locker">Ячейка: %1$s</string>
+    <string name="summary_price">Цена в сутки: %1$d сом</string>
+    <string name="summary_days">Срок хранения: %1$d дней</string>
+    <string name="summary_total">К оплате: %1$d сом</string>
 </resources>
