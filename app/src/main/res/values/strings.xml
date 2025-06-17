@@ -40,9 +40,10 @@
     <string name="text_cell_amount">%1$s cом/сутки</string>
     <string name="text_choose_size_error">Выберите размер ячейки!</string>
     <string name="text_choose_size_of_parcel">Выберите размер посылки</string>
-    <string name="text_choose_size_of_parcel_and_day">Выберите размер посылки \nи срок аренды</string>
-    <string name="text_rent_in_days">Срок аренды в днях</string>
+    <string name="text_choose_size_of_parcel_and_day">1. Выберите размер ячейки</string>
+    <string name="text_rent_in_days">2. Выберите срок аренды (в днях)</string>
     <string name="text_to_pay">К оплате:</string>
+    <string name="text_sum">Сумма:</string>
     <string name="text_contains_free_cell">Есть свободные ячейки</string>
     <string name="text_not_contains_free_cell">Нет свободных ячеек</string>
     <string name="text_leave_parcel">Я оставил(-а) посылку</string>
@@ -67,9 +68,18 @@
     <string name="text_welcome_description">Вас приветствует сервис inLog –\nудобный способ получить свою покупку</string>
     <string name="text_btn_take">ЗАБРАТЬ\nПОСЫЛКУ</string>
     <string name="text_btn_leave">ОСТАВИТЬ\nПОСЫЛКУ</string>
+    <string name="text_all">Итого</string>
+    <string name="text_select">Выберите</string>
+    <string name="text_cell">Ячейка</string>
+    <string name="text_amount_for_day">Цена в сутки</string>
+    <string name="text_best_before">Срок хранения</string>
 
     <string name="summary_locker">Ячейка: %1$s</string>
     <string name="summary_price">Цена в сутки: %1$d сом</string>
     <string name="summary_days">Срок хранения: %1$d дней</string>
     <string name="summary_total">К оплате: %1$d сом</string>
+
+    <string name="text_day_1">день</string>
+    <string name="text_day_2_4">дня</string>
+    <string name="text_day_multiple">дней</string>
 </resources>

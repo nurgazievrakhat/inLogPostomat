@@ -11,6 +11,7 @@ import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentReceiverBinding
 import com.example.sampleusbproject.presentation.base.BaseFragment
 import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
+import com.example.sampleusbproject.presentation.days.adapter.PayerDays
 import com.example.sampleusbproject.utils.getColorStateList
 import com.example.sampleusbproject.utils.makeToast
 import com.google.android.material.button.MaterialButton
@@ -45,9 +46,10 @@ class ReceiverFragment : BaseFragment<FragmentReceiverBinding>(
             else {
                 val receiverPhone = if (self!!) commonViewModel.phoneNumber else ""
                 commonViewModel.receiverPhoneNumber = receiverPhone
-                if (self!!)
+                if (self!!) {
+                    commonViewModel.payer = PayerDays.SENDER
                     findNavController().navigate(R.id.action_receiverFragment_to_selectCellWithAmountFragment)
-                else
+                } else
                     findNavController().navigate(R.id.action_receiverFragment_to_enterReceiverPhoneNumberFragment2)
             }
         }

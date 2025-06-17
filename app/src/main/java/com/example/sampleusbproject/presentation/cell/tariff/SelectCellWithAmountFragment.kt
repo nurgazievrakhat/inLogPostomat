@@ -12,12 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentSelectCellWithAmountBinding
+import com.example.sampleusbproject.presentation.CellSizeItemDecoration
 import com.example.sampleusbproject.presentation.FinikPaymentModel
 import com.example.sampleusbproject.presentation.base.BaseViewModelFragment
 import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
 import com.example.sampleusbproject.presentation.cell.CenterItemDecoration
 import com.example.sampleusbproject.presentation.cell.SelectCellAdapter
 import com.example.sampleusbproject.presentation.cell.SelectCellModel
+import com.example.sampleusbproject.presentation.cell.SelectCellNewAdapter
 import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
 import com.example.sampleusbproject.presentation.commonViewModel.SelectedCell
 import com.example.sampleusbproject.presentation.days.adapter.PayerDays
@@ -26,6 +28,7 @@ import com.example.sampleusbproject.presentation.days.adapter.SelectDayAdapter
 import com.example.sampleusbproject.presentation.days.adapter.getSelectList
 import com.example.sampleusbproject.utils.gone
 import com.example.sampleusbproject.utils.makeToast
+import com.example.sampleusbproject.utils.showWordWithDeclination
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kg.finik.android.sdk.CreateItemHandlerWidget
@@ -58,7 +61,8 @@ class SelectCellWithAmountFragment :
                         val selected = adapter.currentList.find { it.isSelected }
                         val selectedDay = daysAdapter.currentList.find { it.isSelected }
                         val sumOfPay =
-                            binding.tvAmount.text.toString().filter { it.isDigit() }.ifBlank { "0" }.toLong()
+                            binding.tvAmount.text.toString().filter { it.isDigit() }.ifBlank { "0" }
+                                .toLong()
 
                         viewModel.createTransaction(
                             sumOfPay,
@@ -71,7 +75,7 @@ class SelectCellWithAmountFragment :
                     } else {
                         makeToast(R.string.text_something_went_wrong)
                     }
-                } catch (e: Exception){
+                } catch (e: Exception) {
                     makeToast(R.string.text_something_went_wrong)
                 }
             } else {
@@ -82,7 +86,7 @@ class SelectCellWithAmountFragment :
     private var prevCellSelectedPos: Int = -1
     private var prevDaySelectedPos: Int = -1
 
-    private lateinit var adapter: SelectCellAdapter
+    private lateinit var adapter: SelectCellNewAdapter
 
     private val daysAdapter: SelectDayAdapter by lazy {
         SelectDayAdapter(this::onDayClick)
@@ -93,6 +97,7 @@ class SelectCellWithAmountFragment :
             return
 
         if (pos > -1) {
+            daysTotal(daysAdapter.currentList[pos])
             onDaySelect(true, pos)
         }
 
@@ -108,6 +113,7 @@ class SelectCellWithAmountFragment :
         val list = daysAdapter.currentList.toMutableList()
         list[pos].isSelected = isSelected
         daysAdapter.notifyItemChanged(pos)
+        check()
     }
 
     private fun onClick(pos: Int, model: SelectCellModel) {
@@ -118,6 +124,7 @@ class SelectCellWithAmountFragment :
             select(false, prevCellSelectedPos)
         }
 
+        cellTotal(adapter.currentList[pos])
         select(true, pos)
         prevCellSelectedPos = pos
         updateSum()
@@ -127,23 +134,55 @@ class SelectCellWithAmountFragment :
         val list = adapter.currentList.toMutableList()
         list[pos].isSelected = isSelected
         adapter.notifyItemChanged(pos)
+        check()
+    }
+
+    private fun cellTotal(model: SelectCellModel) {
+        val size = String.format(
+            binding.root.context.getString(R.string.text_cell_size_title),
+            model.boardSize.name
+        )
+        binding.itemTotalCell.setContent(size)
+        val amount = String.format(
+            binding.root.context.getString(R.string.text_cell_amount),
+            model.boardSize.amount.toString()
+        )
+        binding.itemTotalAmount.setContent(amount)
+    }
+
+    private fun daysTotal(model: SelectDay) {
+        val daysTitle = "${model.day} ${
+            binding.root.context.getString(
+                model.day.showWordWithDeclination(
+                    R.string.text_day_1,
+                    R.string.text_day_2_4,
+                    R.string.text_day_multiple
+                )
+            )
+        }"
+        binding.itemTotalBestBefore.setContent(daysTitle)
     }
 
     private fun updateSum() {
         val selectedDay = daysAdapter.currentList.find { it.isSelected }
         val selectedCell = adapter.currentList.find { it.isSelected }
-        if (selectedDay != null && selectedCell != null){
+        if (selectedDay != null && selectedCell != null) {
             binding.tvAmount.text = "${selectedDay.day * selectedCell.boardSize.amount} сом"
         }
     }
 
     override fun initialize() {
-        adapter = SelectCellAdapter(this::onClick, false)
+        adapter = SelectCellNewAdapter(this::onClick, true)
         viewModel.getFreCells(commonViewModel.selectedCell?.size)
         binding.rvCells.adapter = adapter
-        binding.rvCells.addItemDecoration(CenterItemDecoration())
+        binding.rvCells.addItemDecoration(CellSizeItemDecoration())
         binding.rvDays.adapter = daysAdapter
-        daysAdapter.submitList(PayerDays.SENDER.getSelectList(commonViewModel.days))
+        daysAdapter.submitList(commonViewModel.payer!!.getSelectList(commonViewModel.days))
+        if (commonViewModel.payer!! == PayerDays.SENDER) {
+            binding.tvToPay.text = requireContext().getString(R.string.text_to_pay)
+        } else {
+            binding.tvToPay.text = requireContext().getString(R.string.text_sum)
+        }
         if (commonViewModel.orderId.isNotBlank())
             binding.btnBack.gone()
     }
@@ -168,15 +207,30 @@ class SelectCellWithAmountFragment :
                 return@setOnClickListener
             }
 
-            if (commonViewModel.orderId.isBlank())
-                launchFinik(sumOfPay)
-            else
+            if (commonViewModel.orderId.isBlank()) {
+                if (commonViewModel.payer!! == PayerDays.SENDER)
+                    launchFinik(sumOfPay)
+                else
+                    viewModel.createOrder(
+                        selected.cellId ?: "",
+                        commonViewModel.phoneNumber,
+                        commonViewModel.receiverPhoneNumber,
+                        selectedDay.day
+                    )
+            } else
                 viewModel.updateCell(
                     selected.cellId ?: "",
                     commonViewModel.orderId,
                     selectedDay.day
                 )
         }
+    }
+
+    private fun check() {
+        val selected = adapter.currentList.find { it.isSelected }
+        val selectedDay = daysAdapter.currentList.find { it.isSelected }
+
+        binding.btnContinue.isEnabled = selected != null && selectedDay != null
     }
 
     override fun setupSubscribers() {

@@ -11,6 +11,7 @@ import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.FragmentChoosePayerAndDaysBinding
 import com.example.sampleusbproject.presentation.base.BaseFragment
 import com.example.sampleusbproject.presentation.commonViewModel.LeaveParcelViewModel
+import com.example.sampleusbproject.presentation.days.adapter.PayerDays
 import com.google.android.material.button.MaterialButton
 
 class ChoosePayerAndDaysFragment : BaseFragment<FragmentChoosePayerAndDaysBinding>(
@@ -39,11 +40,8 @@ class ChoosePayerAndDaysFragment : BaseFragment<FragmentChoosePayerAndDaysBindin
             findNavController().popBackStack(R.id.receiverFragment, false)
         }
         binding.btnContinue.setOnClickListener {
-            if (selfPayer) {
-                findNavController().navigate(R.id.action_choosePayerAndDaysFragment_to_selectCellWithAmountFragment)
-            } else {
-                findNavController().navigate(R.id.action_choosePayerAndDaysFragment_to_selectCellFragment)
-            }
+            commonViewModel.payer = if (selfPayer) PayerDays.SENDER else PayerDays.RECEIVER
+            findNavController().navigate(R.id.action_choosePayerAndDaysFragment_to_selectCellWithAmountFragment)
         }
     }
 

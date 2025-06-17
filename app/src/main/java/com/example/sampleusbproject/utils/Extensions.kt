@@ -62,6 +62,20 @@ fun Int.dpToPx(context: Context): Int {
     ).toInt()
 }
 
+fun Int.showWordWithDeclination(
+    @StringRes singular: Int,
+    @StringRes firstDeclination: Int,
+    @StringRes secondDeclination: Int
+): Int {
+    val num100 = this % 100
+    return if (num100 in 5..20) secondDeclination else
+        when (num100 % 10) {
+            1 -> singular
+            in 2..4 -> firstDeclination
+            else -> secondDeclination
+        }
+}
+
 private var lastClickTime: Long = 0
 
 fun TextView.setLinkedText(

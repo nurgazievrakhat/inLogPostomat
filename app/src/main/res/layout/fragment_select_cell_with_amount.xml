@@ -52,103 +52,144 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="58dp"
+        android:fontFamily="@font/inter_tight_bold_700"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:text="@string/text_choose_size_of_parcel_and_day"
         android:textColor="#181C4A"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_cells"
-        android:layout_width="0dp"
-        android:layout_height="352dp"
-        android:layout_marginHorizontal="50dp"
+        android:layout_width="442dp"
+        android:layout_height="466dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:itemCount="4"
-        tools:listitem="@layout/layout_select_cell_size" />
+        tools:listitem="@layout/layout_select_cell_size_new" />
 
     <TextView
         android:id="@+id/tv_days_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="186dp"
-        android:layout_marginTop="26dp"
-        android:fontFamily="@font/inter_tight_medium_500"
+        android:layout_marginStart="112dp"
+        android:fontFamily="@font/inter_tight_bold_700"
         android:includeFontPadding="false"
         android:text="@string/text_rent_in_days"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_cells" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/rv_cells"
+        app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="186dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/tv_days_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_days_title"
+        app:layout_constraintStart_toStartOf="@id/tv_days_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_days_title"
         tools:itemCount="2"
         tools:listitem="@layout/item_day_choose" />
+
+    <TextView
+        android:id="@+id/tv_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_tight_bold_700"
+        android:includeFontPadding="false"
+        android:text="@string/text_all"
+        android:layout_marginTop="37dp"
+        android:textColor="@color/dark_blue"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@id/rv_days"
+        app:layout_constraintTop_toBottomOf="@id/rv_days" />
+
+    <com.example.sampleusbproject.utils.ItemTotal
+        android:id="@+id/item_total_cell"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_days_title"
+        app:layout_constraintStart_toStartOf="@id/tv_all"
+        app:layout_constraintTop_toBottomOf="@id/tv_all"
+        app:total_title="@string/text_cell" />
+
+    <com.example.sampleusbproject.utils.ItemTotal
+        android:id="@+id/item_total_amount"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        app:layout_constraintEnd_toEndOf="@id/item_total_cell"
+        app:layout_constraintStart_toStartOf="@id/item_total_cell"
+        app:layout_constraintTop_toBottomOf="@id/item_total_cell"
+        app:total_title="@string/text_amount_for_day" />
+
+    <com.example.sampleusbproject.utils.ItemTotal
+        android:id="@+id/item_total_best_before"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        app:layout_constraintEnd_toEndOf="@id/item_total_amount"
+        app:layout_constraintStart_toStartOf="@id/item_total_amount"
+        app:layout_constraintTop_toBottomOf="@id/item_total_amount"
+        app:total_title="@string/text_best_before" />
 
     <TextView
         android:id="@+id/tv_to_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="18dp"
         android:fontFamily="@font/inter_tight_semi_bold_600"
+        android:includeFontPadding="false"
         android:text="@string/text_to_pay"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@id/tv_days_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_days_title" />
+        android:textColor="@color/blue_hovered"
+        android:textSize="46sp"
+        app:layout_constraintStart_toStartOf="@id/item_total_best_before"
+        app:layout_constraintTop_toBottomOf="@id/item_total_best_before" />
 
     <TextView
         android:id="@+id/tv_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
         android:fontFamily="@font/inter_tight_semi_bold_600"
-        tools:text="120 сом"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:includeFontPadding="false"
+        android:textColor="@color/blue_hovered"
+        android:textSize="46sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_to_pay"
-        app:layout_constraintEnd_toEndOf="@id/rv_days" />
+        app:layout_constraintStart_toEndOf="@id/tv_to_pay"
+        tools:text="120 сом" />
 
     <!-- Кнопки внизу -->
     <Button
         android:id="@+id/btnBack"
         style="@style/WhiteRoundedBtn"
-        android:layout_width="240dp"
-        android:layout_height="56dp"
+        android:layout_width="185dp"
+        android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
         android:text="Назад"
-        android:textColor="#BDBDBD"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContinue"
         style="@style/BlueRoundedBtn"
-        android:layout_width="240dp"
-        android:layout_height="56dp"
+        android:layout_width="185dp"
+        android:layout_height="70dp"
+        android:enabled="false"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Продолжить"
+        android:text="Далее"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

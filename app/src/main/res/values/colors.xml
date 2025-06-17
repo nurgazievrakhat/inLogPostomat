@@ -26,6 +26,7 @@
     <color name="shadow_black">#0F0F0F</color>
     <color name="black_10">#1A000000</color>
     <color name="black_30">#4D000000</color>
+    <color name="black_20">#33000000</color>
     <color name="blue_light">#EFF8FF</color>
     <color name="blue_baby">#0076D8</color>
     <color name="blue_hovered">#2694EF</color>
@@ -33,4 +34,9 @@
     <color name="text_secondary">#626975</color>
     <color name="grey">#D6D6D6</color>
     <color name="green">#3ABE35</color>
+    <color name="blue_bg">#EEF7FF</color>
+    <color name="divider">#E6E6E6</color>
+    <color name="text_content">#676767</color>
+    <color name="disabled">#EDEDED</color>
+    <color name="text_disabled">#A0A0A0</color>
 </resources>

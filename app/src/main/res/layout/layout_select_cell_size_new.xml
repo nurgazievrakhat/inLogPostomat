@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="95dp"
+    app:cardCornerRadius="16dp"
+    app:strokeColor="@color/black_20"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp">
+
+        <ImageView
+            android:id="@+id/btn_choose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/iv_select_cell_inactive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_tight_bold_700"
+            android:includeFontPadding="false"
+            android:text="@string/text_cell_size_title"
+            android:textColor="@color/shadow_black"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/inter_tight_medium_500"
+            android:includeFontPadding="false"
+            android:text="47х34х9см"
+            android:textColor="@color/shadow_black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/inter_tight_bold_700"
+            android:includeFontPadding="false"
+            android:textColor="@color/dark_blue"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_cell_state"
+            app:layout_constraintEnd_toStartOf="@id/btn_choose"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="20 сом/сутки" />
+
+        <TextView
+            android:id="@+id/tv_cell_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_tight_medium_500"
+            android:includeFontPadding="false"
+            android:text="Свободных ячеек нет"
+            android:textColor="@color/black_30"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/btn_choose"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_amount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

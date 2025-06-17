@@ -68,7 +68,7 @@ class SelectCellWithAmountViewModel @Inject constructor(
         fromUserPhone: String,
         toUserPhone: String,
         days: Int,
-        transactionId: String
+        transactionId: String ?= null
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
