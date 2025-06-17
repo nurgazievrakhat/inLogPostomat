@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="50dp"
-        android:text="@string/text_opened_board"
+        android:text="@string/text_opened_board_title"
         android:textColor="@color/dark_blue"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -61,13 +61,14 @@
         app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
     <TextView
-        android:id="@+id/tv_description1"
+        android:id="@+id/tv_board_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Заберите посылку и закройте ячейку вручную."
-        android:textColor="@color/shadow_black"
-        android:textSize="20sp"
+        android:text="3"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:textSize="150sp"
         app:layout_constraintEnd_toEndOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="@id/tv_title"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
@@ -77,12 +78,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Если возникла проблема — свяжитесь с нашей поддержкой."
+        android:text="@string/text_opened_board_description"
         android:textColor="@color/shadow_black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="@id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_description1" />
+        app:layout_constraintTop_toBottomOf="@id/tv_board_number" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_boards"
@@ -121,18 +122,17 @@
         style="@style/BlueStrokedBtn"
         android:layout_width="459dp"
         android:layout_height="60dp"
-        android:layout_marginStart="60dp"
         android:layout_marginBottom="34dp"
-        android:text="Открыть ячейку еще раз"
+        android:layout_marginEnd="30dp"
+        android:text="@string/text_choose_another_board"
         android:textColor="@color/blue_baby"
         android:textSize="24sp"
-        app:icon="@drawable/icon_repeat"
         app:iconGravity="textEnd"
         app:iconPadding="18dp"
         app:iconSize="28dp"
         app:iconTint="@color/blue_baby"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/btnContinue"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContinue"
