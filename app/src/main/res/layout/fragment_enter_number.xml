@@ -74,10 +74,10 @@
         android:inputType="number"
         android:maxLength="4"
         android:paddingVertical="20dp"
-        android:textColor="#181C4A"
-        android:textColorHint="#BDBDBD"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@id/btnClear"
+        android:textColor="@color/dark_blue"
+        android:textColorHint="@color/text_disabled"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="@id/keypadGrid"
         app:layout_constraintStart_toStartOf="@id/keypadGrid"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -99,21 +99,22 @@
         android:id="@+id/btnClear"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/bg_btn_circle_blue"
         android:padding="8dp"
         android:src="@drawable/ic_clear"
         app:layout_constraintBottom_toBottomOf="@id/etCodeInput"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="@id/keypadGrid"
+        app:layout_constraintStart_toEndOf="@id/etCodeInput"
         app:layout_constraintTop_toTopOf="@id/etCodeInput" />
 
     <!-- Клавиатура -->
     <com.example.sampleusbproject.utils.customview.NumberPadView
         android:id="@+id/keypadGrid"
-        android:layout_width="507dp"
+        android:layout_width="599dp"
         android:layout_height="wrap_content"
-        app:layout_goneMarginTop="24dp"
-        android:layout_marginTop="14dp"
+        app:layout_goneMarginTop="31dp"
+        android:layout_marginTop="21dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_error" />
@@ -139,7 +140,7 @@
         android:layout_height="56dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Продолжить"
+        android:text="Далее"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

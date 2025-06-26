@@ -20,9 +20,9 @@
     Разрешите приложению управлять настройками безопасности устройства,
     чтобы отключить кнопки навигации и заблокировать планшет в киоск-режиме.
 </string>
-    <string name="text_policy_before_link">Нажимая «Продолжить», вы соглашаетесь </string>
+    <string name="text_policy_before_link">Нажимая «Далее», вы соглашаетесь </string>
     <string name="text_policy_first_link">с условиями оферты </string>
-    <string name="text_policy_after_link">и </string>
+    <string name="text_policy_after_link">\nи </string>
     <string name="text_policy_second_link">политикой конфиденциальности.</string>
     <string name="text_something_went_wrong">Что-то пошло нет так, попробуйте позже</string>
     <string name="text_order_not_found">Заказ не найден</string>
@@ -88,4 +88,5 @@
     <string name="text_who_take_delivery">Как Вы хотите забрать посылку?</string>
     <string name="text_send_other_person">Отправить другому\nчеловеку</string>
     <string name="text_take_self">Забрать самостоятельно позже</string>
+    <string name="text_enter_your_number">Введите свой номер телефона</string>
 </resources>
