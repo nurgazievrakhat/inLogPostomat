@@ -20,6 +20,7 @@ import com.example.sampleusbproject.databinding.ActivityMainBinding
 import com.example.sampleusbproject.domain.interfaces.LockerBoardInterface
 import com.example.sampleusbproject.usecases.PostomatSocketUseCase
 import com.example.sampleusbproject.utils.AliveService
+import com.example.sampleusbproject.utils.AppStatus
 import com.example.sampleusbproject.utils.CommonPrefs
 import com.example.sampleusbproject.utils.ScreensaverManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,6 +76,15 @@ class MainActivity : AppCompatActivity() {
         connectSocket()
     }
 
+    override fun onStart() {
+        super.onStart()
+        AppStatus.isInForeground = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        AppStatus.isInForeground = false
+    }
     override fun onResume() {
         super.onResume()
         tryStartKioskMode()

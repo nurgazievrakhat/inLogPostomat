@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.sampleusbproject.BuildConfig
 import com.example.sampleusbproject.MainActivity
 import com.example.sampleusbproject.R
-import com.example.sampleusbproject.data.LockerBoardResponse
 import com.example.sampleusbproject.data.PostomatInfoMapper
 import com.example.sampleusbproject.databinding.FragmentMainBinding
 import com.example.sampleusbproject.presentation.numberPad.PackageType
@@ -81,9 +80,7 @@ class MainFragment : Fragment() {
                 findNavController().navigate(R.id.leave_parcel_navigation)
             }
         }
-        binding.tvWelcome.setOnClickListener {
-            findNavController().navigate(R.id.qrFragment)
-        }
+
         binding.btnTake.setOnClickListener {
             checkLockerBoardAndDo {
                 findNavController().navigate(
