@@ -121,4 +121,8 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <declare-styleable name="ItemTotal">
+        <attr name="total_title" format="reference"/>
+    </declare-styleable>
+
 </resources>

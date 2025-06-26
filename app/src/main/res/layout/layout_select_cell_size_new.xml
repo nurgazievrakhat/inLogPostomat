@@ -44,7 +44,7 @@
             android:fontFamily="@font/inter_tight_medium_500"
             android:includeFontPadding="false"
             android:text="47х34х9см"
-            android:textColor="@color/shadow_black"
+            android:textColor="@color/text_content"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
@@ -57,7 +57,7 @@
             android:fontFamily="@font/inter_tight_bold_700"
             android:includeFontPadding="false"
             android:textColor="@color/dark_blue"
-            android:textSize="16sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@id/tv_cell_state"
             app:layout_constraintEnd_toStartOf="@id/btn_choose"
             app:layout_constraintTop_toTopOf="parent"
