@@ -15,7 +15,7 @@
     <string name="text_day_count">Количество дней*</string>
     <string name="text_max_days">*макс. %1$s %2$s</string>
     <string name="text_opened_board">Открыта ячейка <font color="#0076D8">%1$s</font></string>
-    <string name="text_opened_board_title">Внимание! Откроется ячейка под номером:</string>
+    <string name="text_opened_board_title">Внимание!\nОткроется ячейка под номером:</string>
     <string name="device_admin_description">
     Разрешите приложению управлять настройками безопасности устройства,
     чтобы отключить кнопки навигации и заблокировать планшет в киоск-режиме.
@@ -89,4 +89,24 @@
     <string name="text_send_other_person">Отправить другому\nчеловеку</string>
     <string name="text_take_self">Забрать самостоятельно позже</string>
     <string name="text_enter_your_number">Введите свой номер телефона</string>
+    <string name="text_back">Назад</string>
+    <string name="text_next">Далее</string>
+    <string name="text_need_close_cell">Необходимо закрыть ячейку</string>
+    <string name="text_close_cell_before_choose_another">Перед выборок другой ячейки\nзакройте текущую открытую</string>
+    <string name="text_i_close_cell">Я закрыл(-а) ячейку</string>
+    <string name="text_your_cell_bigger">Ваша посылка оказалась крупнее?</string>
+    <string name="text_you_can_choose_another_cell">Не проблема — выберите ячейку побольше\nи доплатите разницу.</string>
+    <string name="text_check_receiver_phone">Проверьте номер получателя</string>
+    <string name="text_all_right">Все верно</string>
+    <string name="text_you_pointed">Вы указали:</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_enter">Войти</string>
+    <string name="text_support">Круглосуточная поддержка</string>
+    <string name="text_enter_code_from_sms">Введите код из СМС</string>
+    <string name="text_i_take_delivery">Я забрал(-а) посылку</string>
+    <string name="text_loading">Загрузка...</string>
+    <string name="text_thanks_for_using_inlog">Спасибо что\nвоспользовались inLog!</string>
+    <string name="text_client_get_notification">Клиент получил уведомление о доставке</string>
+    <string name="text_back_to_main">Вернуться на главную</string>
+    <string name="text_no_free_cells">Свободных ячеек нет</string>
 </resources>

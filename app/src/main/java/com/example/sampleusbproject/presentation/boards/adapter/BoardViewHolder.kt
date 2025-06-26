@@ -12,8 +12,18 @@ class BoardViewHolder(
 ) : ViewHolder(binding.root) {
 
     fun onBind(model: CellSchema, selectedNumber: Long) {
-        if (model.usable){
+        if (model.usable) {
             binding.tvNumber.visible()
+            binding.tvNumber.setTextColor(
+                ColorStateList.valueOf(
+                    binding.tvNumber.context.getColor(
+                        if (model.number != selectedNumber)
+                            R.color.shadow_black
+                        else
+                            R.color.white
+                    )
+                )
+            )
             binding.tvNumber.text = model.number.toString()
             binding.mcvNumber.backgroundTintList = ColorStateList.valueOf(
                 binding.mcvNumber.context.getColor(

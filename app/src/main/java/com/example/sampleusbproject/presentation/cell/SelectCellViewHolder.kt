@@ -3,6 +3,7 @@ package com.example.sampleusbproject.presentation.cell
 import android.content.res.ColorStateList
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.sampleusbproject.R
 import com.example.sampleusbproject.databinding.LayoutSelectCellSizeBinding
@@ -19,6 +20,7 @@ class SelectCellViewHolder(
 ) {
 
     fun onBind(model: SelectCellModel) {
+        binding.tvCellState.isVisible = !model.isSelected
         binding.tvTitle.text = String.format(
             binding.root.context.getString(R.string.text_cell_size_title),
             model.boardSize.name

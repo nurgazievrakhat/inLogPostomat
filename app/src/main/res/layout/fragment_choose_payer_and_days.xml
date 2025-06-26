@@ -31,7 +31,7 @@
             android:id="@+id/tvSupport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Круглосуточная поддержка"
+            android:text="@string/text_support"
             android:textColor="#222B45"
             android:textSize="16sp" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="+995 550 500 500"
-            android:textColor="#3386E6"
+            android:textColor="#379ED8"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -155,25 +155,22 @@
     <Button
         android:id="@+id/btnBack"
         style="@style/WhiteRoundedBtn"
-        android:layout_width="240dp"
-        android:layout_height="56dp"
+        android:layout_width="185dp"
+        android:layout_height="70dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Назад"
-        android:textColor="#BDBDBD"
-        android:textSize="20sp"
+        android:text="@string/text_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnContinue"
         style="@style/BlueRoundedBtn"
-        android:layout_width="240dp"
-        android:layout_height="56dp"
+        android:layout_width="185dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Продолжить"
-        android:textSize="20sp"
+        android:text="@string/text_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
