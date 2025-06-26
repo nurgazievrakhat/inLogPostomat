@@ -145,7 +145,7 @@ class SelectCellWithAmountFragment :
         binding.itemTotalCell.setContent(size)
         val amount = String.format(
             binding.root.context.getString(R.string.text_cell_amount),
-            model.boardSize.amount.toString()
+            model.cellPrice.toString()
         )
         binding.itemTotalAmount.setContent(amount)
     }
@@ -167,7 +167,7 @@ class SelectCellWithAmountFragment :
         val selectedDay = daysAdapter.currentList.find { it.isSelected }
         val selectedCell = adapter.currentList.find { it.isSelected }
         if (selectedDay != null && selectedCell != null) {
-            binding.tvAmount.text = "${selectedDay.day * selectedCell.boardSize.amount} сом"
+            binding.tvAmount.text = "${selectedDay.day * selectedCell.cellPrice} сом"
         }
     }
 

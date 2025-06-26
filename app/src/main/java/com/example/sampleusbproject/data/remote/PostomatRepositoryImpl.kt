@@ -6,6 +6,8 @@ import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
 import com.example.sampleusbproject.data.remote.dto.UpdateOrderCellDto
 import com.example.sampleusbproject.data.remote.dto.mapToDomain
 import com.example.sampleusbproject.data.remote.dto.mapToDto
+import com.example.sampleusbproject.data.remote.dto.toDomain
+import com.example.sampleusbproject.domain.models.CellPrice
 import com.example.sampleusbproject.domain.models.CreateOrderModel
 import com.example.sampleusbproject.domain.models.FreeCellModel
 import com.example.sampleusbproject.domain.models.GetOrderError
@@ -76,7 +78,11 @@ class PostomatRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateCell(orderId: String, cellId: String, days: Int): Either<Unit, Unit> {
+    override suspend fun updateCell(
+        orderId: String,
+        cellId: String,
+        days: Int
+    ): Either<Unit, Unit> {
         return try {
             val response = service.updateCell(orderId, UpdateOrderCellDto(orderId, cellId, days))
             if (response.isSuccessful)
@@ -147,6 +153,18 @@ class PostomatRepositoryImpl @Inject constructor(
             )
             if (response.isSuccessful)
                 Either.Right(Unit)
+            else
+                Either.Left(Unit)
+        } catch (e: Exception) {
+            Either.Left(Unit)
+        }
+    }
+
+    override suspend fun getCellPrices(): Either<Unit, List<CellPrice>> {
+        return try {
+            val response = service.getCellPrices()
+            if (response.isSuccessful && response.body() != null)
+                Either.Right(response.body()!!.prices.toDomain())
             else
                 Either.Left(Unit)
         } catch (e: Exception) {

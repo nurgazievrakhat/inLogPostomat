@@ -23,7 +23,7 @@ class SelectCellNewViewHolder(
         if (withAmount) {
             binding.tvAmount.text = String.format(
                 binding.root.context.getString(R.string.text_cell_amount),
-                model.boardSize.amount.toString()
+                model.cellPrice.toString()
             )
             binding.tvAmount.visible()
         } else {

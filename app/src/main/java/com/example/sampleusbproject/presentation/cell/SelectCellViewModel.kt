@@ -6,6 +6,7 @@ import com.example.sampleusbproject.domain.models.CreateOrderModel
 import com.example.sampleusbproject.domain.remote.PostomatRepository
 import com.example.sampleusbproject.presentation.base.BaseViewModel
 import com.example.sampleusbproject.presentation.boards.adapter.BoardSize
+import com.example.sampleusbproject.usecases.GetFreeCellWithAmountUseCase
 import com.example.sampleusbproject.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectCellViewModel @Inject constructor(
-    private val postomatRepository: PostomatRepository
+    private val postomatRepository: PostomatRepository,
+    private val getFreeCellWithAmountUseCase: GetFreeCellWithAmountUseCase
 ) : BaseViewModel() {
 
     private val _freeCells = MutableStateFlow<List<SelectCellModel>>(listOf())
@@ -31,7 +33,7 @@ class SelectCellViewModel @Inject constructor(
     fun getFreCells(previousSelectedSize: BoardSize?= null) {
         viewModelScope.launch(Dispatchers.IO) {
             _alertLiveData.postValue(true)
-            val response = postomatRepository.getFreeCells()
+            val response = getFreeCellWithAmountUseCase.invoke()
             _alertLiveData.postValue(false)
             when (response) {
                 is Either.Left -> errorEvent.postValue(true)

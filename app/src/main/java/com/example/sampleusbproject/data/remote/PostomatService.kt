@@ -1,5 +1,6 @@
 package com.example.sampleusbproject.data.remote
 
+import com.example.sampleusbproject.data.remote.dto.CellTariffDto
 import com.example.sampleusbproject.data.remote.dto.ConfirmPhoneDto
 import com.example.sampleusbproject.data.remote.dto.CreateTransactionDto
 import com.example.sampleusbproject.data.remote.dto.DeliveryOrderDto
@@ -63,5 +64,8 @@ interface PostomatService {
         @Path("id") orderId: String,
         @Body model: UpdateOrderCellDto
     ): Response<Unit>
+
+    @GET("/api/v1/postomat/order/default-b2c-tariff")
+    suspend fun getCellPrices(): Response<CellTariffDto>
 
 }
