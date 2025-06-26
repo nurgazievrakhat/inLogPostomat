@@ -85,9 +85,12 @@
     <string name="text_day_1">день</string>
     <string name="text_day_2_4">дня</string>
     <string name="text_day_multiple">дней</string>
+    <string name="text_success">Успех</string>
     <string name="text_who_take_delivery">Как Вы хотите забрать посылку?</string>
     <string name="text_send_other_person">Отправить другому\nчеловеку</string>
     <string name="text_take_self">Забрать самостоятельно позже</string>
+    <string name="text_send_email_title">Введите почту для отправки чека</string>
+    <string name="text_send">Отправить</string>
     <string name="text_enter_your_number">Введите свой номер телефона</string>
     <string name="text_back">Назад</string>
     <string name="text_next">Далее</string>

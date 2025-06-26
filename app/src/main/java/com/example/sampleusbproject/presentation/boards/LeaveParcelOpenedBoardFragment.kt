@@ -80,11 +80,7 @@ class LeaveParcelOpenedBoardFragment :
 
         binding.btnBack.text = requireContext().getString(R.string.text_choose_another_cell)
         binding.btnContinue.text = requireContext().getString(R.string.text_leave_parcel)
-        binding.tvTitle.text = String.format(
-            requireContext().getString(R.string.text_opened_board),
-            (commonViewModel.selectedCell?.number ?: 0).toString()
-        )
-
+        binding.tvBoardNumber.text = (commonViewModel.selectedCell?.number ?: 0).toString()
         binding.rvBoards.adapter = adapter
         binding.rvBoards.isNestedScrollingEnabled = false
         val dividerItemDecoration =

@@ -1,5 +1,6 @@
 package com.example.sampleusbproject.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -146,4 +147,8 @@ fun TextView.setLinkedText(
 
 fun Fragment.makeToast(@StringRes message: Int){
     Toast.makeText(requireContext(), requireContext().getString(message), Toast.LENGTH_LONG).show()
+}
+
+fun Activity.makeToast(@StringRes message: Int){
+    Toast.makeText(this, this.getString(message), Toast.LENGTH_LONG).show()
 }
