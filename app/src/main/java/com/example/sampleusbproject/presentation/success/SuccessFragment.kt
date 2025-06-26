@@ -30,13 +30,6 @@ class SuccessFragment : Fragment(R.layout.fragment_success) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args = PackageType.getType(arguments?.getInt("type") ?: 0)
-        if (args == PackageType.COURIER) {
-            binding.tvDescription.visible()
-            binding.tvTitle.text = "Готово"
-        } else {
-            binding.tvDescription.gone()
-            binding.tvTitle.text = "Спасибо что\nвоспользовались inLog!"
-        }
         binding.btnToMain.setOnClickListener {
             findNavController().navigate(
                 R.id.mainFragment

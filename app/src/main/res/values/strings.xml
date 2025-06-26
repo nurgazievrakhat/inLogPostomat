@@ -112,4 +112,5 @@
     <string name="text_client_get_notification">Клиент получил уведомление о доставке</string>
     <string name="text_back_to_main">Вернуться на главную</string>
     <string name="text_no_free_cells">Свободных ячеек нет</string>
+    <string name="text_ready">Готово</string>
 </resources>
