@@ -266,7 +266,10 @@ class SelectCellWithAmountFragment :
                     fixedAmount = sum.toDouble()
                 )
             )
-            putExtra("paymentMethod", PaymentMethod.QR as Parcelable)
+            putExtra("paymentMethods", arrayOf(PaymentMethod.QR))
+            putExtra("enableShare", false)
+            putExtra("enableAnimation", false)
+            putExtra("tapableSupportButtons", false)
             putExtra("locale", FinikSdkLocale.RU as Parcelable)
             putExtra("isBeta", false)
         }

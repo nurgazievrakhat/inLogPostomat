@@ -46,7 +46,6 @@ class QrFragment : Fragment(R.layout.qr_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListeners()
-        launchFinik()
     }
 
     private fun setupListeners() {
@@ -60,22 +59,4 @@ class QrFragment : Fragment(R.layout.qr_fragment) {
         _binding = null
     }
 
-    fun launchFinik() {
-        val intent = Intent(requireContext(), FinikActivity::class.java).apply {
-            putExtra("apiKey", "da2-g7s2jntzuzcojmj4fh37msznmq")
-            putExtra(
-                "widget",
-                CreateItemHandlerWidget(
-                    accountId = "e5574818-f448-420a-816e-aab6b1f1c26e",
-                    name = "Test",
-                    fixedAmount = 1.0
-                )
-            )
-            putExtra("paymentMethod", PaymentMethod.QR as Parcelable)
-            putExtra("locale", FinikSdkLocale.RU as Parcelable)
-            putExtra("isBeta", false)
-        }
-
-        finikLauncher.launch(intent)
-    }
 } 

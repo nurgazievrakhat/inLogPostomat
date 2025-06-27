@@ -9,10 +9,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.sampleusbproject.R
+import javax.inject.Inject
 
 class ScreensaverManager(
     private val activity: AppCompatActivity,
-    private val idleTimeMillis: Long = 540000 //9 мин
+    private val commonPrefs: CommonPrefs,
+    private val idleTimeMillis: Long = 540000//9 мин
 ) {
     private var userActivityHandler = Handler(Looper.getMainLooper())
     private var isScreensaverShown = false
@@ -20,7 +22,7 @@ class ScreensaverManager(
 
     private val showScreensaverRunnable = Runnable {
         if (!isScreensaverShown) {
-            if (navController.currentDestination?.id != R.id.mainFragment) {
+            if (navController.currentDestination?.id != R.id.mainFragment && commonPrefs.isAuthorized()) {
                 navController.navigate(R.id.mainFragment)
             }
             isScreensaverShown = true

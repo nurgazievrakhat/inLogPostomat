@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             Log.e("sdfsdfsdfsdf", "onCreate: ${e.message}", )
         }
         
-        screensaverManager = ScreensaverManager(this)
+        screensaverManager = ScreensaverManager(this,commonPrefs)
 
 
         setupNavigation()
@@ -121,7 +121,6 @@ class MainActivity : AppCompatActivity() {
         
         navGraph.setStartDestination(
             if (commonPrefs.isAuthorized()) R.id.mainFragment else R.id.authFragment
-//            R.id.mainFragment
         )
         
         navHostFragment.navController.graph = navGraph
